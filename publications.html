@@ -30,7 +30,7 @@
                 <span class="logo-text">AR</span>
             </a>
 
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">
                 <i data-lucide="menu" class="menu-icon"></i>
                 <i data-lucide="x" class="close-icon"></i>
             </button>
@@ -39,23 +39,35 @@
                 <li><a href="index.html#about">About</a></li>
                 <li><a href="index.html#skills">Skills</a></li>
                 <li><a href="index.html#experience">Experience</a></li>
-                <li class="nav-dropdown">
-                    <a href="projects.html" class="dropdown-toggle">
-                        Projects
-                        <i data-lucide="chevron-down" class="dropdown-icon"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="index.html#projects">Featured Projects</a></li>
-                        <li><a href="projects.html">All Projects</a></li>
-                    </ul>
-                </li>
+                <li><a href="index.html#projects">Featured Projects</a></li>
                 <li><a href="index.html#education">Education</a></li>
                 <li><a href="honors.html">Honors</a></li>
-                <li><a href="publications.html" class="active">Publications</a></li>
+                <li><a href="publications.html">Publications</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
+
+            <button class="sidebar-menu-btn" id="sidebarMenuBtn" aria-label="Open sidebar menu">
+                <i data-lucide="menu"></i>
+            </button>
         </nav>
     </header>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <aside class="sidebar-menu" id="sidebarMenu">
+        <div class="sidebar-header">
+            <span class="sidebar-title">Menu</span>
+            <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close sidebar">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="projects.html"><i data-lucide="folder-open"></i> All Projects</a></li>
+            <li><a href="honors.html"><i data-lucide="award"></i> Honors</a></li>
+            <li><a href="publications.html"><i data-lucide="book-open"></i> Publications</a></li>
+            <li><a href="contact.html"><i data-lucide="mail"></i> Contact</a></li>
+        </ul>
+    </aside>
 
     <main>
         <!-- Publications Section -->
