@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vacuum Assisted Wall Climber for Skyscraper Cleaning - Project by Adithya Rajendran">
+    <meta name="author" content="Adithya Rajendran">
+
+    <title>Skyscraper Cleaner | Adithya Rajendran</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .project-detail-hero {
+            padding: 120px 0 60px;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+        }
+
+        .project-detail-hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .project-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .project-meta-item i {
+            width: 18px;
+            height: 18px;
+            color: var(--accent-bright);
+        }
+
+        .project-content {
+            padding: 4rem 0;
+        }
+
+        .project-section {
+            margin-bottom: 3rem;
+        }
+
+        .project-section h2 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .project-section h2 i {
+            width: 24px;
+            height: 24px;
+            color: var(--accent-bright);
+        }
+
+        .project-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .project-image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-image-card {
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            transition: all 0.3s ease;
+        }
+
+        .project-image-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .project-image-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .project-image-card .caption {
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .tech-stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tech-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+        }
+
+        .tech-item i {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-bright);
+        }
+
+        .components-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .component-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+        }
+
+        .component-item i {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-violet);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .component-item span {
+            color: var(--text-secondary);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .team-member {
+            padding: 1.25rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .team-member .name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .team-member .id {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
+        .workflow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .workflow-step {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .step-content h3 {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-github {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-github:hover {
+            border-color: var(--accent-bright);
+            box-shadow: var(--shadow-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-github i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-bright);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .back-link i {
+            width: 18px;
+            height: 18px;
+        }
+
+        .video-container {
+            position: relative;
+            margin-top: 1.5rem;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+        }
+
+        .video-container video {
+            width: 100%;
+            display: block;
+        }
+
+        .video-placeholder {
+            padding: 3rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .video-placeholder i {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1rem;
+            color: var(--accent-bright);
+        }
+
+        .feature-highlight {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-highlight h3 {
+            color: var(--accent-bright);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-highlight h3 i {
+            width: 20px;
+            height: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .workflow-step {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .project-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="nav-header" id="navbar">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-text">AR</span>
+            </a>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <i data-lucide="menu" class="menu-icon"></i>
+                <i data-lucide="x" class="close-icon"></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#education">Education</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
+                <li><a href="honors.html">Honors</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Project Hero -->
+        <section class="project-detail-hero">
+            <div class="container">
+                <a href="projects.html" class="back-link">
+                    <i data-lucide="arrow-left"></i>
+                    Back to Projects
+                </a>
+
+                <h1>Vacuum Assisted Wall Climber for Skyscraper Cleaning</h1>
+                <p class="project-tagline" style="color: var(--text-secondary); font-size: 1.1rem; max-width: 800px;">
+                    A pneumatic-based window cleaning prototype that uses vacuum-assisted wall climbing mechanism for cleaning high-rise building windows.
+                </p>
+
+                <div class="project-meta">
+                    <div class="project-meta-item">
+                        <i data-lucide="calendar"></i>
+                        <span>January 2020 - March 2020</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="building"></i>
+                        <span>PSG Polytechnic College</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="users"></i>
+                        <span>Team of 4</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="graduation-cap"></i>
+                        <span>Diploma Final Year Project</span>
+                    </div>
+                </div>
+
+                <div class="cta-buttons">
+                    <a href="https://github.com/Adithya191101/Skyscrapper-cleaner/tree/main" target="_blank" rel="noopener" class="btn-github">
+                        <i data-lucide="github"></i>
+                        View on GitHub
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Content -->
+        <section class="project-content">
+            <div class="container">
+
+                <!-- Overview -->
+                <div class="project-section">
+                    <h2><i data-lucide="info"></i> Project Overview</h2>
+                    <p>
+                        This diploma final year project presents an innovative pneumatic-based system designed for cleaning high-rise building windows. The prototype demonstrates "vacuum-assisted wall climbing" technology, scaled down from industrial applications for practical testing and demonstration purposes.
+                    </p>
+                    <p>
+                        The system addresses the growing need for automated cleaning solutions in urban environments where manual window cleaning of skyscrapers poses significant safety risks and logistical challenges. By utilizing pneumatic suction cups and an intelligent control system, the robot can adhere to vertical glass surfaces while performing cleaning operations.
+                    </p>
+
+                    <div class="feature-highlight">
+                        <h3><i data-lucide="lightbulb"></i> Key Innovation</h3>
+                        <p style="margin: 0;">
+                            The vacuum-assisted adhesion mechanism allows the robot to climb vertical glass surfaces without the need for external support structures, making it ideal for modern glass-facade buildings.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- CAD Images -->
+                <div class="project-section">
+                    <h2><i data-lucide="image"></i> Design & Visualization</h2>
+                    <p>The system was designed using SolidWorks and Creo Parametric, with detailed 3D models and technical drawings created for manufacturing.</p>
+
+                    <div class="project-image-grid">
+                        <div class="project-image-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/Skyscrapper-cleaner/main/Screenshot%20(13).png', '3D CAD Model - Complete Assembly')">
+                            <img src="https://raw.githubusercontent.com/Adithya191101/Skyscrapper-cleaner/main/Screenshot%20(13).png" alt="3D CAD Model of Wall Climber">
+                            <div class="caption">3D CAD Model - Complete Assembly</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- How It Works -->
+                <div class="project-section">
+                    <h2><i data-lucide="cog"></i> How It Works</h2>
+                    <p>The wall climbing robot operates through a coordinated sequence of pneumatic actuations and vacuum-based adhesion:</p>
+
+                    <div class="workflow-steps">
+                        <div class="workflow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Vacuum Adhesion</h3>
+                                <p>Pneumatic suction cups create a strong vacuum seal against the glass surface, allowing the robot to securely attach to vertical walls.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Sequential Movement</h3>
+                                <p>Pneumatic cylinders extend and retract in a coordinated pattern, moving the robot upward while maintaining at least one set of suction cups attached at all times.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Cleaning Operation</h3>
+                                <p>The integrated brush mechanism cleans the glass surface as the robot moves, removing dirt and debris from high-rise windows.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>Arduino Control</h3>
+                                <p>An Arduino microcontroller coordinates the solenoid valves, controlling the timing of vacuum cups and pneumatic cylinders for smooth operation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical Specifications -->
+                <div class="project-section">
+                    <h2><i data-lucide="wrench"></i> Technical Specifications</h2>
+
+                    <h3 style="color: var(--text-primary); margin: 1.5rem 0 1rem;">Hardware Components</h3>
+                    <div class="components-list">
+                        <div class="component-item">
+                            <i data-lucide="circle"></i>
+                            <span><strong>Solenoid Valves</strong> - MAX-SV61 model for pneumatic control</span>
+                        </div>
+                        <div class="component-item">
+                            <i data-lucide="circle"></i>
+                            <span><strong>Pneumatic Cylinders</strong> - For linear actuation and movement</span>
+                        </div>
+                        <div class="component-item">
+                            <i data-lucide="circle"></i>
+                            <span><strong>Vacuum Cups</strong> - Industrial-grade suction cups for adhesion</span>
+                        </div>
+                        <div class="component-item">
+                            <i data-lucide="circle"></i>
+                            <span><strong>Mini Vacuum Pump</strong> - Creates negative pressure for suction</span>
+                        </div>
+                        <div class="component-item">
+                            <i data-lucide="circle"></i>
+                            <span><strong>L-Angle Frame</strong> - Modular structural framework</span>
+                        </div>
+                        <div class="component-item">
+                            <i data-lucide="circle"></i>
+                            <span><strong>Bush Components</strong> - For smooth mechanical movement</span>
+                        </div>
+                        <div class="component-item">
+                            <i data-lucide="circle"></i>
+                            <span><strong>Brush Assembly</strong> - Cleaning mechanism attachment</span>
+                        </div>
+                        <div class="component-item">
+                            <i data-lucide="circle"></i>
+                            <span><strong>Arduino Board</strong> - Microcontroller for automation</span>
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--text-primary); margin: 1.5rem 0 1rem;">Software & Tools Used</h3>
+                    <div class="tech-stack-grid">
+                        <div class="tech-item">
+                            <i data-lucide="box"></i>
+                            <span>SOLIDWORKS</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="box"></i>
+                            <span>PTC Creo Parametric</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="cpu"></i>
+                            <span>Arduino IDE</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="code"></i>
+                            <span>C++ Programming</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team -->
+                <div class="project-section">
+                    <h2><i data-lucide="users"></i> Project Team</h2>
+                    <p>This project was developed by a team of four Mechatronics Engineering diploma students:</p>
+
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <div class="name">R. Adithya</div>
+                            <div class="id">17DM03</div>
+                        </div>
+                        <div class="team-member">
+                            <div class="name">C. Aswin</div>
+                            <div class="id">18LH02</div>
+                        </div>
+                        <div class="team-member">
+                            <div class="name">S. Mohamed Roshan Ali</div>
+                            <div class="id">17DM29</div>
+                        </div>
+                        <div class="team-member">
+                            <div class="name">R. Ronaldo</div>
+                            <div class="id">17DM40</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources -->
+                <div class="project-section">
+                    <h2><i data-lucide="folder-open"></i> Project Resources</h2>
+                    <p>Access the complete project files including CAD designs, technical drawings, and source code:</p>
+
+                    <div class="cta-buttons" style="margin-top: 1rem;">
+                        <a href="https://github.com/Adithya191101/Skyscrapper-cleaner/tree/main" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="github"></i>
+                            GitHub Repository
+                        </a>
+                        <a href="https://github.com/Adithya191101/Skyscrapper-cleaner/tree/main/Desgin" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="folder"></i>
+                            CAD Design Files
+                        </a>
+                        <a href="https://github.com/Adithya191101/Skyscrapper-cleaner/tree/main/PROGRAM" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="code"></i>
+                            Arduino Code
+                        </a>
+                        <a href="https://raw.githubusercontent.com/Adithya191101/Skyscrapper-cleaner/main/Project.pptx" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="presentation"></i>
+                            Project Presentation
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Image Modal -->
+    <div class="certificate-modal" id="imageModal">
+        <div class="modal-overlay" onclick="closeImageModal()"></div>
+        <div class="modal-content image-modal-content">
+            <button class="modal-close" onclick="closeImageModal()">
+                <i data-lucide="x"></i>
+            </button>
+            <h3 class="modal-title" id="imageModalTitle">Image</h3>
+            <img id="modalImage" src="" alt="Project Image">
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="index.html#about">About</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+
+                <div class="footer-social">
+                    <a href="https://linkedin.com/in/adithyarajendran" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <i data-lucide="linkedin"></i>
+                    </a>
+                    <a href="https://github.com/Adithya191101" target="_blank" rel="noopener" aria-label="GitHub">
+                        <i data-lucide="github"></i>
+                    </a>
+                    <a href="mailto:adithya191101@gmail.com" aria-label="Email">
+                        <i data-lucide="mail"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    &copy; 2025 Adithya Rajendran. All rights reserved.
+                </p>
+
+                <p class="footer-tagline">
+                    Built with passion for robotics
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

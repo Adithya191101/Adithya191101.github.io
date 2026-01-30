@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="3D Mapping with Boston Dynamics Spot using ROS2 and LIO-SAM - Project by Adithya Rajendran">
+    <meta name="author" content="Adithya Rajendran">
+
+    <title>LIO-SAM Mapping with Spot | Adithya Rajendran</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .project-detail-hero {
+            padding: 120px 0 60px;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+        }
+
+        .project-detail-hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .project-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .project-meta-item i {
+            width: 18px;
+            height: 18px;
+            color: var(--accent-bright);
+        }
+
+        .project-content {
+            padding: 4rem 0;
+        }
+
+        .project-section {
+            margin-bottom: 3rem;
+        }
+
+        .project-section h2 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .project-section h2 i {
+            width: 24px;
+            height: 24px;
+            color: var(--accent-bright);
+        }
+
+        .project-section h3 {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            margin: 1.5rem 0 1rem;
+        }
+
+        .project-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .project-image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-image-card {
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-image-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .project-image-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            background: #1a1a2e;
+        }
+
+        .project-image-card .caption {
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: center;
+            border-top: 1px solid var(--border-glow);
+        }
+
+        /* Video Card Styles */
+        .project-image-grid .video-card {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-image-grid .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .project-image-grid .video-card:hover .play-icon {
+            transform: translate(-50%, -50%) scale(1.2);
+            color: var(--accent-bright);
+        }
+
+        .project-image-grid .video-card .video-thumbnail {
+            width: 100%;
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+            display: block;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .project-image-grid .video-card .video-thumbnail:hover {
+            transform: none;
+        }
+
+        .project-image-grid .video-card .video-thumbnail .thumbnail-preview {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: brightness(0.7);
+            transition: filter 0.3s ease;
+        }
+
+        .project-image-grid .video-card:hover .thumbnail-preview {
+            filter: brightness(0.9);
+        }
+
+        .project-image-grid .video-card .video-thumbnail .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 64px;
+            height: 64px;
+            color: #fff;
+            transition: all 0.3s ease;
+            z-index: 2;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+        }
+
+        .project-image-grid .video-card .video-thumbnail .video-label {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .project-image-grid .video-card .video-thumbnail .video-label i {
+            width: 12px;
+            height: 12px;
+        }
+
+        .project-image-grid .video-card .caption {
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: center;
+            border-top: 1px solid var(--border-glow);
+        }
+
+        .local-video-modal-content {
+            max-width: fit-content;
+            width: auto;
+            padding: 1rem;
+            background: var(--bg-card);
+            border-radius: 12px;
+        }
+
+        .local-video-modal-content video {
+            max-width: 90vw;
+            max-height: 80vh;
+            border-radius: 8px;
+            background: #000;
+            display: block;
+        }
+
+        .local-video-modal-content .modal-title {
+            margin-bottom: 1rem;
+        }
+
+        .tech-stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tech-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+        }
+
+        .tech-item i {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-bright);
+        }
+
+        .workflow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .workflow-step {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .step-content h3 {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-github {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-github:hover {
+            border-color: var(--accent-bright);
+            box-shadow: var(--shadow-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-github i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-bright);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .back-link i {
+            width: 18px;
+            height: 18px;
+        }
+
+        .feature-highlight {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-highlight h3 {
+            color: var(--accent-bright);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-highlight h3 i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .sensor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .sensor-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .sensor-card:hover {
+            border-color: var(--accent-bright);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .sensor-card i {
+            width: 40px;
+            height: 40px;
+            color: var(--accent-bright);
+            margin-bottom: 1rem;
+        }
+
+        .sensor-card h4 {
+            color: var(--text-primary);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .sensor-card p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        .architecture-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .architecture-card h4 {
+            color: var(--accent-bright);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .architecture-card h4 i {
+            width: 18px;
+            height: 18px;
+        }
+
+        .architecture-flow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .flow-item {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(124, 58, 237, 0.2));
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .flow-arrow {
+            color: var(--accent-bright);
+            font-weight: bold;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .team-member {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .team-member i {
+            width: 32px;
+            height: 32px;
+            color: var(--accent-bright);
+            margin-bottom: 0.75rem;
+        }
+
+        .team-member h4 {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .config-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .config-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .config-card h4 {
+            color: var(--accent-bright);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .config-card h4 i {
+            width: 18px;
+            height: 18px;
+        }
+
+        .config-card ul {
+            color: var(--text-secondary);
+            margin: 0;
+            padding-left: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .gif-container {
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            margin-top: 1.5rem;
+        }
+
+        .gif-container img {
+            width: 100%;
+            display: block;
+        }
+
+        .gif-container .caption {
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: center;
+            border-top: 1px solid var(--border-glow);
+        }
+
+        @media (max-width: 768px) {
+            .workflow-step {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .project-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .architecture-flow {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="nav-header" id="navbar">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-text">AR</span>
+            </a>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <i data-lucide="menu" class="menu-icon"></i>
+                <i data-lucide="x" class="close-icon"></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#education">Education</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
+                <li><a href="honors.html">Honors</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Project Hero -->
+        <section class="project-detail-hero">
+            <div class="container">
+                <a href="projects.html" class="back-link">
+                    <i data-lucide="arrow-left"></i>
+                    Back to Projects
+                </a>
+
+                <h1>3D Mapping with Boston Dynamics' Spot using LIO-SAM</h1>
+                <p class="project-tagline" style="color: var(--text-secondary); font-size: 1.1rem; max-width: 800px;">
+                    Implementing the LIO-SAM (LiDAR-Inertial Odometry via Smoothing and Mapping) algorithm on Boston Dynamics' Spot robot to achieve high-precision 3D mapping and localization in dynamic, GPS-denied environments.
+                </p>
+
+                <div class="project-meta">
+                    <div class="project-meta-item">
+                        <i data-lucide="calendar"></i>
+                        <span>September - December 2024</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="building"></i>
+                        <span>Northeastern University</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="book-open"></i>
+                        <span>EECE 5554 - Robotics Sensing & Navigation</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="bot"></i>
+                        <span>Boston Dynamics Spot</span>
+                    </div>
+                </div>
+
+                <div class="cta-buttons">
+                    <a href="https://github.com/Adithya191101/EECE5554/tree/main/Final_Project" target="_blank" rel="noopener" class="btn-github">
+                        <i data-lucide="github"></i>
+                        View on GitHub
+                    </a>
+                    <a href="https://github.com/Adithya191101/EECE5554/tree/main/GROUP_7_SPOT_DATA-20260129T222441Z-3-001" target="_blank" rel="noopener" class="btn-github">
+                        <i data-lucide="database"></i>
+                        View Dataset
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Content -->
+        <section class="project-content">
+            <div class="container">
+
+                <!-- Overview -->
+                <div class="project-section">
+                    <h2><i data-lucide="info"></i> Project Overview</h2>
+                    <p>
+                        This project implements the LIO-SAM (LiDAR-Inertial Odometry via Smoothing and Mapping) algorithm on Boston Dynamics' Spot quadruped robot for high-precision 3D mapping and localization in GPS-denied indoor environments. The goal was to create globally consistent 3D point cloud maps with real-time pose estimates suitable for autonomous navigation.
+                    </p>
+                    <p>
+                        The project involved integrating multiple sensors including LiDAR, IMU, and cameras with the Spot robot platform, validating the algorithm on standard datasets, and collecting custom datasets from indoor environments at Northeastern University.
+                    </p>
+
+                    <div class="feature-highlight">
+                        <h3><i data-lucide="target"></i> Project Objectives</h3>
+                        <ul style="color: var(--text-secondary); margin: 0; padding-left: 1.5rem; line-height: 2;">
+                            <li>Implement tightly-coupled LiDAR-inertial SLAM using factor graph optimization</li>
+                            <li>Achieve reliable loop closure detection for drift correction in closed-loop trajectories</li>
+                            <li>Integrate custom sensor rig with Boston Dynamics' Spot robot</li>
+                            <li>Collect and process real-world datasets from indoor environments</li>
+                            <li>Generate high-resolution 3D point cloud maps for navigation applications</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Team -->
+                <div class="project-section">
+                    <h2><i data-lucide="users"></i> Team Members</h2>
+                    <p>This project was completed as a collaborative effort by Group 7 for the EECE 5554 course:</p>
+
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <i data-lucide="user"></i>
+                            <h4>Adithya Rajendran</h4>
+                        </div>
+                        <div class="team-member">
+                            <i data-lucide="user"></i>
+                            <h4>Dhyey Mistry</h4>
+                        </div>
+                        <div class="team-member">
+                            <i data-lucide="user"></i>
+                            <h4>Yash Wakde</h4>
+                        </div>
+                        <div class="team-member">
+                            <i data-lucide="user"></i>
+                            <h4>Kevin Jason</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Robot Platform -->
+                <div class="project-section">
+                    <h2><i data-lucide="bot"></i> Robot Platform & Hardware Setup</h2>
+                    <p>Boston Dynamics' Spot is an agile quadruped robot capable of navigating complex terrain, making it ideal for indoor mapping applications. We tested two different hardware configurations:</p>
+
+                    <div class="config-cards">
+                        <div class="config-card">
+                            <h4><i data-lucide="settings"></i> Configuration 1 (Initial)</h4>
+                            <ul>
+                                <li>Boston Dynamics Spot robot</li>
+                                <li>Onboard Velodyne VLP-16 LiDAR</li>
+                                <li>Spot's internal IMU</li>
+                                <li>Built-in stereo cameras</li>
+                            </ul>
+                        </div>
+                        <div class="config-card">
+                            <h4><i data-lucide="settings-2"></i> Configuration 2 (Final)</h4>
+                            <ul>
+                                <li>Boston Dynamics Spot robot</li>
+                                <li>NVIDIA Jetson Nano compute module</li>
+                                <li>External Ouster LiDAR sensor</li>
+                                <li>VectorNav IMU</li>
+                                <li>Multiple RGB cameras</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="project-image-grid" style="margin-top: 2rem;">
+                        <div class="project-image-card" onclick="openImageModal('assets/lio-sam/spot_with_lidar.jpeg', 'Spot Robot with Velodyne LiDAR')">
+                            <img src="assets/lio-sam/spot_with_lidar.jpeg" alt="Spot with LiDAR">
+                            <div class="caption">Boston Dynamics Spot equipped with Velodyne LiDAR mounted on top for 360° environment scanning</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/lio-sam/spot_highbay_setup.jpg', 'Spot Robot in High Bay Facility')">
+                            <img src="assets/lio-sam/spot_highbay_setup.jpg" alt="Spot in High Bay">
+                            <div class="caption">Spot robot in the High Bay testing facility at Northeastern University with sensor payload</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/lio-sam/spot_sensor_closeup.jpg', 'Sensor Payload Close-up')">
+                            <img src="assets/lio-sam/spot_sensor_closeup.jpg" alt="Sensor Closeup">
+                            <div class="caption">Close-up view of the sensor payload showing LiDAR, cameras, and compute module mounting</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LIO-SAM Algorithm -->
+                <div class="project-section">
+                    <h2><i data-lucide="git-branch"></i> LIO-SAM Algorithm</h2>
+                    <p>LIO-SAM (LiDAR Inertial Odometry via Smoothing and Mapping) is a tightly-coupled LiDAR-inertial SLAM framework that achieves accurate real-time odometry and mapping through factor graph optimization:</p>
+
+                    <div class="project-image-grid">
+                        <div class="project-image-card" onclick="openImageModal('assets/lio-sam/liosam_architecture.png', 'LIO-SAM System Architecture')">
+                            <img src="assets/lio-sam/liosam_architecture.png" alt="LIO-SAM Architecture">
+                            <div class="caption">LIO-SAM system architecture showing the factor graph structure with IMU, LiDAR, GPS, and loop closure factors</div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-steps">
+                        <div class="workflow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>IMU Preintegration</h3>
+                                <p>High-frequency IMU measurements (100-400 Hz) are preintegrated between LiDAR scans to provide motion prior and enable LiDAR point deskewing, correcting for motion distortion during scan acquisition. This is crucial for accurate feature extraction.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>LiDAR Feature Extraction</h3>
+                                <p>Edge and planar features are extracted from the deskewed LiDAR point clouds. Edge features correspond to sharp corners while planar features represent flat surfaces - both provide geometric constraints for scan matching.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Scan-to-Map Matching</h3>
+                                <p>Current scan features are matched against the local map using point-to-edge and point-to-plane distances. The IMU preintegration provides initial pose estimate for faster ICP convergence.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>Factor Graph Optimization</h3>
+                                <p>A sliding-window factor graph incorporates IMU factors, LiDAR odometry factors, GPS factors (when available), and loop closure factors. The GTSAM library performs incremental smoothing using iSAM2 for global consistency.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h3>Loop Closure Detection</h3>
+                                <p>Place recognition using scan context identifies previously visited locations. When a loop is detected, constraints are added to the factor graph to correct accumulated drift, ensuring globally consistent maps.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="architecture-card">
+                        <h4><i data-lucide="workflow"></i> Data Flow Pipeline</h4>
+                        <div class="architecture-flow">
+                            <span class="flow-item">LiDAR Scans</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-item">Deskewing</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-item">Feature Extraction</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-item">Scan Matching</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-item">Factor Graph</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-item">3D Map</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sensor Suite -->
+                <div class="project-section">
+                    <h2><i data-lucide="radio"></i> Multimodal Sensor Suite</h2>
+                    <p>The mapping system integrates multiple sensors for robust state estimation and dense environmental reconstruction:</p>
+
+                    <div class="sensor-grid">
+                        <div class="sensor-card">
+                            <i data-lucide="radar"></i>
+                            <h4>Ouster LiDAR</h4>
+                            <p>360° 3D laser scanner providing dense point clouds at 10-20 Hz for mapping and localization</p>
+                        </div>
+                        <div class="sensor-card">
+                            <i data-lucide="activity"></i>
+                            <h4>VectorNav IMU</h4>
+                            <p>High-rate inertial measurements at 400 Hz for motion prediction and LiDAR deskewing</p>
+                        </div>
+                        <div class="sensor-card">
+                            <i data-lucide="eye"></i>
+                            <h4>RGB Cameras</h4>
+                            <p>Visual feedback and potential for visual-inertial fusion in future work</p>
+                        </div>
+                        <div class="sensor-card">
+                            <i data-lucide="cpu"></i>
+                            <h4>Jetson Nano</h4>
+                            <p>Edge compute platform running ROS2 Humble and LIO-SAM in real-time</p>
+                        </div>
+                    </div>
+
+                    <div class="gif-container">
+                        <img src="assets/lio-sam/ouster_demo.gif" alt="Ouster LiDAR Demo">
+                        <div class="caption">Ouster LiDAR sensor demonstration showing real-time 3D point cloud capture capabilities</div>
+                    </div>
+                </div>
+
+                <!-- Data Collection -->
+                <div class="project-section">
+                    <h2><i data-lucide="database"></i> Data Collection</h2>
+                    <p>Extensive data collection was performed at two primary locations at Northeastern University:</p>
+
+                    <div class="config-cards">
+                        <div class="config-card">
+                            <h4><i data-lucide="warehouse"></i> High Bay Facility</h4>
+                            <ul>
+                                <li>Large open indoor space (~50m x 30m)</li>
+                                <li>Multiple obstacles and structures</li>
+                                <li>Ideal for testing loop closure</li>
+                                <li>Controlled lighting conditions</li>
+                            </ul>
+                        </div>
+                        <div class="config-card">
+                            <h4><i data-lucide="building"></i> EXP Building</h4>
+                            <ul>
+                                <li>Multi-room indoor environment</li>
+                                <li>Corridors and open spaces</li>
+                                <li>Dynamic obstacles (people, furniture)</li>
+                                <li>Real-world navigation challenges</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>Data Collection Sessions</h3>
+                    <div class="project-image-grid">
+                        <div class="project-image-card" onclick="openImageModal('assets/lio-sam/data_collection_1.jpg', 'Data Collection in Progress')">
+                            <img src="assets/lio-sam/data_collection_1.jpg" alt="Data Collection 1">
+                            <div class="caption">Spot robot during data collection session - capturing LiDAR and IMU data while traversing the environment</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/lio-sam/data_collection_2.jpg', 'Spot Navigation')">
+                            <img src="assets/lio-sam/data_collection_2.jpg" alt="Data Collection 2">
+                            <div class="caption">Spot navigating through the testing environment with full sensor payload active</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/lio-sam/spot_exp_building.jpg', 'Spot in EXP Building')">
+                            <img src="assets/lio-sam/spot_exp_building.jpg" alt="Spot in EXP">
+                            <div class="caption">Data collection session in the EXP building - testing in real-world indoor conditions</div>
+                        </div>
+                    </div>
+
+                    <h3>Data Collection Videos</h3>
+                    <div class="project-image-grid">
+                        <div class="video-card" onclick="openLocalVideoModal('assets/lio-sam/spot_walking_highbay.mp4', 'Spot Walking in High Bay')">
+                            <div class="video-thumbnail">
+                                <img class="thumbnail-preview" src="assets/lio-sam/walking_thumb.jpg" alt="Spot Walking Video">
+                                <i data-lucide="play-circle" class="play-icon"></i>
+                                <span class="video-label"><i data-lucide="video"></i> Video</span>
+                            </div>
+                            <div class="caption">Spot robot locomotion demonstration in the High Bay facility during data collection</div>
+                        </div>
+                        <div class="video-card" onclick="openLocalVideoModal('assets/lio-sam/spot_in_exp.mp4', 'Spot in EXP Building')">
+                            <div class="video-thumbnail">
+                                <img class="thumbnail-preview" src="assets/lio-sam/exp_thumb.jpg" alt="Spot in EXP Video">
+                                <i data-lucide="play-circle" class="play-icon"></i>
+                                <span class="video-label"><i data-lucide="video"></i> Video</span>
+                            </div>
+                            <div class="caption">Spot robot navigating through the EXP building corridors while collecting sensor data</div>
+                        </div>
+                        <div class="video-card" onclick="openLocalVideoModal('assets/lio-sam/spot_pointcloud_highbay.mp4', 'Point Cloud Data Collection')">
+                            <div class="video-thumbnail">
+                                <img class="thumbnail-preview" src="assets/lio-sam/pointcloud_thumb.jpg" alt="Point Cloud Video">
+                                <i data-lucide="play-circle" class="play-icon"></i>
+                                <span class="video-label"><i data-lucide="video"></i> Video</span>
+                            </div>
+                            <div class="caption">Real-time point cloud visualization during data collection in High Bay</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Software Environment -->
+                <div class="project-section">
+                    <h2><i data-lucide="terminal"></i> Software Environment</h2>
+                    <p>The project utilized a modern ROS2-based software stack for sensor integration and SLAM processing:</p>
+
+                    <div class="feature-highlight">
+                        <h3><i data-lucide="layers"></i> Software Stack</h3>
+                        <ul style="color: var(--text-secondary); margin: 0; padding-left: 1.5rem; line-height: 2;">
+                            <li><strong>Operating System:</strong> Ubuntu 22.04 LTS</li>
+                            <li><strong>Middleware:</strong> ROS2 Humble with ROS1 bridge for legacy compatibility</li>
+                            <li><strong>SLAM Framework:</strong> LIO-SAM with custom parameter tuning</li>
+                            <li><strong>Optimization:</strong> GTSAM library for factor graph optimization</li>
+                            <li><strong>Visualization:</strong> RViz2 for real-time point cloud and trajectory display</li>
+                            <li><strong>Data Format:</strong> .mcap bag files for sensor data recording</li>
+                            <li><strong>Robot Interface:</strong> Boston Dynamics Spot SDK for robot control</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div class="project-section">
+                    <h2><i data-lucide="map-pin"></i> Mapping Results</h2>
+                    <p>The LIO-SAM algorithm was validated on the KITTI dataset and applied to our custom Spot datasets. Below are the visualization results from RViz:</p>
+
+                    <div class="project-image-grid">
+                        <div class="project-image-card" onclick="openImageModal('assets/lio-sam/rviz_mapping_1.png', 'RViz Point Cloud Visualization')">
+                            <img src="assets/lio-sam/rviz_mapping_1.png" alt="RViz Mapping 1">
+                            <div class="caption">Real-time point cloud map visualization in RViz showing accumulated LiDAR scans</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/lio-sam/rviz_mapping_2.png', 'Loop Closure Detection')">
+                            <img src="assets/lio-sam/rviz_mapping_2.png" alt="RViz Mapping 2">
+                            <div class="caption">LIO-SAM factor graph visualization showing loop closure constraints</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/lio-sam/rviz_mapping_3.png', 'Dense Point Cloud Map')">
+                            <img src="assets/lio-sam/rviz_mapping_3.png" alt="RViz Mapping 3">
+                            <div class="caption">Dense 3D point cloud map generated from LIO-SAM processing</div>
+                        </div>
+                    </div>
+
+                    <h3>Final 3D Maps</h3>
+                    <div class="project-image-grid">
+                        <div class="project-image-card" onclick="openImageModal('assets/lio-sam/final_map_1.png', 'KITTI Dataset Map')">
+                            <img src="assets/lio-sam/final_map_1.png" alt="Final Map 1">
+                            <div class="caption">LIO-SAM output on KITTI dataset - validating algorithm performance with ground truth</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/lio-sam/final_map_2.png', 'High Bay Environment Map')">
+                            <img src="assets/lio-sam/final_map_2.png" alt="Final Map 2">
+                            <div class="caption">3D point cloud map of the High Bay environment showing structural details</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/lio-sam/final_map_3.png', 'Detailed Indoor Map')">
+                            <img src="assets/lio-sam/final_map_3.png" alt="Final Map 3">
+                            <div class="caption">High-resolution indoor map with colored point cloud showing environmental features</div>
+                        </div>
+                    </div>
+
+                    <h3>RViz Mapping Demonstration</h3>
+                    <div class="project-image-grid">
+                        <div class="video-card" onclick="openLocalVideoModal('assets/lio-sam/rviz_mapping_video.mp4', 'LIO-SAM Real-time Mapping')">
+                            <div class="video-thumbnail">
+                                <img class="thumbnail-preview" src="assets/lio-sam/rviz_video_thumb.jpg" alt="RViz Mapping Video">
+                                <i data-lucide="play-circle" class="play-icon"></i>
+                                <span class="video-label"><i data-lucide="video"></i> Video</span>
+                            </div>
+                            <div class="caption">Real-time LIO-SAM mapping visualization in RViz showing point cloud accumulation and trajectory estimation</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Challenges -->
+                <div class="project-section">
+                    <h2><i data-lucide="alert-triangle"></i> Challenges & Learnings</h2>
+                    <p>The project encountered several technical challenges that provided valuable learning experiences:</p>
+
+                    <div class="feature-highlight">
+                        <h3><i data-lucide="bug"></i> Primary Challenge: IMU Data Compatibility</h3>
+                        <p style="margin-bottom: 1rem;">
+                            Spot's internal IMU lacked required data fields (ring and intensity values) that LIO-SAM expects for point cloud deskewing. This resulted in "Waiting for IMU data..." errors when attempting to run the algorithm directly on Spot-collected data.
+                        </p>
+                        <p style="margin: 0;">
+                            <strong>Solution Approach:</strong> We integrated an external VectorNav IMU with the required data fields and developed custom ROS2 message converters to bridge the data format gap.
+                        </p>
+                    </div>
+
+                    <div class="feature-highlight" style="margin-top: 1rem;">
+                        <h3><i data-lucide="lightbulb"></i> Key Learnings</h3>
+                        <ul style="color: var(--text-secondary); margin: 0; padding-left: 1.5rem; line-height: 2;">
+                            <li><strong>Factor Graph Optimization:</strong> Deep understanding of how IMU, LiDAR, and loop closure factors interact in GTSAM</li>
+                            <li><strong>ROS2 Ecosystem:</strong> Experience with ROS2 Humble, tf2 transforms, and sensor message types</li>
+                            <li><strong>Sensor Fusion:</strong> Practical knowledge of tightly-coupled vs loosely-coupled fusion approaches</li>
+                            <li><strong>Transform Debugging:</strong> Skills in diagnosing TF tree issues and sensor frame alignment</li>
+                            <li><strong>Platform Integration:</strong> Experience integrating custom sensors with proprietary robot platforms</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Summary -->
+                <div class="project-section">
+                    <h2><i data-lucide="check-circle"></i> Summary</h2>
+
+                    <div class="feature-highlight">
+                        <h3><i data-lucide="trophy"></i> Achievements</h3>
+                        <ul style="color: var(--text-secondary); margin: 0; padding-left: 1.5rem; line-height: 2;">
+                            <li>Successfully validated LIO-SAM on KITTI dataset with accurate loop closure detection</li>
+                            <li>Collected high-quality datasets from High Bay and EXP building environments</li>
+                            <li>Integrated custom sensor rig with Jetson Nano on Spot robot platform</li>
+                            <li>Generated detailed point cloud visualizations and trajectory estimates</li>
+                            <li>Developed expertise in modern SLAM algorithms and ROS2 development</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Technologies -->
+                <div class="project-section">
+                    <h2><i data-lucide="cpu"></i> Technologies Used</h2>
+
+                    <div class="tech-stack-grid">
+                        <div class="tech-item">
+                            <i data-lucide="box"></i>
+                            <span>ROS2 Humble</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="code"></i>
+                            <span>Python</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="terminal"></i>
+                            <span>C++</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="map"></i>
+                            <span>LIO-SAM</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="git-branch"></i>
+                            <span>GTSAM</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="radar"></i>
+                            <span>Ouster LiDAR</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="bot"></i>
+                            <span>Spot SDK</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="cpu"></i>
+                            <span>Jetson Nano</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="activity"></i>
+                            <span>VectorNav IMU</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="monitor"></i>
+                            <span>Ubuntu 22.04</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources -->
+                <div class="project-section">
+                    <h2><i data-lucide="folder-open"></i> Project Resources</h2>
+                    <p>Access the complete source code, datasets, and documentation:</p>
+
+                    <div class="cta-buttons" style="margin-top: 1rem;">
+                        <a href="https://github.com/Adithya191101/EECE5554/tree/main/Final_Project" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="github"></i>
+                            GitHub Repository
+                        </a>
+                        <a href="https://github.com/Adithya191101/EECE5554/tree/main/GROUP_7_SPOT_DATA-20260129T222441Z-3-001" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="database"></i>
+                            Dataset & Media
+                        </a>
+                        <a href="https://github.com/TixiaoShan/LIO-SAM" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="external-link"></i>
+                            LIO-SAM Paper
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Image Modal -->
+    <div class="certificate-modal" id="imageModal">
+        <div class="modal-overlay" onclick="closeImageModal()"></div>
+        <div class="modal-content image-modal-content">
+            <button class="modal-close" onclick="closeImageModal()">
+                <i data-lucide="x"></i>
+            </button>
+            <h3 class="modal-title" id="imageModalTitle">Image</h3>
+            <img id="modalImage" src="" alt="Project Image">
+        </div>
+    </div>
+
+    <!-- Local Video Modal -->
+    <div class="certificate-modal" id="localVideoModal">
+        <div class="modal-overlay" onclick="closeLocalVideoModal()"></div>
+        <div class="modal-content local-video-modal-content">
+            <button class="modal-close" onclick="closeLocalVideoModal()">
+                <i data-lucide="x"></i>
+            </button>
+            <h3 class="modal-title" id="localVideoModalTitle">Video</h3>
+            <video id="localVideoPlayer" controls>
+                <source id="localVideoSource" src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
+    <script>
+        function openLocalVideoModal(videoSrc, title) {
+            const modal = document.getElementById('localVideoModal');
+            const video = document.getElementById('localVideoPlayer');
+            const source = document.getElementById('localVideoSource');
+            const titleEl = document.getElementById('localVideoModalTitle');
+
+            source.src = videoSrc;
+            video.load();
+            titleEl.textContent = title;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLocalVideoModal() {
+            const modal = document.getElementById('localVideoModal');
+            const video = document.getElementById('localVideoPlayer');
+
+            video.pause();
+            video.currentTime = 0;
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLocalVideoModal();
+                closeImageModal();
+            }
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="index.html#about">About</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+
+                <div class="footer-social">
+                    <a href="https://linkedin.com/in/adithyarajendran" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <i data-lucide="linkedin"></i>
+                    </a>
+                    <a href="https://github.com/Adithya191101" target="_blank" rel="noopener" aria-label="GitHub">
+                        <i data-lucide="github"></i>
+                    </a>
+                    <a href="mailto:adithya191101@gmail.com" aria-label="Email">
+                        <i data-lucide="mail"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    &copy; 2025 Adithya Rajendran. All rights reserved.
+                </p>
+
+                <p class="footer-tagline">
+                    Built with passion for robotics
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

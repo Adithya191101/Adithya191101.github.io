@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GPS Data Analysis - Robotics Sensing and Navigation Course Project by Adithya Rajendran">
+    <meta name="author" content="Adithya Rajendran">
+
+    <title>GPS Data Analysis | Adithya Rajendran</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .project-detail-hero {
+            padding: 120px 0 60px;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+        }
+
+        .project-detail-hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .project-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .project-meta-item i {
+            width: 18px;
+            height: 18px;
+            color: var(--accent-bright);
+        }
+
+        .project-content {
+            padding: 4rem 0;
+        }
+
+        .project-section {
+            margin-bottom: 3rem;
+        }
+
+        .project-section h2 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .project-section h2 i {
+            width: 24px;
+            height: 24px;
+            color: var(--accent-bright);
+        }
+
+        .project-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .project-image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-image-card {
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-image-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .project-image-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            background: #1a1a2e;
+            padding: 10px;
+        }
+
+        .project-image-card .caption {
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: center;
+            border-top: 1px solid var(--border-glow);
+        }
+
+        .tech-stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tech-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+        }
+
+        .tech-item i {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-bright);
+        }
+
+        .workflow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .workflow-step {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .step-content h3 {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-github {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-github:hover {
+            border-color: var(--accent-bright);
+            box-shadow: var(--shadow-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-github i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-bright);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .back-link i {
+            width: 18px;
+            height: 18px;
+        }
+
+        .feature-highlight {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-highlight h3 {
+            color: var(--accent-bright);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-highlight h3 i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .metric-card h4 {
+            color: var(--accent-bright);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-card .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+        }
+
+        .metric-card .desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        .analysis-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .analysis-tab {
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .analysis-tab:hover,
+        .analysis-tab.active {
+            border-color: var(--accent-bright);
+            color: var(--accent-bright);
+        }
+
+        .data-scenarios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .scenario-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .scenario-card:hover {
+            border-color: var(--accent-bright);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .scenario-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .scenario-card h3 i {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-bright);
+        }
+
+        .scenario-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .workflow-step {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .project-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="nav-header" id="navbar">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-text">AR</span>
+            </a>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <i data-lucide="menu" class="menu-icon"></i>
+                <i data-lucide="x" class="close-icon"></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#education">Education</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
+                <li><a href="honors.html">Honors</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Project Hero -->
+        <section class="project-detail-hero">
+            <div class="container">
+                <a href="projects.html" class="back-link">
+                    <i data-lucide="arrow-left"></i>
+                    Back to Projects
+                </a>
+
+                <h1>GPS Data Analysis & Visualization</h1>
+                <p class="project-tagline" style="color: var(--text-secondary); font-size: 1.1rem; max-width: 800px;">
+                    A comprehensive GPS data analysis project using ROS2, processing GPGGA NMEA sentences to compute statistical metrics including RMSE, variance, and bias across stationary and mobile scenarios.
+                </p>
+
+                <div class="project-meta">
+                    <div class="project-meta-item">
+                        <i data-lucide="calendar"></i>
+                        <span>September 26, 2024</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="building"></i>
+                        <span>Northeastern University</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="book-open"></i>
+                        <span>EECE 5554 - Robotics Sensing & Navigation</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="navigation"></i>
+                        <span>GPS & Sensor Analysis</span>
+                    </div>
+                </div>
+
+                <div class="cta-buttons">
+                    <a href="https://github.com/Adithya191101/EECE5554/tree/main/LAB1" target="_blank" rel="noopener" class="btn-github">
+                        <i data-lucide="github"></i>
+                        View on GitHub
+                    </a>
+                    <a href="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB1/src/Report.pdf" target="_blank" rel="noopener" class="btn-github">
+                        <i data-lucide="file-text"></i>
+                        View Report (PDF)
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Content -->
+        <section class="project-content">
+            <div class="container">
+
+                <!-- Overview -->
+                <div class="project-section">
+                    <h2><i data-lucide="info"></i> Project Overview</h2>
+                    <p>
+                        This laboratory project focuses on GPS data acquisition, processing, and analysis as part of the Robotics Sensing and Navigation course at Northeastern University. Using a USB-based GPS module (BU-353S4), raw GPGGA NMEA sentences were collected and processed to understand GPS accuracy and error characteristics.
+                    </p>
+                    <p>
+                        The project involves developing a ROS2-based GPS driver to parse NMEA data, convert coordinates to UTM (Universal Transverse Mercator) format, and perform comprehensive statistical analysis including Root Mean Square Error (RMSE), variance, mean, and bias calculations.
+                    </p>
+
+                    <div class="feature-highlight">
+                        <h3><i data-lucide="target"></i> Learning Objectives</h3>
+                        <p style="margin: 0;">
+                            Understand GPS error characteristics, implement ROS2 sensor drivers, perform coordinate transformations (Lat/Long to UTM), and conduct statistical analysis on real-world sensor data.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Data Collection Scenarios -->
+                <div class="project-section">
+                    <h2><i data-lucide="database"></i> Data Collection Scenarios</h2>
+                    <p>GPS data was collected under three different scenarios to analyze positioning accuracy and error patterns:</p>
+
+                    <div class="data-scenarios">
+                        <div class="scenario-card">
+                            <h3><i data-lucide="map-pin"></i> Stationary Data</h3>
+                            <p>GPS receiver placed at a fixed known location for extended duration to measure positioning drift and static accuracy characteristics.</p>
+                        </div>
+                        <div class="scenario-card">
+                            <h3><i data-lucide="move-horizontal"></i> Walking Straight Line</h3>
+                            <p>Controlled walking along a straight path to evaluate GPS tracking accuracy during linear motion with predictable trajectory.</p>
+                        </div>
+                        <div class="scenario-card">
+                            <h3><i data-lucide="route"></i> Dynamic Walking</h3>
+                            <p>Free-form walking pattern in open environment to assess GPS performance during varied movement and direction changes.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stationary Analysis Results -->
+                <div class="project-section">
+                    <h2><i data-lucide="map-pin"></i> Stationary Data Analysis</h2>
+                    <p>Analysis of GPS measurements taken at a fixed location reveals the inherent positioning variance and drift characteristics of the GPS receiver.</p>
+
+                    <div class="project-image-grid">
+                        <div class="project-image-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB1/src/Analysis_scripts/stationary_UTM.png', 'Stationary GPS Data - UTM Coordinates Scatter Plot')">
+                            <img src="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB1/src/Analysis_scripts/stationary_UTM.png" alt="Stationary UTM Plot">
+                            <div class="caption">UTM Coordinates Scatter Plot - Shows position variance around true location</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB1/src/Analysis_scripts/stationary_vstime.png', 'Stationary GPS Data - Position vs Time')">
+                            <img src="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB1/src/Analysis_scripts/stationary_vstime.png" alt="Stationary vs Time">
+                            <div class="caption">Position vs Time - Temporal analysis of GPS drift</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB1/src/Analysis_scripts/stationary_map.png', 'Stationary GPS Data - Map Visualization')">
+                            <img src="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB1/src/Analysis_scripts/stationary_map.png" alt="Stationary Map">
+                            <div class="caption">Map Visualization - Geographic scatter of measurements</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Walking Analysis Results -->
+                <div class="project-section">
+                    <h2><i data-lucide="footprints"></i> Walking Data Analysis</h2>
+                    <p>Analysis of GPS tracking during controlled walking experiments demonstrates the receiver's ability to track motion and the associated tracking errors.</p>
+
+                    <div class="project-image-grid">
+                        <div class="project-image-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB1/src/Analysis_scripts/walking_st.png', 'Walking Straight - UTM Trajectory')">
+                            <img src="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB1/src/Analysis_scripts/walking_st.png" alt="Walking Straight UTM">
+                            <div class="caption">Straight Line Walking - UTM trajectory plot</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB1/src/Analysis_scripts/walking%20straight.png', 'Walking Straight - Analysis Plot')">
+                            <img src="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB1/src/Analysis_scripts/walking%20straight.png" alt="Walking Straight Analysis">
+                            <div class="caption">Straight Walking Analysis - Position tracking</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB1/src/Analysis_scripts/walking_dyn.png', 'Dynamic Walking - UTM Plot')">
+                            <img src="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB1/src/Analysis_scripts/walking_dyn.png" alt="Dynamic Walking">
+                            <div class="caption">Dynamic Walking - Free-form trajectory</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB1/src/Analysis_scripts/walking_dynamic_map.png', 'Dynamic Walking - Map Overlay')">
+                            <img src="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB1/src/Analysis_scripts/walking_dynamic_map.png" alt="Dynamic Walking Map">
+                            <div class="caption">Dynamic Walking - Geographic map overlay</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistical Metrics -->
+                <div class="project-section">
+                    <h2><i data-lucide="bar-chart-2"></i> Statistical Analysis</h2>
+                    <p>Comprehensive statistical metrics were computed to quantify GPS accuracy and characterize error distributions:</p>
+
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <h4>RMSE</h4>
+                            <div class="value">Root Mean Square Error</div>
+                            <div class="desc">Measures overall positioning accuracy</div>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Variance</h4>
+                            <div class="value">σ²</div>
+                            <div class="desc">Spread of measurements around mean</div>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Mean</h4>
+                            <div class="value">μ</div>
+                            <div class="desc">Average position estimate</div>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Bias</h4>
+                            <div class="value">Systematic Error</div>
+                            <div class="desc">Offset from true position</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Implementation -->
+                <div class="project-section">
+                    <h2><i data-lucide="code"></i> Implementation Details</h2>
+                    <p>The project involved developing a complete ROS2-based pipeline for GPS data acquisition and analysis.</p>
+
+                    <div class="workflow-steps">
+                        <div class="workflow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>ROS2 GPS Driver Development</h3>
+                                <p>Created a custom ROS2 node to interface with the BU-353S4 GPS receiver via serial port, parsing GPGGA NMEA sentences and publishing structured GPS messages.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>NMEA Sentence Parsing</h3>
+                                <p>Implemented parser for GPGGA sentences extracting latitude, longitude, altitude, fix quality, number of satellites, and HDOP (Horizontal Dilution of Precision).</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>UTM Coordinate Conversion</h3>
+                                <p>Converted WGS84 geographic coordinates (latitude/longitude) to UTM (Universal Transverse Mercator) projection for accurate distance measurements in meters.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>Data Logging with ROS2 Bags</h3>
+                                <p>Recorded GPS data using ROS2 bag files stored in SQLite database format (.db3) for persistent storage and offline analysis.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h3>Statistical Analysis & Visualization</h3>
+                                <p>Developed Python analysis scripts using NumPy and Matplotlib to compute statistical metrics and generate comprehensive visualizations of GPS performance.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technologies -->
+                <div class="project-section">
+                    <h2><i data-lucide="cpu"></i> Technologies Used</h2>
+
+                    <div class="tech-stack-grid">
+                        <div class="tech-item">
+                            <i data-lucide="box"></i>
+                            <span>ROS2</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="code"></i>
+                            <span>Python</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="navigation"></i>
+                            <span>GPS/NMEA</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="bar-chart"></i>
+                            <span>Matplotlib</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="calculator"></i>
+                            <span>NumPy</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="database"></i>
+                            <span>SQLite</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources -->
+                <div class="project-section">
+                    <h2><i data-lucide="folder-open"></i> Project Resources</h2>
+                    <p>Access the complete source code, analysis scripts, and project report:</p>
+
+                    <div class="cta-buttons" style="margin-top: 1rem;">
+                        <a href="https://github.com/Adithya191101/EECE5554/tree/main/LAB1" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="github"></i>
+                            GitHub Repository
+                        </a>
+                        <a href="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB1/src/Report.pdf" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="file-text"></i>
+                            Project Report
+                        </a>
+                        <a href="https://github.com/Adithya191101/EECE5554/tree/main/LAB1/src/Analysis_scripts" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="code"></i>
+                            Analysis Scripts
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Image Modal -->
+    <div class="certificate-modal" id="imageModal">
+        <div class="modal-overlay" onclick="closeImageModal()"></div>
+        <div class="modal-content image-modal-content">
+            <button class="modal-close" onclick="closeImageModal()">
+                <i data-lucide="x"></i>
+            </button>
+            <h3 class="modal-title" id="imageModalTitle">Image</h3>
+            <img id="modalImage" src="" alt="Project Image">
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="index.html#about">About</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+
+                <div class="footer-social">
+                    <a href="https://linkedin.com/in/adithyarajendran" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <i data-lucide="linkedin"></i>
+                    </a>
+                    <a href="https://github.com/Adithya191101" target="_blank" rel="noopener" aria-label="GitHub">
+                        <i data-lucide="github"></i>
+                    </a>
+                    <a href="mailto:adithya191101@gmail.com" aria-label="Email">
+                        <i data-lucide="mail"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    &copy; 2025 Adithya Rajendran. All rights reserved.
+                </p>
+
+                <p class="footer-tagline">
+                    Built with passion for robotics
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

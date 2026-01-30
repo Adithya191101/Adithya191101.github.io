@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Adithya Rajendran - Robotics & AI Engineer specializing in Physical AI, Vision-Language Models, and Robot Learning">
+    <meta name="keywords" content="Robotics, AI, Machine Learning, Physical AI, VLM, Robot Learning, Northeastern University">
+    <meta name="author" content="Adithya Rajendran">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Adithya Rajendran | Robotics & AI Engineer">
+    <meta property="og:description" content="Building intelligent robotic systems with Physical AI and Vision-Language Models">
+    <meta property="og:type" content="website">
+
+    <title>Adithya Rajendran | Robotics & AI Engineer</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="nav-header" id="navbar">
+        <nav class="nav-container">
+            <a href="#" class="nav-logo">
+                <span class="logo-text">AR</span>
+            </a>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <i data-lucide="menu" class="menu-icon"></i>
+                <i data-lucide="x" class="close-icon"></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="honors.html">Honors</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="hero-bg">
+                <div class="gradient-mesh"></div>
+                <canvas id="particleCanvas"></canvas>
+            </div>
+
+            <div class="hero-content">
+                <div class="profile-container">
+                    <div class="profile-ring">
+                        <img src="assets/profile.jpeg" alt="Adithya Rajendran" class="profile-photo" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%230f172a%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2255%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22%233b82f6%22>AR</text></svg>'">
+                    </div>
+                </div>
+
+                <h1 class="hero-name">Adithya Rajendran</h1>
+                <p class="hero-title" id="typingText"></p>
+                <p class="hero-tagline">Building intelligent robotic systems that bridge perception and action through Physical AI</p>
+
+                <div class="hero-cta">
+                    <a href="projects.html" class="btn btn-primary">
+                        <i data-lucide="folder-open"></i>
+                        View Projects
+                    </a>
+                    <a href="assets/adithya_resume.pdf" class="btn btn-secondary" download>
+                        <i data-lucide="download"></i>
+                        Download Resume
+                    </a>
+                </div>
+
+                <div class="social-links">
+                    <a href="https://linkedin.com/in/adithyarajendran" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <i data-lucide="linkedin"></i>
+                    </a>
+                    <a href="https://github.com/Adithya191101" target="_blank" rel="noopener" aria-label="GitHub">
+                        <i data-lucide="github"></i>
+                    </a>
+                    <a href="mailto:adithya191101@gmail.com" aria-label="Email">
+                        <i data-lucide="mail"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="scroll-indicator">
+                <i data-lucide="chevrons-down"></i>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="section about" id="about">
+            <div class="container">
+                <h2 class="section-title">
+                    About Me
+                </h2>
+
+                <div class="about-content animate-on-scroll">
+                    <div class="about-text">
+                        <p>I'm a <strong>Robotics & AI Engineer</strong> passionate about building intelligent systems that can perceive, reason, and interact with the physical world. Currently pursuing my <strong>Master's in Robotics at Northeastern University</strong>, I focus on the intersection of machine learning and robotic manipulation.</p>
+
+                        <p>My research interests lie in <strong>Physical AI</strong> — developing robots that learn from vision-language models to perform complex manipulation tasks. I work extensively with frameworks like SmolVLA, ACT policies, and reinforcement learning to create adaptive robotic behaviors.</p>
+
+                        <p>I believe the future of robotics is in systems that can understand human intent through natural language and visual cues, then translate that understanding into precise physical actions.</p>
+                    </div>
+
+                    <div class="focus-areas">
+                        <h3>Research Focus</h3>
+                        <ul class="focus-list">
+                            <li><i data-lucide="brain"></i> Physical AI & Embodied Intelligence</li>
+                            <li><i data-lucide="eye"></i> Vision-Language Models for Robotics</li>
+                            <li><i data-lucide="bot"></i> Robot Learning & Manipulation</li>
+                            <li><i data-lucide="route"></i> Motion Planning & Control</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="section skills" id="skills">
+            <div class="container">
+                <h2 class="section-title">
+                    Technical Skills
+                </h2>
+
+                <div class="skills-grid">
+                    <div class="skill-card animate-on-scroll">
+                        <div class="skill-icon">
+                            <i data-lucide="brain"></i>
+                        </div>
+                        <h3>Physical AI</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">SmolVLA</span>
+                            <span class="skill-tag">ACT</span>
+                            <span class="skill-tag">Reinforcement Learning</span>
+                            <span class="skill-tag">PyTorch</span>
+                            <span class="skill-tag">TensorFlow</span>
+                            <span class="skill-tag">OpenAI Gym</span>
+                            <span class="skill-tag">HuggingFace</span>
+                            <span class="skill-tag">W&B</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-card animate-on-scroll">
+                        <div class="skill-icon">
+                            <i data-lucide="cog"></i>
+                        </div>
+                        <h3>Robotics Simulation</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">ROS 2</span>
+                            <span class="skill-tag">MoveIt</span>
+                            <span class="skill-tag">Nav2</span>
+                            <span class="skill-tag">Gazebo</span>
+                            <span class="skill-tag">PyBullet</span>
+                            <span class="skill-tag">CARLA</span>
+                            <span class="skill-tag">URDF</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-card animate-on-scroll">
+                        <div class="skill-icon">
+                            <i data-lucide="scan"></i>
+                        </div>
+                        <h3>Perception & Navigation</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">SLAM</span>
+                            <span class="skill-tag">Sensor Fusion</span>
+                            <span class="skill-tag">Path Planning</span>
+                            <span class="skill-tag">Depth Vision</span>
+                            <span class="skill-tag">Computer Vision</span>
+                            <span class="skill-tag">OpenCV</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-card animate-on-scroll">
+                        <div class="skill-icon">
+                            <i data-lucide="code"></i>
+                        </div>
+                        <h3>Languages & Tools</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">C++</span>
+                            <span class="skill-tag">Linux</span>
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag">CMake</span>
+                            <span class="skill-tag">MATLAB</span>
+                            <span class="skill-tag">SolidWorks</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-card animate-on-scroll">
+                        <div class="skill-icon">
+                            <i data-lucide="cpu"></i>
+                        </div>
+                        <h3>Hardware</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">SO-101 Robot</span>
+                            <span class="skill-tag">Intel NUC</span>
+                            <span class="skill-tag">Raspberry Pi</span>
+                            <span class="skill-tag">Depth Cameras</span>
+                            <span class="skill-tag">Arduino</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section class="section experience" id="experience">
+            <div class="container">
+                <h2 class="section-title">
+                    Experience
+                </h2>
+
+                <div class="timeline">
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <img src="assets/northeastern_university_logo.jpeg" alt="Northeastern University" class="company-logo">
+                                <div class="timeline-header-text">
+                                    <h3>Research Assistant</h3>
+                                    <span class="timeline-company">Silicon Synapsis Lab, Northeastern University</span>
+                                </div>
+                            </div>
+                            <span class="timeline-date">
+                                <i data-lucide="calendar"></i>
+                                January 2025 - Present
+                            </span>
+                            <span class="timeline-location">
+                                <i data-lucide="map-pin"></i>
+                                Boston, MA
+                            </span>
+                            <ul class="timeline-details">
+                                <li>Engineered and validated control policies for a hybrid multi-modal robot (legged and aerial) in Gazebo, ensuring seamless mode transitions and collision-free navigation across >600 graph nodes</li>
+                                <li>Accelerated robot path-planning by 40% by porting Probabilistic Roadmaps (PRM) and A* algorithms from MATLAB to optimized ROS 2 C++</li>
+                                <li>Developed custom cost functions within the navigation stack to prioritize energy efficiency, reducing onboard CPU usage and power consumption</li>
+                            </ul>
+                            <div class="timeline-tags">
+                                <span>Gazebo</span>
+                                <span>ROS 2</span>
+                                <span>C++</span>
+                                <span>PRM</span>
+                                <span>A*</span>
+                                <span>Motion Planning</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <img src="assets/iitdelhi_logo.jpeg" alt="IIT Delhi" class="company-logo">
+                                <div class="timeline-header-text">
+                                    <h3>Research Intern</h3>
+                                    <span class="timeline-company">Indian Institute of Technology, Delhi · Prof. SK Saha's Lab</span>
+                                </div>
+                            </div>
+                            <span class="timeline-date">
+                                <i data-lucide="calendar"></i>
+                                November 2023 - July 2024 · 9 months
+                            </span>
+                            <span class="timeline-location">
+                                <i data-lucide="map-pin"></i>
+                                Delhi, India
+                            </span>
+                            <ul class="timeline-details">
+                                <li>Architected an LLM-driven agent on edge (Raspberry Pi) using OpenAI Whisper and ChatGPT, achieving 2x lower latency for real-time natural language command execution</li>
+                                <li>Reduced collision incidents by 90% by implementing a LiDAR-based perception pipeline and tuning Nav2 parameters (Behavior Trees, Costmaps, AMCL)</li>
+                                <li>Developed a wavefront-frontier exploration algorithm integrated with SLAM, achieving 95% automated map coverage without human teleoperation</li>
+                            </ul>
+                            <div class="timeline-tags">
+                                <span>LLM</span>
+                                <span>Whisper</span>
+                                <span>SLAM</span>
+                                <span>Nav2</span>
+                                <span>LiDAR</span>
+                                <span>ROS</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <img src="assets/SeiAnmaiTech-logo.jpeg" alt="SeiAnmai Technologies" class="company-logo">
+                                <div class="timeline-header-text">
+                                    <h3>Research And Development Intern</h3>
+                                    <span class="timeline-company">SeiAnmai Technologies · IIT Delhi Campus</span>
+                                </div>
+                            </div>
+                            <span class="timeline-date">
+                                <i data-lucide="calendar"></i>
+                                November 2023 - July 2024 · 9 months
+                            </span>
+                            <span class="timeline-location">
+                                <i data-lucide="map-pin"></i>
+                                Delhi, India
+                            </span>
+                            <ul class="timeline-details">
+                                <li>Developed TOTOCE robot for autonomous navigation in crowded environments, showcased at Robocon 2024</li>
+                                <li>Implemented LiDAR-based perception pipeline with Nav2 tuning (Behavior Trees, Costmaps, AMCL), reducing collision incidents by 90%</li>
+                                <li>Built wavefront-frontier exploration algorithm integrated with SLAM, achieving 95% automated map coverage</li>
+                            </ul>
+                            <div class="timeline-tags">
+                                <span>TOTOCE</span>
+                                <span>SLAM</span>
+                                <span>Nav2</span>
+                                <span>LiDAR</span>
+                                <span>ROS</span>
+                                <span>AMCL</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <img src="assets/robotoai-logo.png" alt="RobotoAI Technologies" class="company-logo">
+                                <div class="timeline-header-text">
+                                    <h3>Project Intern</h3>
+                                    <span class="timeline-company">RobotoAI Technologies</span>
+                                </div>
+                            </div>
+                            <span class="timeline-date">
+                                <i data-lucide="calendar"></i>
+                                August 2022 - November 2022 · 4 months
+                            </span>
+                            <span class="timeline-location">
+                                <i data-lucide="map-pin"></i>
+                                Coimbatore, India
+                            </span>
+                            <ul class="timeline-details">
+                                <li>Developed robot localization and navigation techniques for autonomous mobile robots</li>
+                                <li>Implemented SLAM and AMCL algorithms for precise robot positioning and mapping</li>
+                                <li>Integrated multiple sensors and built path planning systems for collision-free navigation</li>
+                            </ul>
+                            <div class="timeline-tags">
+                                <span>SLAM</span>
+                                <span>AMCL</span>
+                                <span>Navigation</span>
+                                <span>ROS</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <img src="assets/titanengineeringandautomationlimited_logo.jpeg" alt="Titan Engineering" class="company-logo">
+                                <div class="timeline-header-text">
+                                    <h3>Student Intern - Center of Excellence</h3>
+                                    <span class="timeline-company">Titan Engineering & Automation Limited</span>
+                                </div>
+                            </div>
+                            <span class="timeline-date">
+                                <i data-lucide="calendar"></i>
+                                June 2022 - July 2022 · 2 months
+                            </span>
+                            <span class="timeline-location">
+                                <i data-lucide="map-pin"></i>
+                                Hosur, Tamil Nadu, India
+                            </span>
+                            <ul class="timeline-details">
+                                <li>Conducted process analysis and optimization in manufacturing environments</li>
+                                <li>Implemented Industrial Internet of Things (IIoT) solutions using IOT2050 devices</li>
+                                <li>Utilized FlexSim for manufacturing process simulation and workflow optimization</li>
+                            </ul>
+                            <div class="timeline-tags">
+                                <span>IIoT</span>
+                                <span>FlexSim</span>
+                                <span>IOT2050</span>
+                                <span>Process Analysis</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <img src="assets/AGIIT-logo.jpeg" alt="AGIIT" class="company-logo">
+                                <div class="timeline-header-text">
+                                    <h3>Industrial Trainee</h3>
+                                    <span class="timeline-company">AGIIT</span>
+                                </div>
+                            </div>
+                            <span class="timeline-date">
+                                <i data-lucide="calendar"></i>
+                                May 2019 - June 2019 · 2 months
+                            </span>
+                            <span class="timeline-location">
+                                <i data-lucide="map-pin"></i>
+                                Coimbatore, Tamil Nadu, India
+                            </span>
+                            <ul class="timeline-details">
+                                <li>Completed hands-on training in PLC programming and industrial automation systems</li>
+                                <li>Gained practical experience with relay logic and control system fundamentals</li>
+                            </ul>
+                            <div class="timeline-tags">
+                                <span>PLC</span>
+                                <span>Relay Logic</span>
+                                <span>Automation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section class="section education" id="education">
+            <div class="container">
+                <h2 class="section-title">
+                    Education
+                </h2>
+
+                <div class="education-grid">
+                    <div class="education-card animate-on-scroll">
+                        <img src="assets/northeastern_university_logo.jpeg" alt="Northeastern University" class="education-logo">
+                        <div class="education-content">
+                            <h3>Master of Science - Mechatronics, Robotics, and Automation Engineering</h3>
+                            <p class="education-school">Northeastern University, Boston</p>
+                            <p class="education-date">August 2024 - December 2026 (Expected)</p>
+                            <div class="education-skills">
+                                <span>ROS2</span>
+                                <span>SLAM</span>
+                                <span>Computer Vision</span>
+                                <span>Visual SLAM</span>
+                                <span>Sensor Fusion</span>
+                                <span>Reinforcement Learning</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="education-card animate-on-scroll">
+                        <img src="assets/PSG_logo.jpeg" alt="PSG College of Technology" class="education-logo">
+                        <div class="education-content">
+                            <h3>Bachelor of Engineering - Mechatronics, Robotics, and Automation Engineering</h3>
+                            <p class="education-school">PSG College of Technology, India</p>
+                            <p class="education-date">2020 - 2023 | GPA: 8.4/10</p>
+                            <div class="education-skills">
+                                <span>ROS</span>
+                                <span>PLC</span>
+                                <span>SOLIDWORKS</span>
+                                <span>Industrial Automation</span>
+                                <span>Siemens TIA Portal</span>
+                                <span>CAD</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="education-card animate-on-scroll">
+                        <img src="assets/PSG_polytechnic_college_logo.jpeg" alt="PSG Polytechnic College" class="education-logo">
+                        <div class="education-content">
+                            <h3>High School Diploma - Mechatronics</h3>
+                            <p class="education-school">PSG Polytechnic College, India</p>
+                            <p class="education-date">2017 - 2020 | Grade: 85.75%</p>
+                            <p class="education-highlight">Winner - District Skill Competition 2020 (Mobile Robotics)</p>
+                            <div class="education-skills">
+                                <span>PLC</span>
+                                <span>PTC Creo</span>
+                                <span>Hydraulics</span>
+                                <span>Pneumatics</span>
+                                <span>SIMATIC STEP 7</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="education-card animate-on-scroll">
+                        <img src="assets/ssvminstitutions_logo.jpeg" alt="SSVM Institutions" class="education-logo">
+                        <div class="education-content">
+                            <h3>AISSE (Secondary School)</h3>
+                            <p class="education-school">SSVM Institutions, India</p>
+                            <p class="education-date">2017 | CGPA: 9.4/10</p>
+                            <p class="education-highlight">FIRST Tech Challenge National Championship 2017 | FLL India 2015 National Qualifier</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#about">About</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+
+                <div class="footer-social">
+                    <a href="https://linkedin.com/in/adithyarajendran" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <i data-lucide="linkedin"></i>
+                    </a>
+                    <a href="https://github.com/Adithya191101" target="_blank" rel="noopener" aria-label="GitHub">
+                        <i data-lucide="github"></i>
+                    </a>
+                    <a href="mailto:adithya191101@gmail.com" aria-label="Email">
+                        <i data-lucide="mail"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    &copy; 2025 Adithya Rajendran. All rights reserved.
+                </p>
+
+                <p class="footer-tagline">
+                    Built with passion for robotics
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

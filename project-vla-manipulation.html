@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vision-Language Manipulation Policies - ACT and SmolVLA models for robotic pick-and-place on SO-101 by Adithya Rajendran">
+    <meta name="author" content="Adithya Rajendran">
+
+    <title>Vision-Language Manipulation Policies | Adithya Rajendran</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .project-detail-hero {
+            padding: 120px 0 60px;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+        }
+
+        .project-detail-hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .project-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .project-meta-item i {
+            width: 18px;
+            height: 18px;
+            color: var(--accent-bright);
+        }
+
+        .project-content {
+            padding: 4rem 0;
+        }
+
+        .project-section {
+            margin-bottom: 3rem;
+        }
+
+        .project-section h2 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .project-section h2 i {
+            width: 24px;
+            height: 24px;
+            color: var(--accent-bright);
+        }
+
+        .project-section h3 {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            margin: 2rem 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .project-section h3 i {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-bright);
+        }
+
+        .project-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .video-card {
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover {
+            box-shadow: var(--shadow-glow);
+        }
+
+        .video-card video {
+            width: 100%;
+            display: block;
+            background: #000;
+        }
+
+        .video-card .caption {
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: center;
+            border-top: 1px solid var(--border-glow);
+        }
+
+        .video-card .caption strong {
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .tech-stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tech-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+        }
+
+        .tech-item i {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-bright);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-github {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-github:hover {
+            border-color: var(--accent-bright);
+            box-shadow: var(--shadow-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-github i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-bright);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .back-link i {
+            width: 18px;
+            height: 18px;
+        }
+
+        .feature-highlight {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-highlight h3 {
+            color: var(--accent-bright);
+            margin-bottom: 0.75rem;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-highlight h3 i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .model-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .model-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .model-card:hover {
+            border-color: var(--accent-bright);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .model-card .model-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .model-card h4 {
+            color: var(--accent-bright);
+            font-size: 1.2rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .model-card h4 i {
+            width: 22px;
+            height: 22px;
+        }
+
+        .success-rate {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .model-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .model-card .specs {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-glow);
+        }
+
+        .model-card .spec-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+        }
+
+        .model-card .spec-item .label {
+            color: var(--text-secondary);
+        }
+
+        .model-card .spec-item .value {
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .model-card .properties {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .model-card .property {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(124, 58, 237, 0.2));
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .debugging-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .debugging-section h4 {
+            color: var(--accent-bright);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .debugging-section h4 i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .debug-item {
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+        }
+
+        .debug-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .debug-item .issue {
+            color: #f87171;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .debug-item .solution {
+            color: #4ade80;
+            font-size: 0.9rem;
+        }
+
+        .results-highlight {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .result-stat {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .result-stat .value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .result-stat .unit {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .result-stat .label {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+        }
+
+        .hardware-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .hardware-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .hardware-item i {
+            width: 32px;
+            height: 32px;
+            color: var(--accent-bright);
+            margin-bottom: 0.5rem;
+        }
+
+        .hardware-item .name {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .hardware-item .desc {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .architecture-flow {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 2;
+            color: var(--text-secondary);
+            overflow-x: auto;
+        }
+
+        .architecture-flow .arrow {
+            color: var(--accent-bright);
+        }
+
+        .architecture-flow .component {
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 768px) {
+            .project-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .model-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .model-card .model-header {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .results-highlight {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="nav-header" id="navbar">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-text">AR</span>
+            </a>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <i data-lucide="menu" class="menu-icon"></i>
+                <i data-lucide="x" class="close-icon"></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#education">Education</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
+                <li><a href="honors.html">Honors</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Project Hero -->
+        <section class="project-detail-hero">
+            <div class="container">
+                <a href="projects.html" class="back-link">
+                    <i data-lucide="arrow-left"></i>
+                    Back to Projects
+                </a>
+
+                <h1>Vision-Language Manipulation Policies</h1>
+                <p class="project-tagline" style="color: var(--text-secondary); font-size: 1.1rem; max-width: 800px;">
+                    Implementing state-of-the-art Vision-Language-Action (VLA) models including ACT and SmolVLA for robotic pick-and-place tasks on the SO-101 manipulator, achieving 80% success rate on soft irregular objects.
+                </p>
+
+                <div class="project-meta">
+                    <div class="project-meta-item">
+                        <i data-lucide="calendar"></i>
+                        <span>December 2024 - January 2025</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="gift"></i>
+                        <span>Christmas & New Year Project</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="bot"></i>
+                        <span>SO-101 Robot Arm</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="sparkles"></i>
+                        <span>HuggingFace LeRobot</span>
+                    </div>
+                </div>
+
+                <div class="cta-buttons">
+                    <a href="https://github.com/Adithya191101/hugging-face_So101" target="_blank" rel="noopener" class="btn-github">
+                        <i data-lucide="github"></i>
+                        View on GitHub
+                    </a>
+                    <a href="https://huggingface.co/AdithyaRajendran" target="_blank" rel="noopener" class="btn-github">
+                        <i data-lucide="box"></i>
+                        HuggingFace Models
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Content -->
+        <section class="project-content">
+            <div class="container">
+
+                <!-- Video Demos -->
+                <div class="project-section">
+                    <h2><i data-lucide="play-circle"></i> Video Demonstrations</h2>
+                    <p>
+                        Watch the trained models perform pick-and-place tasks on soft irregular objects using the SO-101 robotic arm with dual camera feedback.
+                    </p>
+
+                    <div class="video-grid">
+                        <div class="video-card">
+                            <video controls poster="assets/vla-manipulation/ACT_policy_thumb.jpg">
+                                <source src="assets/vla-manipulation/ACT_policy.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <div class="caption">
+                                <strong>ACT Model - 80% Success Rate</strong>
+                                Action Chunking Transformer performing smooth pick-and-place with temporal ensembling
+                            </div>
+                        </div>
+
+                        <div class="video-card">
+                            <video controls poster="assets/vla-manipulation/SmolVLA_thumb.jpg">
+                                <source src="assets/vla-manipulation/SmolVLA.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <div class="caption">
+                                <strong>SmolVLA - Language-Conditioned Grasping</strong>
+                                500M parameter VLA model responding to "Grab the brain" instruction
+                            </div>
+                        </div>
+
+                        <div class="video-card">
+                            <video controls poster="assets/vla-manipulation/Imitation_thumb.jpg">
+                                <source src="assets/vla-manipulation/Imitation.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <div class="caption">
+                                <strong>Teleoperation Data Collection</strong>
+                                Leader-follower demonstration capturing 241 episodes (100K+ frames)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Overview -->
+                <div class="project-section">
+                    <h2><i data-lucide="info"></i> Project Overview</h2>
+                    <p>
+                        This project implements cutting-edge Vision-Language-Action (VLA) models for robotic manipulation, focusing on pick-and-place tasks using a low-cost SO-101 robot arm. The work explores two architectures: the Action Chunking Transformer (ACT) for high-precision manipulation and SmolVLA for language-conditioned grasping.
+                    </p>
+
+                    <!-- Key Metrics -->
+                    <div class="results-highlight">
+                        <div class="result-stat">
+                            <div class="value">80<span class="unit">%</span></div>
+                            <div class="label">ACT Success Rate</div>
+                        </div>
+                        <div class="result-stat">
+                            <div class="value">241</div>
+                            <div class="label">Training Episodes</div>
+                        </div>
+                        <div class="result-stat">
+                            <div class="value">100K<span class="unit">+</span></div>
+                            <div class="label">Training Frames</div>
+                        </div>
+                        <div class="result-stat">
+                            <div class="value">500<span class="unit">M</span></div>
+                            <div class="label">SmolVLA Parameters</div>
+                        </div>
+                        <div class="result-stat">
+                            <div class="value">3.5<span class="unit">hrs</span></div>
+                            <div class="label">Training Time (V100)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Models -->
+                <div class="project-section">
+                    <h2><i data-lucide="brain"></i> Model Architectures</h2>
+                    <p>
+                        Two complementary approaches to vision-based robotic manipulation, each with distinct strengths.
+                    </p>
+
+                    <div class="model-grid">
+                        <div class="model-card">
+                            <div class="model-header">
+                                <h4><i data-lucide="layers"></i> ACT</h4>
+                                <span class="success-rate">80%</span>
+                            </div>
+                            <p>
+                                Action Chunking Transformer uses temporal action chunking for smooth, fluid trajectories. The model predicts sequences of actions rather than single steps, enabling natural robot motion.
+                            </p>
+                            <div class="properties">
+                                <span class="property">Temporal Ensembling</span>
+                                <span class="property">CVAE Decoder</span>
+                                <span class="property">CNN Encoder</span>
+                            </div>
+                            <div class="specs">
+                                <div class="spec-item">
+                                    <span class="label">Architecture</span>
+                                    <span class="value">CNN → Transformer → CVAE</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="label">Input</span>
+                                    <span class="value">Dual RGB (640×480) + 6-DOF</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="label">Action Chunk</span>
+                                    <span class="value">100 steps</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="label">Objects</span>
+                                    <span class="value">Soft irregular shapes</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="model-card">
+                            <div class="model-header">
+                                <h4><i data-lucide="message-square"></i> SmolVLA</h4>
+                                <span class="success-rate">33%</span>
+                            </div>
+                            <p>
+                                Small Vision-Language-Action model fine-tuned from SmolVLM2-500M for language-conditioned manipulation. Uses flow-matching diffusion for action prediction from natural language instructions.
+                            </p>
+                            <div class="properties">
+                                <span class="property">Language-Conditioned</span>
+                                <span class="property">Flow Matching</span>
+                                <span class="property">500M Params</span>
+                            </div>
+                            <div class="specs">
+                                <div class="spec-item">
+                                    <span class="label">Base Model</span>
+                                    <span class="value">SmolVLM2-500M-Video</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="label">Chunk Size</span>
+                                    <span class="value">30</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="label">Action Steps</span>
+                                    <span class="value">20</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="label">Target</span>
+                                    <span class="value">>70% (6×6 inch area)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Architecture -->
+                <div class="project-section">
+                    <h2><i data-lucide="git-branch"></i> System Pipeline</h2>
+                    <p>
+                        The training and deployment pipeline integrates data collection, model training, and real-time inference.
+                    </p>
+
+                    <div class="architecture-flow">
+                        <span class="component">Dual Cameras (640×480 @ 30fps)</span> <span class="arrow">→</span>
+                        <span class="component">Image Preprocessing</span> <span class="arrow">→</span>
+                        <span class="component">CNN Feature Extraction</span> <span class="arrow">→</span>
+                        <span class="component">Transformer Encoder</span> <span class="arrow">→</span>
+                        <span class="component">Action Decoder (CVAE/Flow)</span> <span class="arrow">→</span>
+                        <span class="component">Action Chunks</span> <span class="arrow">→</span>
+                        <span class="component">Temporal Ensembling</span> <span class="arrow">→</span>
+                        <span class="component">SO-101 Motor Commands</span>
+                    </div>
+                </div>
+
+                <!-- Hardware -->
+                <div class="project-section">
+                    <h2><i data-lucide="cpu"></i> Hardware Setup</h2>
+                    <p>
+                        Low-cost robotic manipulation platform using the SO-101 arm with teleoperation capability.
+                    </p>
+
+                    <div class="hardware-grid">
+                        <div class="hardware-item">
+                            <i data-lucide="bot"></i>
+                            <div class="name">SO-101 Follower Arm</div>
+                            <div class="desc">6-DOF manipulator with Feetech servos</div>
+                        </div>
+                        <div class="hardware-item">
+                            <i data-lucide="hand"></i>
+                            <div class="name">SO-101 Leader Arm</div>
+                            <div class="desc">Teleoperation for demonstration</div>
+                        </div>
+                        <div class="hardware-item">
+                            <i data-lucide="camera"></i>
+                            <div class="name">Front Camera</div>
+                            <div class="desc">Scene understanding (640×480)</div>
+                        </div>
+                        <div class="hardware-item">
+                            <i data-lucide="eye"></i>
+                            <div class="name">Wrist Camera</div>
+                            <div class="desc">Close-up manipulation view</div>
+                        </div>
+                    </div>
+
+                    <div class="feature-highlight">
+                        <h3><i data-lucide="database"></i> Training Dataset</h3>
+                        <ul style="color: var(--text-secondary); margin: 0; padding-left: 1.5rem; line-height: 2;">
+                            <li><strong>Dataset:</strong> so101_grab_brain_t2 on HuggingFace Hub</li>
+                            <li><strong>Episodes:</strong> 241 demonstrations via teleoperation</li>
+                            <li><strong>Frames:</strong> 100,832 total with full metadata</li>
+                            <li><strong>Task:</strong> Pick-and-place soft brain toy object</li>
+                            <li><strong>Recording:</strong> 30 FPS, synchronized dual cameras + joint states</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Debugging Discoveries -->
+                <div class="project-section">
+                    <h2><i data-lucide="bug"></i> Critical Debugging Discoveries</h2>
+                    <p>
+                        Seven major challenges were identified and systematically resolved during development, providing valuable insights for VLA model deployment.
+                    </p>
+
+                    <div class="debugging-section">
+                        <h4><i data-lucide="alert-circle"></i> Key Issues & Solutions</h4>
+
+                        <div class="debug-item">
+                            <div class="issue">1. Language Instruction Mismatch</div>
+                            <div class="solution">Training used "Grab the brain" but deployment used "Grasp a brain and put it in the bin" — different embeddings caused 0% → 33% success. Solution: Use identical instructions.</div>
+                        </div>
+
+                        <div class="debug-item">
+                            <div class="issue">2. Camera Configuration Swap</div>
+                            <div class="solution">Physical cameras were reversed between camera1 and camera2, causing spatial reasoning failure and robot crashes. Solution: Verify camera IDs match training.</div>
+                        </div>
+
+                        <div class="debug-item">
+                            <div class="issue">3. Overfitting Prevention</div>
+                            <div class="solution">Original training used 15.87 epochs. Optimized to 6.35 epochs — reduced training time by 2.5x while improving generalization.</div>
+                        </div>
+
+                        <div class="debug-item">
+                            <div class="issue">4. Motion Smoothness vs Reactivity</div>
+                            <div class="solution">Balancing chunk_size and n_action_steps: larger chunks enable smooth motion, smaller chunks improve visual feedback responsiveness.</div>
+                        </div>
+
+                        <div class="debug-item">
+                            <div class="issue">5. Starting State Inconsistency</div>
+                            <div class="solution">Robot arm requires exact home position between episodes. Gripper state (open vs closed) particularly critical for consistent behavior.</div>
+                        </div>
+
+                        <div class="debug-item">
+                            <div class="issue">6. Visual Distribution Shift</div>
+                            <div class="solution">Mixed-dataset training combining original 241 episodes with 50 deployment-environment demonstrations for better workspace generalization.</div>
+                        </div>
+
+                        <div class="debug-item">
+                            <div class="issue">7. Batch Size Misunderstanding</div>
+                            <div class="solution">Batch size affects training efficiency, not overfitting. Epoch count controls generalization — key insight for hyperparameter tuning.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Training Configuration -->
+                <div class="project-section">
+                    <h2><i data-lucide="settings"></i> Training Configuration</h2>
+
+                    <div class="feature-highlight">
+                        <h3><i data-lucide="sliders"></i> SmolVLA v5 Final Configuration</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                            <div>
+                                <div style="color: var(--text-secondary); font-size: 0.85rem;">Training Steps</div>
+                                <div style="color: var(--text-primary); font-family: 'JetBrains Mono', monospace; font-size: 1.1rem;">20,000</div>
+                            </div>
+                            <div>
+                                <div style="color: var(--text-secondary); font-size: 0.85rem;">Batch Size</div>
+                                <div style="color: var(--text-primary); font-family: 'JetBrains Mono', monospace; font-size: 1.1rem;">32</div>
+                            </div>
+                            <div>
+                                <div style="color: var(--text-secondary); font-size: 0.85rem;">Learning Rate</div>
+                                <div style="color: var(--text-primary); font-family: 'JetBrains Mono', monospace; font-size: 1.1rem;">1e-5</div>
+                            </div>
+                            <div>
+                                <div style="color: var(--text-secondary); font-size: 0.85rem;">Final Loss</div>
+                                <div style="color: var(--text-primary); font-family: 'JetBrains Mono', monospace; font-size: 1.1rem;">0.012</div>
+                            </div>
+                            <div>
+                                <div style="color: var(--text-secondary); font-size: 0.85rem;">GPU</div>
+                                <div style="color: var(--text-primary); font-family: 'JetBrains Mono', monospace; font-size: 1.1rem;">V100 (Colab)</div>
+                            </div>
+                            <div>
+                                <div style="color: var(--text-secondary); font-size: 0.85rem;">Training Time</div>
+                                <div style="color: var(--text-primary); font-family: 'JetBrains Mono', monospace; font-size: 1.1rem;">~3.5 hours</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Lessons -->
+                <div class="project-section">
+                    <h2><i data-lucide="lightbulb"></i> Key Lessons Learned</h2>
+
+                    <div class="feature-highlight">
+                        <h3><i data-lucide="book-open"></i> VLA Deployment Insights</h3>
+                        <ul style="color: var(--text-secondary); margin: 0; padding-left: 1.5rem; line-height: 2;">
+                            <li><strong>Exact Configuration Matching:</strong> VLA models require identical language instructions and camera setups between training and deployment</li>
+                            <li><strong>Quantitative Debugging:</strong> Analyzing action distributions proves essential for diagnosing deployment failures</li>
+                            <li><strong>Data Quality > Model Complexity:</strong> Multi-environment training data outweighs model architecture improvements</li>
+                            <li><strong>Systematic Methodology:</strong> Hypothesis-driven debugging with evidence-based validation drives problem resolution</li>
+                            <li><strong>Temporal Abstraction:</strong> Action chunking enables smooth motion but requires careful tuning of chunk size vs reactivity</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Future Work -->
+                <div class="project-section">
+                    <h2><i data-lucide="rocket"></i> Future Development</h2>
+                    <ul style="color: var(--text-secondary); margin: 0; padding-left: 1.5rem; line-height: 2;">
+                        <li><strong>Short-term:</strong> Complete 50-episode deployment mix dataset, achieve >70% SmolVLA success rate, generalize to 6×6 inch workspace</li>
+                        <li><strong>Medium-term:</strong> Multi-object scenarios, diverse language instructions, comprehensive ACT vs SmolVLA comparison</li>
+                        <li><strong>Long-term:</strong> Multi-task VLA capabilities, open-source contributions to LeRobot, publication-quality results</li>
+                    </ul>
+                </div>
+
+                <!-- Technologies -->
+                <div class="project-section">
+                    <h2><i data-lucide="wrench"></i> Technologies Used</h2>
+
+                    <div class="tech-stack-grid">
+                        <div class="tech-item">
+                            <i data-lucide="brain"></i>
+                            <span>PyTorch</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="box"></i>
+                            <span>HuggingFace</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="bot"></i>
+                            <span>LeRobot</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="activity"></i>
+                            <span>Weights & Biases</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="code"></i>
+                            <span>Python</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="cloud"></i>
+                            <span>Google Colab</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="image"></i>
+                            <span>OpenCV</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="bar-chart"></i>
+                            <span>NumPy/Pandas</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources -->
+                <div class="project-section">
+                    <h2><i data-lucide="folder-open"></i> Project Resources</h2>
+                    <p>Access the complete source code, trained models, and dataset:</p>
+
+                    <div class="cta-buttons" style="margin-top: 1rem;">
+                        <a href="https://github.com/Adithya191101/hugging-face_So101" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="github"></i>
+                            GitHub Repository
+                        </a>
+                        <a href="https://huggingface.co/AdithyaRajendran" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="box"></i>
+                            HuggingFace Profile
+                        </a>
+                        <a href="https://huggingface.co/datasets/AdithyaRajendran/so101_grab_brain_t2" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="database"></i>
+                            Training Dataset
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="index.html#about">About</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+
+                <div class="footer-social">
+                    <a href="https://linkedin.com/in/adithyarajendran" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <i data-lucide="linkedin"></i>
+                    </a>
+                    <a href="https://github.com/Adithya191101" target="_blank" rel="noopener" aria-label="GitHub">
+                        <i data-lucide="github"></i>
+                    </a>
+                    <a href="mailto:adithya191101@gmail.com" aria-label="Email">
+                        <i data-lucide="mail"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    &copy; 2025 Adithya Rajendran. All rights reserved.
+                </p>
+
+                <p class="footer-tagline">
+                    Built with passion for robotics
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

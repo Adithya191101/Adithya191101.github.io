@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="IMU Noise Characterization with Allan Variance - Robotics Sensing and Navigation Course Project by Adithya Rajendran">
+    <meta name="author" content="Adithya Rajendran">
+
+    <title>IMU Noise Characterization | Adithya Rajendran</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .project-detail-hero {
+            padding: 120px 0 60px;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+        }
+
+        .project-detail-hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .project-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .project-meta-item i {
+            width: 18px;
+            height: 18px;
+            color: var(--accent-bright);
+        }
+
+        .project-content {
+            padding: 4rem 0;
+        }
+
+        .project-section {
+            margin-bottom: 3rem;
+        }
+
+        .project-section h2 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .project-section h2 i {
+            width: 24px;
+            height: 24px;
+            color: var(--accent-bright);
+        }
+
+        .project-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .project-image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-image-card {
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-image-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .project-image-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            background: #1a1a2e;
+            padding: 10px;
+        }
+
+        .project-image-card .caption {
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: center;
+            border-top: 1px solid var(--border-glow);
+        }
+
+        .tech-stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tech-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+        }
+
+        .tech-item i {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-bright);
+        }
+
+        .workflow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .workflow-step {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .step-content h3 {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-github {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-github:hover {
+            border-color: var(--accent-bright);
+            box-shadow: var(--shadow-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-github i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-bright);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .back-link i {
+            width: 18px;
+            height: 18px;
+        }
+
+        .feature-highlight {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-highlight h3 {
+            color: var(--accent-bright);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-highlight h3 i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .metric-card h4 {
+            color: var(--accent-bright);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-card .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+        }
+
+        .metric-card .desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        .data-scenarios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .scenario-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .scenario-card:hover {
+            border-color: var(--accent-bright);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .scenario-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .scenario-card h3 i {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-bright);
+        }
+
+        .scenario-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .histogram-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .histogram-card {
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .histogram-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .histogram-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            background: #1a1a2e;
+            padding: 8px;
+        }
+
+        .histogram-card .caption {
+            padding: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-align: center;
+            border-top: 1px solid var(--border-glow);
+        }
+
+        .sensor-section {
+            margin-top: 2rem;
+        }
+
+        .sensor-section h3 {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sensor-section h3 i {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-bright);
+        }
+
+        @media (max-width: 768px) {
+            .workflow-step {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .project-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .histogram-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="nav-header" id="navbar">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-text">AR</span>
+            </a>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <i data-lucide="menu" class="menu-icon"></i>
+                <i data-lucide="x" class="close-icon"></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#education">Education</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
+                <li><a href="honors.html">Honors</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Project Hero -->
+        <section class="project-detail-hero">
+            <div class="container">
+                <a href="projects.html" class="back-link">
+                    <i data-lucide="arrow-left"></i>
+                    Back to Projects
+                </a>
+
+                <h1>IMU Noise Characterization with Allan Variance</h1>
+                <p class="project-tagline" style="color: var(--text-secondary); font-size: 1.1rem; max-width: 800px;">
+                    Comprehensive analysis of IMU sensor noise characteristics using Allan Variance methodology, examining accelerometer, gyroscope, and magnetometer data across short-term and long-term collection periods.
+                </p>
+
+                <div class="project-meta">
+                    <div class="project-meta-item">
+                        <i data-lucide="calendar"></i>
+                        <span>October 14, 2024</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="building"></i>
+                        <span>Northeastern University</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="book-open"></i>
+                        <span>EECE 5554 - Robotics Sensing & Navigation</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="activity"></i>
+                        <span>IMU & Sensor Analysis</span>
+                    </div>
+                </div>
+
+                <div class="cta-buttons">
+                    <a href="https://github.com/Adithya191101/EECE5554/tree/main/LAB3" target="_blank" rel="noopener" class="btn-github">
+                        <i data-lucide="github"></i>
+                        View on GitHub
+                    </a>
+                    <a href="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/lab3_Report.pdf" target="_blank" rel="noopener" class="btn-github">
+                        <i data-lucide="file-text"></i>
+                        View Report (PDF)
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Content -->
+        <section class="project-content">
+            <div class="container">
+
+                <!-- Overview -->
+                <div class="project-section">
+                    <h2><i data-lucide="info"></i> Project Overview</h2>
+                    <p>
+                        This laboratory project focuses on characterizing IMU (Inertial Measurement Unit) sensor noise using Allan Variance analysis. The study examines data from a 9-DOF IMU containing a 3-axis accelerometer, 3-axis gyroscope, and 3-axis magnetometer to understand noise characteristics critical for navigation and state estimation applications.
+                    </p>
+                    <p>
+                        Allan Variance is a powerful statistical tool originally developed for analyzing frequency stability in oscillators, now widely used in IMU calibration and error modeling. By analyzing sensor data over varying time intervals, it reveals different noise components including white noise, bias instability, and random walk.
+                    </p>
+
+                    <div class="feature-highlight">
+                        <h3><i data-lucide="target"></i> Learning Objectives</h3>
+                        <p style="margin: 0;">
+                            Understand IMU noise characteristics, implement Allan Variance analysis, develop ROS2 IMU drivers, characterize sensor bias and random walk parameters, and apply statistical methods to real-world inertial sensor data.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Data Collection -->
+                <div class="project-section">
+                    <h2><i data-lucide="database"></i> Data Collection Scenarios</h2>
+                    <p>IMU data was collected under two different duration scenarios to capture both short-term noise and long-term stability characteristics:</p>
+
+                    <div class="data-scenarios">
+                        <div class="scenario-card">
+                            <h3><i data-lucide="clock"></i> 15-Minute Dataset</h3>
+                            <p>Short-term data collection for initial statistical analysis, histogram generation, and quick noise characterization. Captures high-frequency noise components and sensor behavior during typical operation periods.</p>
+                        </div>
+                        <div class="scenario-card">
+                            <h3><i data-lucide="timer"></i> 5-Hour Dataset</h3>
+                            <p>Extended data collection for Allan Variance analysis, enabling identification of bias instability, random walk parameters, and long-term drift characteristics essential for navigation applications.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 15-Minute Analysis -->
+                <div class="project-section">
+                    <h2><i data-lucide="bar-chart-2"></i> Short-Term Statistical Analysis (15 min)</h2>
+                    <p>Analysis of the 15-minute dataset provides insights into immediate sensor noise characteristics through time-series visualization and histogram distributions.</p>
+
+                    <div class="sensor-section">
+                        <h3><i data-lucide="move-3d"></i> Accelerometer Data</h3>
+                        <div class="project-image-grid">
+                            <div class="project-image-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Accelerometer_Data.png', 'Accelerometer Time Series Data')">
+                                <img src="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Accelerometer_Data.png" alt="Accelerometer Data">
+                                <div class="caption">Accelerometer X, Y, Z axis time series data</div>
+                            </div>
+                        </div>
+                        <div class="histogram-grid">
+                            <div class="histogram-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Histogram_Accelerometer_X-axis.png', 'Accelerometer X-axis Histogram')">
+                                <img src="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Histogram_Accelerometer_X-axis.png" alt="Accel X Histogram">
+                                <div class="caption">X-axis Distribution</div>
+                            </div>
+                            <div class="histogram-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Histogram_Accelerometer_Y-axis.png', 'Accelerometer Y-axis Histogram')">
+                                <img src="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Histogram_Accelerometer_Y-axis.png" alt="Accel Y Histogram">
+                                <div class="caption">Y-axis Distribution</div>
+                            </div>
+                            <div class="histogram-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Histogram_Accelerometer_Z-axis.png', 'Accelerometer Z-axis Histogram')">
+                                <img src="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Histogram_Accelerometer_Z-axis.png" alt="Accel Z Histogram">
+                                <div class="caption">Z-axis Distribution</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sensor-section">
+                        <h3><i data-lucide="rotate-3d"></i> Gyroscope Data</h3>
+                        <div class="project-image-grid">
+                            <div class="project-image-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Gyroscope_Data.png', 'Gyroscope Time Series Data')">
+                                <img src="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Gyroscope_Data.png" alt="Gyroscope Data">
+                                <div class="caption">Gyroscope X, Y, Z axis time series data</div>
+                            </div>
+                        </div>
+                        <div class="histogram-grid">
+                            <div class="histogram-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Histogram_Gyroscope_X-axis.png', 'Gyroscope X-axis Histogram')">
+                                <img src="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Histogram_Gyroscope_X-axis.png" alt="Gyro X Histogram">
+                                <div class="caption">X-axis Distribution</div>
+                            </div>
+                            <div class="histogram-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Histogram_Gyroscope_Y-axis.png', 'Gyroscope Y-axis Histogram')">
+                                <img src="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Histogram_Gyroscope_Y-axis.png" alt="Gyro Y Histogram">
+                                <div class="caption">Y-axis Distribution</div>
+                            </div>
+                            <div class="histogram-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Histogram_Gyroscope_Z-axis.png', 'Gyroscope Z-axis Histogram')">
+                                <img src="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Histogram_Gyroscope_Z-axis.png" alt="Gyro Z Histogram">
+                                <div class="caption">Z-axis Distribution</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sensor-section">
+                        <h3><i data-lucide="compass"></i> Magnetometer Data</h3>
+                        <div class="project-image-grid">
+                            <div class="project-image-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Magnetometer_Data.png', 'Magnetometer Time Series Data')">
+                                <img src="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Magnetometer_Data.png" alt="Magnetometer Data">
+                                <div class="caption">Magnetometer X, Y, Z axis time series data</div>
+                            </div>
+                        </div>
+                        <div class="histogram-grid">
+                            <div class="histogram-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Histogram_Magnetometer_X-axis.png', 'Magnetometer X-axis Histogram')">
+                                <img src="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Histogram_Magnetometer_X-axis.png" alt="Mag X Histogram">
+                                <div class="caption">X-axis Distribution</div>
+                            </div>
+                            <div class="histogram-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Histogram_Magnetometer_Y-axis.png', 'Magnetometer Y-axis Histogram')">
+                                <img src="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Histogram_Magnetometer_Y-axis.png" alt="Mag Y Histogram">
+                                <div class="caption">Y-axis Distribution</div>
+                            </div>
+                            <div class="histogram-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Histogram_Magnetometer_Z-axis.png', 'Magnetometer Z-axis Histogram')">
+                                <img src="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/15mins_data/Histogram_Magnetometer_Z-axis.png" alt="Mag Z Histogram">
+                                <div class="caption">Z-axis Distribution</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Allan Variance Analysis -->
+                <div class="project-section">
+                    <h2><i data-lucide="trending-up"></i> Allan Variance Analysis (5 hrs)</h2>
+                    <p>Extended 5-hour data collection enables Allan Deviation analysis to identify key noise parameters critical for navigation system design and sensor fusion algorithms.</p>
+
+                    <div class="project-image-grid">
+                        <div class="project-image-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/5hrs_data/Accelerometer_allan_deviation.png', 'Accelerometer Allan Deviation')">
+                            <img src="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/5hrs_data/Accelerometer_allan_deviation.png" alt="Accelerometer Allan Deviation">
+                            <div class="caption">Accelerometer Allan Deviation - Noise characterization across time scales</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/5hrs_data/Gyroscope_allan_deviation.png', 'Gyroscope Allan Deviation')">
+                            <img src="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/5hrs_data/Gyroscope_allan_deviation.png" alt="Gyroscope Allan Deviation">
+                            <div class="caption">Gyroscope Allan Deviation - Angular rate stability analysis</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/5hrs_data/Magnetometer_allan_deviation.png', 'Magnetometer Allan Deviation')">
+                            <img src="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/5hrs_data/Magnetometer_allan_deviation.png" alt="Magnetometer Allan Deviation">
+                            <div class="caption">Magnetometer Allan Deviation - Magnetic field measurement stability</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Noise Parameters -->
+                <div class="project-section">
+                    <h2><i data-lucide="settings"></i> Key Noise Parameters</h2>
+                    <p>Allan Variance analysis reveals several critical noise parameters used in sensor modeling and Kalman filter design:</p>
+
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <h4>White Noise</h4>
+                            <div class="value">N</div>
+                            <div class="desc">Angle/Velocity Random Walk - slope of -1/2</div>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Bias Instability</h4>
+                            <div class="value">B</div>
+                            <div class="desc">Minimum point on Allan curve - flat region</div>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Random Walk</h4>
+                            <div class="value">K</div>
+                            <div class="desc">Rate Random Walk - slope of +1/2</div>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Quantization</h4>
+                            <div class="value">Q</div>
+                            <div class="desc">Quantization noise - slope of -1</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Implementation -->
+                <div class="project-section">
+                    <h2><i data-lucide="code"></i> Implementation Details</h2>
+                    <p>The project involved developing a complete ROS2-based pipeline for IMU data acquisition and noise analysis.</p>
+
+                    <div class="workflow-steps">
+                        <div class="workflow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>ROS2 IMU Driver Development</h3>
+                                <p>Created a custom ROS2 node to interface with the 9-DOF IMU sensor, publishing standardized sensor_msgs/Imu messages containing linear acceleration, angular velocity, and orientation data.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Data Acquisition & Unit Conversion</h3>
+                                <p>Implemented proper unit conversions for all sensor axes. Magnetometer readings collected in Gauss were converted to Tesla for standardization. Angular rates converted to rad/s and accelerations to m/s^2.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Long-Duration Data Logging</h3>
+                                <p>Recorded 5+ hours of stationary IMU data using ROS2 bags for Allan Variance analysis, ensuring stable temperature and minimal vibration during collection.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>Statistical Analysis (15-min)</h3>
+                                <p>Developed Python analysis scripts to compute mean, variance, standard deviation, and generate histograms for each sensor axis using the short-term dataset.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h3>Allan Variance Computation</h3>
+                                <p>Implemented MATLAB scripts to compute Allan Deviation across multiple averaging times (tau), generating log-log plots to identify noise components from slope analysis.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technologies -->
+                <div class="project-section">
+                    <h2><i data-lucide="cpu"></i> Technologies Used</h2>
+
+                    <div class="tech-stack-grid">
+                        <div class="tech-item">
+                            <i data-lucide="box"></i>
+                            <span>ROS2</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="code"></i>
+                            <span>Python</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="square-function"></i>
+                            <span>MATLAB</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="bar-chart"></i>
+                            <span>Matplotlib</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="calculator"></i>
+                            <span>NumPy</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="activity"></i>
+                            <span>9-DOF IMU</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources -->
+                <div class="project-section">
+                    <h2><i data-lucide="folder-open"></i> Project Resources</h2>
+                    <p>Access the complete source code, analysis scripts, and project report:</p>
+
+                    <div class="cta-buttons" style="margin-top: 1rem;">
+                        <a href="https://github.com/Adithya191101/EECE5554/tree/main/LAB3" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="github"></i>
+                            GitHub Repository
+                        </a>
+                        <a href="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB3/analysis/lab3_Report.pdf" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="file-text"></i>
+                            Project Report
+                        </a>
+                        <a href="https://github.com/Adithya191101/EECE5554/tree/main/LAB3/analysis" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="code"></i>
+                            Analysis Scripts
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Image Modal -->
+    <div class="certificate-modal" id="imageModal">
+        <div class="modal-overlay" onclick="closeImageModal()"></div>
+        <div class="modal-content image-modal-content">
+            <button class="modal-close" onclick="closeImageModal()">
+                <i data-lucide="x"></i>
+            </button>
+            <h3 class="modal-title" id="imageModalTitle">Image</h3>
+            <img id="modalImage" src="" alt="Project Image">
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="index.html#about">About</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+
+                <div class="footer-social">
+                    <a href="https://linkedin.com/in/adithyarajendran" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <i data-lucide="linkedin"></i>
+                    </a>
+                    <a href="https://github.com/Adithya191101" target="_blank" rel="noopener" aria-label="GitHub">
+                        <i data-lucide="github"></i>
+                    </a>
+                    <a href="mailto:adithya191101@gmail.com" aria-label="Email">
+                        <i data-lucide="mail"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    &copy; 2025 Adithya Rajendran. All rights reserved.
+                </p>
+
+                <p class="footer-tagline">
+                    Built with passion for robotics
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

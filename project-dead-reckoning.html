@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="IMU and GPS-Based Navigation with Dead Reckoning - Robotics Sensing and Navigation Course Project by Adithya Rajendran">
+    <meta name="author" content="Adithya Rajendran">
+
+    <title>Dead Reckoning Navigation | Adithya Rajendran</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .project-detail-hero {
+            padding: 120px 0 60px;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+        }
+
+        .project-detail-hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .project-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .project-meta-item i {
+            width: 18px;
+            height: 18px;
+            color: var(--accent-bright);
+        }
+
+        .project-content {
+            padding: 4rem 0;
+        }
+
+        .project-section {
+            margin-bottom: 3rem;
+        }
+
+        .project-section h2 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .project-section h2 i {
+            width: 24px;
+            height: 24px;
+            color: var(--accent-bright);
+        }
+
+        .project-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .tech-stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tech-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+        }
+
+        .tech-item i {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-bright);
+        }
+
+        .workflow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .workflow-step {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .step-content h3 {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-github {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-github:hover {
+            border-color: var(--accent-bright);
+            box-shadow: var(--shadow-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-github i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-bright);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .back-link i {
+            width: 18px;
+            height: 18px;
+        }
+
+        .feature-highlight {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-highlight h3 {
+            color: var(--accent-bright);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-highlight h3 i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .data-scenarios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .scenario-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .scenario-card:hover {
+            border-color: var(--accent-bright);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .scenario-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .scenario-card h3 i {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-bright);
+        }
+
+        .scenario-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .pipeline-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .pipeline-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pipeline-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+        }
+
+        .pipeline-card:hover {
+            border-color: var(--accent-bright);
+            box-shadow: var(--shadow-glow);
+            transform: translateY(-3px);
+        }
+
+        .pipeline-card .card-number {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #fff;
+        }
+
+        .pipeline-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            padding-right: 2.5rem;
+        }
+
+        .pipeline-card .script-name {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent-bright);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pipeline-card .script-name i {
+            width: 14px;
+            height: 14px;
+        }
+
+        .pipeline-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .concept-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .concept-card i {
+            width: 40px;
+            height: 40px;
+            color: var(--accent-bright);
+            margin-bottom: 1rem;
+        }
+
+        .concept-card h4 {
+            color: var(--text-primary);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .concept-card p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        .calibration-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .calibration-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .calibration-card h4 {
+            color: var(--accent-bright);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .calibration-card h4 i {
+            width: 18px;
+            height: 18px;
+        }
+
+        .calibration-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .project-image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-image-grid .video-card {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-image-grid .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .project-image-grid .video-card:hover .play-icon {
+            transform: translate(-50%, -50%) scale(1.2);
+            color: var(--accent-bright);
+        }
+
+        .project-image-grid .video-card .video-thumbnail {
+            width: 100%;
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+            display: block;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .project-image-grid .video-card .video-thumbnail:hover {
+            transform: none;
+        }
+
+        .project-image-grid .video-card .video-thumbnail .thumbnail-preview {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: brightness(0.7);
+            transition: filter 0.3s ease;
+        }
+
+        .project-image-grid .video-card:hover .thumbnail-preview {
+            filter: brightness(0.9);
+        }
+
+        .project-image-grid .video-card .video-thumbnail .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 64px;
+            height: 64px;
+            color: #fff;
+            transition: all 0.3s ease;
+            z-index: 2;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+        }
+
+        .project-image-grid .video-card .video-thumbnail .video-label {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .project-image-grid .video-card .video-thumbnail .video-label i {
+            width: 12px;
+            height: 12px;
+        }
+
+        .project-image-grid .video-card .caption {
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: center;
+            border-top: 1px solid var(--border-glow);
+        }
+
+        .local-video-modal-content {
+            max-width: fit-content;
+            width: auto;
+            padding: 1rem;
+            background: var(--bg-card);
+            border-radius: 12px;
+        }
+
+        .local-video-modal-content video {
+            max-width: 90vw;
+            max-height: 80vh;
+            border-radius: 8px;
+            background: #000;
+            display: block;
+        }
+
+        .local-video-modal-content .modal-title {
+            margin-bottom: 1rem;
+        }
+
+        .project-image-card {
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-image-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .project-image-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            background: #1a1a2e;
+            padding: 10px;
+        }
+
+        .project-image-card .caption {
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: center;
+            border-top: 1px solid var(--border-glow);
+        }
+
+        @media (max-width: 768px) {
+            .workflow-step {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .project-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .pipeline-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-image-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="nav-header" id="navbar">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-text">AR</span>
+            </a>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <i data-lucide="menu" class="menu-icon"></i>
+                <i data-lucide="x" class="close-icon"></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#education">Education</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
+                <li><a href="honors.html">Honors</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Project Hero -->
+        <section class="project-detail-hero">
+            <div class="container">
+                <a href="projects.html" class="back-link">
+                    <i data-lucide="arrow-left"></i>
+                    Back to Projects
+                </a>
+
+                <h1>IMU & GPS-Based Dead Reckoning Navigation</h1>
+                <p class="project-tagline" style="color: var(--text-secondary); font-size: 1.1rem; max-width: 800px;">
+                    Implementation of a complete navigation stack combining IMU and GPS data through sensor fusion, magnetometer calibration, and dead reckoning to achieve accurate vehicle trajectory estimation.
+                </p>
+
+                <div class="project-meta">
+                    <div class="project-meta-item">
+                        <i data-lucide="calendar"></i>
+                        <span>October 31, 2024</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="building"></i>
+                        <span>Northeastern University</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="book-open"></i>
+                        <span>EECE 5554 - Robotics Sensing & Navigation</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="navigation"></i>
+                        <span>Sensor Fusion & Localization</span>
+                    </div>
+                </div>
+
+                <div class="cta-buttons">
+                    <a href="https://github.com/Adithya191101/EECE5554/tree/main/LAB4" target="_blank" rel="noopener" class="btn-github">
+                        <i data-lucide="github"></i>
+                        View on GitHub
+                    </a>
+                    <a href="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB4/analysis/Report.pdf" target="_blank" rel="noopener" class="btn-github">
+                        <i data-lucide="file-text"></i>
+                        View Report (PDF)
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Content -->
+        <section class="project-content">
+            <div class="container">
+
+                <!-- Overview -->
+                <div class="project-section">
+                    <h2><i data-lucide="info"></i> Project Overview</h2>
+                    <p>
+                        This project implements a complete dead reckoning navigation system that fuses IMU (Inertial Measurement Unit) and GPS data to estimate vehicle trajectory. Dead reckoning is a fundamental technique in robotics navigation that computes position by integrating velocity and heading over time, with periodic GPS corrections to bound accumulated errors.
+                    </p>
+                    <p>
+                        The implementation addresses the inherent challenges of inertial navigation including sensor drift, magnetic distortions, and integration errors through a multi-stage processing pipeline involving magnetometer calibration, complementary filtering for yaw estimation, and GPS-aided trajectory correction.
+                    </p>
+
+                    <div class="feature-highlight">
+                        <h3><i data-lucide="target"></i> Learning Objectives</h3>
+                        <p style="margin: 0;">
+                            Implement magnetometer calibration techniques, develop sensor fusion algorithms using complementary filters, understand dead reckoning principles, integrate GPS corrections for drift mitigation, and apply these concepts to real-world driving data.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Key Concepts -->
+                <div class="project-section">
+                    <h2><i data-lucide="lightbulb"></i> Key Concepts</h2>
+                    <p>The project integrates several fundamental concepts in robotic navigation:</p>
+
+                    <div class="concept-grid">
+                        <div class="concept-card">
+                            <i data-lucide="compass"></i>
+                            <h4>Dead Reckoning</h4>
+                            <p>Position estimation by integrating velocity and heading from a known starting point</p>
+                        </div>
+                        <div class="concept-card">
+                            <i data-lucide="git-merge"></i>
+                            <h4>Sensor Fusion</h4>
+                            <p>Combining multiple sensor measurements to achieve better accuracy than individual sensors</p>
+                        </div>
+                        <div class="concept-card">
+                            <i data-lucide="settings-2"></i>
+                            <h4>Calibration</h4>
+                            <p>Correcting systematic sensor errors including hard-iron and soft-iron distortions</p>
+                        </div>
+                        <div class="concept-card">
+                            <i data-lucide="refresh-cw"></i>
+                            <h4>Drift Correction</h4>
+                            <p>Using GPS updates to bound accumulated integration errors over time</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experimental Setup -->
+                <div class="project-section">
+                    <h2><i data-lucide="car"></i> Experimental Setup</h2>
+                    <p>Data was collected using the Northeastern University Robotics research vehicle equipped with IMU and GPS sensors:</p>
+
+                    <div class="project-image-grid">
+                        <div class="project-image-card" onclick="openImageModal('assets/lab4/car_sensor_setup.jpeg', 'Sensor Setup on Research Vehicle')">
+                            <img src="assets/lab4/car_sensor_setup.jpeg" alt="Car Sensor Setup">
+                            <div class="caption">Northeastern Robotics Research Vehicle - GPS antenna mounted on roof, 9-DOF IMU inside, laptop running ROS2</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/lab4/GPS_on_the_top_of_the_car.jpeg', 'GPS Antenna Mounted on Car Roof')">
+                            <img src="assets/lab4/GPS_on_the_top_of_the_car.jpeg" alt="GPS on Car Roof">
+                            <div class="caption">GPS antenna mounted on vehicle roof - provides unobstructed sky view for optimal satellite reception</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/lab4/Leveling_IMU.jpeg', 'IMU Leveling Verification')">
+                            <img src="assets/lab4/Leveling_IMU.jpeg" alt="IMU Leveling">
+                            <div class="caption">IMU leveling verification using digital level app - ensuring 0° tilt for accurate accelerometer readings</div>
+                        </div>
+                    </div>
+
+                    <div class="feature-highlight" style="margin-top: 1.5rem;">
+                        <h3><i data-lucide="settings-2"></i> Hardware Configuration</h3>
+                        <ul style="color: var(--text-secondary); margin: 0; padding-left: 1.5rem; line-height: 2;">
+                            <li><strong>GPS Module:</strong> Roof-mounted antenna for unobstructed satellite reception</li>
+                            <li><strong>IMU Sensor:</strong> 9-DOF IMU (accelerometer, gyroscope, magnetometer) carefully leveled inside vehicle</li>
+                            <li><strong>Data Acquisition:</strong> Laptop running Ubuntu with ROS2 for synchronized sensor logging</li>
+                            <li><strong>Vehicle:</strong> Northeastern University Robotics Lincoln MKZ research platform</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Data Collection Videos -->
+                <div class="project-section">
+                    <h2><i data-lucide="video"></i> Data Collection Videos</h2>
+                    <p>Two driving scenarios were recorded for calibration and navigation testing:</p>
+
+                    <div class="project-image-grid">
+                        <div class="video-card" onclick="openLocalVideoModal('assets/lab4/Car_circle_video.mp4', 'Circular Driving - Magnetometer Calibration')">
+                            <div class="video-thumbnail">
+                                <img class="thumbnail-preview" src="assets/lab4/circle_thumbnail.jpg" alt="Circular Driving Video">
+                                <i data-lucide="play-circle" class="play-icon"></i>
+                                <span class="video-label"><i data-lucide="video"></i> Video</span>
+                            </div>
+                            <div class="caption">Circular Driving Pattern - "Donut" maneuver for magnetometer calibration, sampling all heading directions</div>
+                        </div>
+                        <div class="video-card" onclick="openLocalVideoModal('assets/lab4/car_straight_video.mp4', 'Urban Navigation - Dead Reckoning Test')">
+                            <div class="video-thumbnail">
+                                <img class="thumbnail-preview" src="assets/lab4/straight_thumbnail.jpg" alt="Urban Navigation Video">
+                                <i data-lucide="play-circle" class="play-icon"></i>
+                                <span class="video-label"><i data-lucide="video"></i> Video</span>
+                            </div>
+                            <div class="caption">Urban Navigation Test - Real-world driving near Ruggles Station for dead reckoning validation</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Collection -->
+                <div class="project-section">
+                    <h2><i data-lucide="database"></i> Data Collection Scenarios</h2>
+                    <p>IMU and GPS data were collected under two different scenarios in the Boston area:</p>
+
+                    <div class="data-scenarios">
+                        <div class="scenario-card">
+                            <h3><i data-lucide="circle"></i> Circular Path (Calibration)</h3>
+                            <p>Controlled circular driving pattern ("donut" path) specifically designed for magnetometer calibration. The circular motion ensures all heading directions are sampled, enabling accurate estimation of hard-iron and soft-iron correction parameters.</p>
+                        </div>
+                        <div class="scenario-card">
+                            <h3><i data-lucide="map"></i> Urban Navigation (Testing)</h3>
+                            <p>Real-world driving data collected near Northeastern University's Ruggles Station area in Boston. This dataset includes various turns, stops, and straight segments representative of typical urban navigation scenarios.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Processing Pipeline -->
+                <div class="project-section">
+                    <h2><i data-lucide="workflow"></i> Processing Pipeline</h2>
+                    <p>The navigation system is implemented through four sequential MATLAB scripts, each handling a specific stage of the processing pipeline:</p>
+
+                    <div class="pipeline-grid">
+                        <div class="pipeline-card">
+                            <span class="card-number">1</span>
+                            <h3>Magnetometer Calibration</h3>
+                            <div class="script-name">
+                                <i data-lucide="file-code"></i>
+                                magnetometer_calibration.m
+                            </div>
+                            <p>Corrects magnetic sensor distortions using the circular path calibration data. Implements hard-iron offset removal and soft-iron scale factor correction to transform elliptical magnetometer readings into a centered circle.</p>
+                        </div>
+                        <div class="pipeline-card">
+                            <span class="card-number">2</span>
+                            <h3>Yaw Estimation (Sensor Fusion)</h3>
+                            <div class="script-name">
+                                <i data-lucide="file-code"></i>
+                                sensor_fusion.m
+                            </div>
+                            <p>Implements a complementary filter that fuses gyroscope angular rates with magnetometer heading. Balances the gyroscope's short-term accuracy with the magnetometer's long-term stability to produce drift-free yaw estimates.</p>
+                        </div>
+                        <div class="pipeline-card">
+                            <span class="card-number">3</span>
+                            <h3>Forward Velocity Estimation</h3>
+                            <div class="script-name">
+                                <i data-lucide="file-code"></i>
+                                fwd_vel_est.m
+                            </div>
+                            <p>Derives vehicle forward velocity by integrating accelerometer measurements along the direction of travel. Uses GPS velocity as ground truth for validation and applies corrections to minimize drift accumulation.</p>
+                        </div>
+                        <div class="pipeline-card">
+                            <span class="card-number">4</span>
+                            <h3>Dead Reckoning Integration</h3>
+                            <div class="script-name">
+                                <i data-lucide="file-code"></i>
+                                deadrocking.m
+                            </div>
+                            <p>Computes the complete vehicle trajectory by integrating velocity and orientation estimates. Incorporates periodic GPS position fixes to correct accumulated drift and maintain trajectory accuracy over extended distances.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calibration Details -->
+                <div class="project-section">
+                    <h2><i data-lucide="settings"></i> Magnetometer Calibration</h2>
+                    <p>Accurate heading estimation requires correcting magnetometer measurements for environmental magnetic distortions:</p>
+
+                    <div class="calibration-info">
+                        <div class="calibration-card">
+                            <h4><i data-lucide="move"></i> Hard-Iron Correction</h4>
+                            <p>Removes constant magnetic offsets caused by permanently magnetized materials near the sensor (e.g., vehicle chassis, mounting hardware). These offsets shift the center of the magnetometer's circular response away from the origin.</p>
+                        </div>
+                        <div class="calibration-card">
+                            <h4><i data-lucide="maximize-2"></i> Soft-Iron Correction</h4>
+                            <p>Corrects for scale factor differences and axis coupling caused by magnetically permeable materials that distort the local magnetic field. These effects transform the ideal circular response into an ellipse.</p>
+                        </div>
+                    </div>
+
+                    <div class="project-image-grid" style="margin-top: 2rem;">
+                        <div class="project-image-card" onclick="openImageModal('assets/lab4/1raw_mag_data_fig.png', 'Raw Magnetometer Data')">
+                            <img src="assets/lab4/1raw_mag_data_fig.png" alt="Raw Magnetometer Data">
+                            <div class="caption">Raw Magnetometer Data - Off-center elliptical pattern showing hard-iron offset and soft-iron distortion</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/lab4/2crt_mag_data_fig.png', 'Corrected Magnetometer Data')">
+                            <img src="assets/lab4/2crt_mag_data_fig.png" alt="Corrected Magnetometer Data">
+                            <div class="caption">Corrected Magnetometer Data - Centered circular pattern after hard-iron and soft-iron calibration</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Complementary Filter -->
+                <div class="project-section">
+                    <h2><i data-lucide="git-merge"></i> Complementary Filter Design</h2>
+                    <p>The yaw estimation combines gyroscope and magnetometer data using a complementary filter structure:</p>
+
+                    <div class="workflow-steps">
+                        <div class="workflow-step">
+                            <div class="step-number">G</div>
+                            <div class="step-content">
+                                <h3>Gyroscope (High-Pass)</h3>
+                                <p>Provides accurate short-term angular rate measurements. Integration gives heading change but accumulates drift over time. The high-pass characteristic preserves rapid heading changes while attenuating low-frequency drift.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">M</div>
+                            <div class="step-content">
+                                <h3>Magnetometer (Low-Pass)</h3>
+                                <p>Provides absolute heading reference but is susceptible to high-frequency noise and magnetic interference. The low-pass characteristic extracts the stable heading trend while filtering out transient disturbances.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">+</div>
+                            <div class="step-content">
+                                <h3>Fused Output</h3>
+                                <p>The complementary sum produces a yaw estimate that combines the best characteristics of both sensors: responsive to quick turns (gyroscope) while maintaining long-term accuracy (magnetometer).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 2rem; color: var(--text-primary);"><i data-lucide="line-chart" style="width: 20px; height: 20px; color: var(--accent-bright); vertical-align: middle; margin-right: 0.5rem;"></i>Yaw Estimation Analysis</h3>
+
+                    <div class="project-image-grid" style="margin-top: 1rem;">
+                        <div class="project-image-card" onclick="openImageModal('assets/lab4/3comp_raw_crt_yaw.png', 'Comparison of Raw and Corrected Yaw Angles')">
+                            <img src="assets/lab4/3comp_raw_crt_yaw.png" alt="Raw vs Corrected Yaw">
+                            <div class="caption">Raw vs Corrected Yaw - Blue shows uncalibrated magnetometer yaw with discontinuities, red shows corrected continuous yaw after calibration</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/lab4/4mag_yaw_vs_int_gyro.png', 'Magnetometer Yaw vs Integrated Gyroscope')">
+                            <img src="assets/lab4/4mag_yaw_vs_int_gyro.png" alt="Magnetometer vs Gyro Yaw">
+                            <div class="caption">Magnetometer vs Integrated Gyro - Orange gyroscope integration drifts unboundedly over time while blue magnetometer provides absolute reference with noise</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/lab4/5Yaw_est_hpf_lpf_cf.png', 'Yaw Estimates with Complementary Filter')">
+                            <img src="assets/lab4/5Yaw_est_hpf_lpf_cf.png" alt="Complementary Filter Components">
+                            <div class="caption">Complementary Filter - Green: LPF magnetometer yaw, Orange: HPF gyro rate, Red: fused output combining both for drift-free responsive estimation</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/lab4/6CF_vs_IMU.png', 'Complementary Filter vs IMU Yaw')">
+                            <img src="assets/lab4/6CF_vs_IMU.png" alt="CF vs IMU Yaw">
+                            <div class="caption">Filter Validation - Red complementary filter output closely tracks the red adjusted estimate while blue IMU quaternion-derived yaw shows significant divergence</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Velocity Estimation -->
+                <div class="project-section">
+                    <h2><i data-lucide="gauge"></i> Forward Velocity Estimation</h2>
+                    <p>Forward velocity is derived from accelerometer measurements, requiring careful processing to handle integration drift and sensor bias:</p>
+
+                    <div class="project-image-grid">
+                        <div class="project-image-card" onclick="openImageModal('assets/lab4/7Fw_vel.png', 'Forward Velocity - Unadjusted')">
+                            <img src="assets/lab4/7Fw_vel.png" alt="Unadjusted Velocity">
+                            <div class="caption">Unadjusted IMU Velocity - Red line shows severe drift from accelerometer integration reaching -130 m/s, while blue GPS velocity stays bounded around actual driving speeds</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/lab4/8IMUvsGPS.png', 'Forward Velocity - Adjusted')">
+                            <img src="assets/lab4/8IMUvsGPS.png" alt="Adjusted Velocity">
+                            <div class="caption">Adjusted IMU Velocity - After bias removal and filtering, red IMU velocity tracks blue GPS velocity pattern, enabling accurate position integration</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dead Reckoning Results -->
+                <div class="project-section">
+                    <h2><i data-lucide="map-pin"></i> Dead Reckoning Results</h2>
+                    <p>The final trajectory is computed by integrating corrected velocity with complementary filter yaw estimates, using periodic GPS updates to bound accumulated errors:</p>
+
+                    <div class="project-image-grid">
+                        <div class="project-image-card" onclick="openImageModal('assets/lab4/9gpsvsDD.png', 'Dead Reckoning Path vs GPS Path')">
+                            <img src="assets/lab4/9gpsvsDD.png" alt="Dead Reckoning vs GPS">
+                            <div class="caption">Dead Reckoning vs GPS Path - Excellent agreement between red IMU-based dead reckoning trajectory and blue GPS ground truth over 700+ meters of urban driving near Northeastern University</div>
+                        </div>
+                    </div>
+
+                    <div class="feature-highlight" style="margin-top: 1.5rem;">
+                        <h3><i data-lucide="check-circle"></i> Key Observations</h3>
+                        <ul style="color: var(--text-secondary); margin: 0; padding-left: 1.5rem; line-height: 2;">
+                            <li>Dead reckoning path maintains close alignment with GPS throughout complex urban route</li>
+                            <li>Smooth trajectory without GPS-like jumps demonstrates effective sensor fusion</li>
+                            <li>Periodic GPS corrections successfully bound drift accumulation over ~700m travel distance</li>
+                            <li>System handles multiple turns and direction changes accurately</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div class="project-section">
+                    <h2><i data-lucide="trophy"></i> Summary</h2>
+                    <p>The implemented navigation system demonstrated successful trajectory estimation:</p>
+
+                    <div class="feature-highlight">
+                        <h3><i data-lucide="trending-up"></i> Performance Highlights</h3>
+                        <ul style="color: var(--text-secondary); margin: 0; padding-left: 1.5rem; line-height: 2;">
+                            <li>Successful magnetometer calibration transforming elliptical readings to centered circular response</li>
+                            <li>Complementary filter effectively balanced gyroscope responsiveness with magnetometer stability</li>
+                            <li>Forward velocity estimation closely tracked GPS velocity measurements after adjustment</li>
+                            <li>Periodic GPS corrections maintained trajectory accuracy over extended driving distances</li>
+                            <li>Dead reckoning path closely matched GPS ground truth in urban navigation scenario</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Technologies -->
+                <div class="project-section">
+                    <h2><i data-lucide="cpu"></i> Technologies Used</h2>
+
+                    <div class="tech-stack-grid">
+                        <div class="tech-item">
+                            <i data-lucide="square-function"></i>
+                            <span>MATLAB</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="box"></i>
+                            <span>ROS2</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="activity"></i>
+                            <span>9-DOF IMU</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="navigation"></i>
+                            <span>GPS Module</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="compass"></i>
+                            <span>Magnetometer</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="database"></i>
+                            <span>ROSbag</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources -->
+                <div class="project-section">
+                    <h2><i data-lucide="folder-open"></i> Project Resources</h2>
+                    <p>Access the complete source code, MATLAB scripts, and project report:</p>
+
+                    <div class="cta-buttons" style="margin-top: 1rem;">
+                        <a href="https://github.com/Adithya191101/EECE5554/tree/main/LAB4" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="github"></i>
+                            GitHub Repository
+                        </a>
+                        <a href="https://raw.githubusercontent.com/Adithya191101/EECE5554/main/LAB4/analysis/Report.pdf" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="file-text"></i>
+                            Project Report
+                        </a>
+                        <a href="https://github.com/Adithya191101/EECE5554/tree/main/LAB4/analysis" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="code"></i>
+                            MATLAB Scripts
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Image Modal -->
+    <div class="certificate-modal" id="imageModal">
+        <div class="modal-overlay" onclick="closeImageModal()"></div>
+        <div class="modal-content image-modal-content">
+            <button class="modal-close" onclick="closeImageModal()">
+                <i data-lucide="x"></i>
+            </button>
+            <h3 class="modal-title" id="imageModalTitle">Image</h3>
+            <img id="modalImage" src="" alt="Project Image">
+        </div>
+    </div>
+
+    <!-- Local Video Modal -->
+    <div class="certificate-modal" id="localVideoModal">
+        <div class="modal-overlay" onclick="closeLocalVideoModal()"></div>
+        <div class="modal-content local-video-modal-content">
+            <button class="modal-close" onclick="closeLocalVideoModal()">
+                <i data-lucide="x"></i>
+            </button>
+            <h3 class="modal-title" id="localVideoModalTitle">Video</h3>
+            <video id="localVideoPlayer" controls>
+                <source id="localVideoSource" src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
+    <script>
+        function openLocalVideoModal(videoSrc, title) {
+            const modal = document.getElementById('localVideoModal');
+            const video = document.getElementById('localVideoPlayer');
+            const source = document.getElementById('localVideoSource');
+            const titleEl = document.getElementById('localVideoModalTitle');
+
+            source.src = videoSrc;
+            video.load();
+            titleEl.textContent = title;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLocalVideoModal() {
+            const modal = document.getElementById('localVideoModal');
+            const video = document.getElementById('localVideoPlayer');
+
+            video.pause();
+            video.currentTime = 0;
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLocalVideoModal();
+            }
+        });
+
+    </script>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="index.html#about">About</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+
+                <div class="footer-social">
+                    <a href="https://linkedin.com/in/adithyarajendran" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <i data-lucide="linkedin"></i>
+                    </a>
+                    <a href="https://github.com/Adithya191101" target="_blank" rel="noopener" aria-label="GitHub">
+                        <i data-lucide="github"></i>
+                    </a>
+                    <a href="mailto:adithya191101@gmail.com" aria-label="Email">
+                        <i data-lucide="mail"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    &copy; 2025 Adithya Rajendran. All rights reserved.
+                </p>
+
+                <p class="footer-tagline">
+                    Built with passion for robotics
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Honors & Certifications - Adithya Rajendran">
+    <meta name="author" content="Adithya Rajendran">
+
+    <title>Honors & Certifications | Adithya Rajendran</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="nav-header" id="navbar">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-text">AR</span>
+            </a>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <i data-lucide="menu" class="menu-icon"></i>
+                <i data-lucide="x" class="close-icon"></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#education">Education</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="honors.html" class="active">Honors</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Honors Section -->
+        <section class="section honors page-section" id="honors">
+            <div class="container">
+                <h2 class="section-title">
+                    Honors & Certifications
+                </h2>
+
+                <h3 class="subsection-title">Certifications</h3>
+                <div class="honors-grid">
+                    <div class="honor-card animate-on-scroll">
+                        <img src="assets/Dassault_Systemes_logo.jpeg" alt="Dassault Systèmes" class="cert-logo">
+                        <div class="honor-content">
+                            <h3>Certified SOLIDWORKS Associate (CSWA)</h3>
+                            <p class="honor-org">Dassault Systèmes</p>
+                            <p class="honor-date">October 2021</p>
+                            <p class="credential-id">Credential ID: C-E7QM29SLVH</p>
+                            <div class="cert-skills">
+                                <span>SOLIDWORKS</span>
+                                <span>CAD</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="honor-card animate-on-scroll">
+                        <img src="assets/coursera_logo.jpeg" alt="Coursera" class="cert-logo">
+                        <div class="honor-content">
+                            <h3>Machine Learning for All</h3>
+                            <p class="honor-org">Coursera</p>
+                            <p class="honor-date">September 2021</p>
+                            <a href="https://www.coursera.org/account/accomplishments/certificate/XNT8GZGBNNNQ" target="_blank" rel="noopener" class="credential-link">
+                                <i data-lucide="external-link"></i>
+                                Show Credential
+                            </a>
+                            <div class="cert-skills">
+                                <span>Machine Learning</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="honor-card animate-on-scroll">
+                        <img src="assets/udemy_logo.jpeg" alt="Udemy" class="cert-logo">
+                        <div class="honor-content">
+                            <h3>Introduction to Programming Using Python</h3>
+                            <p class="honor-org">Udemy</p>
+                            <p class="honor-date">June 2021</p>
+                            <a href="https://www.udemy.com/certificate/UC-ab1564ad-d02a-42b7-8661-c49772216431/" target="_blank" rel="noopener" class="credential-link">
+                                <i data-lucide="external-link"></i>
+                                Show Credential
+                            </a>
+                            <div class="cert-skills">
+                                <span>Python</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">Robotics & Technical Awards</h3>
+                <div class="honors-grid">
+                    <div class="honor-card animate-on-scroll drone-award-card">
+                        <div class="award-icon gold">
+                            <i data-lucide="trophy"></i>
+                        </div>
+                        <div class="honor-content">
+                            <h3>National Rank 2 - Drone Aviation</h3>
+                            <p class="honor-org">Bharatiya Innovative Aeronautics Group (BIAG)</p>
+                            <p class="honor-date">April 2023</p>
+                            <p class="honor-description">Secured first position in the National Drone Aviation competition conducted by BIAG.</p>
+
+                            <div class="award-media">
+                                <div class="video-thumbnail" onclick="openVideoModal('syCGKWebg_c', 'Drone Aviation Competition')">
+                                    <img src="https://img.youtube.com/vi/syCGKWebg_c/hqdefault.jpg" alt="Drone Aviation Competition Video">
+                                    <div class="play-overlay">
+                                        <i data-lucide="play-circle"></i>
+                                    </div>
+                                    <span class="media-label">Watch Video</span>
+                                </div>
+                                <div class="cert-thumbnail" onclick="openCertificateModal('assets/PSG 1st Rank (Dorotics)-5.pdf', 'National Rank 2 - Drone Aviation')">
+                                    <div class="cert-preview">
+                                        <i data-lucide="award"></i>
+                                    </div>
+                                    <span class="media-label">View Certificate</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="honor-card animate-on-scroll drone-award-card">
+                        <div class="award-icon gold">
+                            <i data-lucide="trophy"></i>
+                        </div>
+                        <div class="honor-content">
+                            <h3>First Position - Mobile Robotics</h3>
+                            <p class="honor-org">PSG College of Technology</p>
+                            <p class="honor-date">January 2020</p>
+                            <p class="honor-description">Won First position in the Mobile Robotics Competition held at PSG College of Technology. Honoured by the District Collector of Coimbatore.</p>
+
+                            <div class="award-media">
+                                <div class="video-thumbnail" onclick="openImageModal('assets/mobile robotics award.jpg', 'Receiving Award from District Collector of Coimbatore')">
+                                    <img src="assets/mobile robotics award.jpg" alt="Receiving Mobile Robotics Award from District Collector">
+                                    <div class="play-overlay photo-overlay">
+                                        <i data-lucide="zoom-in"></i>
+                                    </div>
+                                    <span class="media-label">View Photo</span>
+                                </div>
+                                <div class="cert-thumbnail" onclick="openCertificateModal('assets/Mobilerobotics.pdf', 'First Position - Mobile Robotics')">
+                                    <div class="cert-preview">
+                                        <i data-lucide="award"></i>
+                                    </div>
+                                    <span class="media-label">View Certificate</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">Swimming Championships</h3>
+                <div class="honors-grid">
+                    <div class="honor-card animate-on-scroll">
+                        <div class="award-icon gold">
+                            <i data-lucide="medal"></i>
+                        </div>
+                        <div class="honor-content">
+                            <h3>First - 100m Breast Stroke</h3>
+                            <p class="honor-org">Coimbatore Sahodaya School Complex</p>
+                            <p class="honor-date">July 2016</p>
+                            <p class="honor-description">Inter School swimming meet organized by Amrita Vidyalayam, Sr.Sec School in the under 19 category group.</p>
+                        </div>
+                    </div>
+
+                    <div class="honor-card animate-on-scroll">
+                        <div class="award-icon silver">
+                            <i data-lucide="medal"></i>
+                        </div>
+                        <div class="honor-content">
+                            <h3>Second - 200m Breast Stroke</h3>
+                            <p class="honor-org">Coimbatore Sahodaya Schools Complex</p>
+                            <p class="honor-date">July 2016</p>
+                            <p class="honor-description">Inter School swimming meet organized by Amrita Vidyalayam, Sr.Sec School in the under 19 category group.</p>
+                        </div>
+                    </div>
+
+                    <div class="honor-card animate-on-scroll">
+                        <div class="award-icon silver">
+                            <i data-lucide="medal"></i>
+                        </div>
+                        <div class="honor-content">
+                            <h3>Second - 50m Back Stroke</h3>
+                            <p class="honor-org">Coimbatore Sahodaya Schools Complex</p>
+                            <p class="honor-date">July 2016</p>
+                            <p class="honor-description">Inter School swimming meet organized by Amrita Vidyalayam, Sr.Sec School in the under 19 category group.</p>
+                        </div>
+                    </div>
+
+                    <div class="honor-card animate-on-scroll">
+                        <div class="award-icon bronze">
+                            <i data-lucide="medal"></i>
+                        </div>
+                        <div class="honor-content">
+                            <h3>Third - 1500m Free Style</h3>
+                            <p class="honor-org">Coimbatore Sahodaya Schools Complex</p>
+                            <p class="honor-date">July 2016</p>
+                            <p class="honor-description">Inter School swimming meet organized by Amrita Vidyalayam, Sr.Sec School in the under 19 category group.</p>
+                        </div>
+                    </div>
+
+                    <div class="honor-card animate-on-scroll">
+                        <div class="award-icon bronze">
+                            <i data-lucide="medal"></i>
+                        </div>
+                        <div class="honor-content">
+                            <h3>Third - 400m Free Style</h3>
+                            <p class="honor-org">Coimbatore Sahodaya Schools Complex</p>
+                            <p class="honor-date">July 2016</p>
+                            <p class="honor-description">Inter School swimming meet organized by Amrita Vidyalayam, Sr.Sec School in the under 19 category group.</p>
+                        </div>
+                    </div>
+
+                    <div class="honor-card animate-on-scroll">
+                        <div class="award-icon silver">
+                            <i data-lucide="medal"></i>
+                        </div>
+                        <div class="honor-content">
+                            <h3>Second - 4x50m Free Style Relay</h3>
+                            <p class="honor-org">Coimbatore District Aquatic Association</p>
+                            <p class="honor-date">October 2015</p>
+                            <p class="honor-description">Tamilnadu State Junior and Sub Junior Inter School Swimming Championship-2015 conducted by Coimbatore District Aquatic Association (Affiliated to Tamilnadu State Aquatic Association) held at Jenneys Residency.</p>
+                        </div>
+                    </div>
+
+                    <div class="honor-card animate-on-scroll">
+                        <div class="award-icon bronze">
+                            <i data-lucide="medal"></i>
+                        </div>
+                        <div class="honor-content">
+                            <h3>Third - 4x50m Free Style Relay</h3>
+                            <p class="honor-org">Coimbatore District Aquatic Association</p>
+                            <p class="honor-date">August 2015</p>
+                            <p class="honor-description">Coimbatore District Junior and Sub Junior Inter School Swimming Meet-2015 (Affiliated to Tamilnadu State Aquatic Association) held at Jenneys Residency on 31st July and 1st August 2015.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="index.html#about">About</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+
+                <div class="footer-social">
+                    <a href="https://linkedin.com/in/adithyarajendran" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <i data-lucide="linkedin"></i>
+                    </a>
+                    <a href="https://github.com/Adithya191101" target="_blank" rel="noopener" aria-label="GitHub">
+                        <i data-lucide="github"></i>
+                    </a>
+                    <a href="mailto:adithya191101@gmail.com" aria-label="Email">
+                        <i data-lucide="mail"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    &copy; 2025 Adithya Rajendran. All rights reserved.
+                </p>
+
+                <p class="footer-tagline">
+                    Built with passion for robotics
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Certificate Modal -->
+    <div class="certificate-modal" id="certificateModal">
+        <div class="modal-overlay" onclick="closeCertificateModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeCertificateModal()">
+                <i data-lucide="x"></i>
+            </button>
+            <h3 class="modal-title" id="modalTitle">Certificate</h3>
+            <iframe id="certificateFrame" src="" frameborder="0"></iframe>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div class="certificate-modal" id="imageModal">
+        <div class="modal-overlay" onclick="closeImageModal()"></div>
+        <div class="modal-content image-modal-content">
+            <button class="modal-close" onclick="closeImageModal()">
+                <i data-lucide="x"></i>
+            </button>
+            <h3 class="modal-title" id="imageModalTitle">Photo</h3>
+            <img id="modalImage" src="" alt="Award Photo">
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div class="certificate-modal" id="videoModal">
+        <div class="modal-overlay" onclick="closeVideoModal()"></div>
+        <div class="modal-content video-modal-content">
+            <button class="modal-close" onclick="closeVideoModal()">
+                <i data-lucide="x"></i>
+            </button>
+            <h3 class="modal-title" id="videoModalTitle">Video</h3>
+            <div class="video-preview-wrapper">
+                <img id="videoThumbnail" src="" alt="Video Thumbnail">
+                <a id="youtubeLink" href="" target="_blank" rel="noopener" class="youtube-play-btn">
+                    <i data-lucide="play"></i>
+                    <span>Watch on YouTube</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

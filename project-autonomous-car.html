@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Development of Scalable Autonomous Car - CARLA Simulation Project by Adithya Rajendran">
+    <meta name="author" content="Adithya Rajendran">
+
+    <title>Autonomous Car | Adithya Rajendran</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .project-detail-hero {
+            padding: 120px 0 60px;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+        }
+
+        .project-detail-hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .project-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .project-meta-item i {
+            width: 18px;
+            height: 18px;
+            color: var(--accent-bright);
+        }
+
+        .project-content {
+            padding: 4rem 0;
+        }
+
+        .project-section {
+            margin-bottom: 3rem;
+        }
+
+        .project-section h2 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .project-section h2 i {
+            width: 24px;
+            height: 24px;
+            color: var(--accent-bright);
+        }
+
+        .project-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .media-card {
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .media-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+            border-color: var(--accent-bright);
+        }
+
+        .media-card-content {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .media-card-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(124, 58, 237, 0.2));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .media-card-icon i {
+            width: 28px;
+            height: 28px;
+            color: var(--accent-bright);
+        }
+
+        .media-card-icon.video {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.2));
+        }
+
+        .media-card-icon.video i {
+            color: #ef4444;
+        }
+
+        .media-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .media-card p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        .tech-stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tech-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+        }
+
+        .tech-item i {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-bright);
+        }
+
+        .workflow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .workflow-step {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .step-content h3 {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-github {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-github:hover {
+            border-color: var(--accent-bright);
+            box-shadow: var(--shadow-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-github i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-bright);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .back-link i {
+            width: 18px;
+            height: 18px;
+        }
+
+        .feature-highlight {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-highlight h3 {
+            color: var(--accent-bright);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-highlight h3 i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .system-diagram {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .system-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .system-card:hover {
+            border-color: var(--accent-bright);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .system-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .system-card h3 i {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-bright);
+        }
+
+        .system-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .system-card li {
+            color: var(--text-secondary);
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .system-card li:last-child {
+            border-bottom: none;
+        }
+
+        .system-card li::before {
+            content: '>';
+            color: var(--accent-bright);
+            font-family: var(--font-mono);
+        }
+
+        .autonomy-levels {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .autonomy-level {
+            text-align: center;
+            padding: 1.5rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .autonomy-level.target {
+            border-color: var(--accent-bright);
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(124, 58, 237, 0.1));
+        }
+
+        .autonomy-level .level-number {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .autonomy-level .level-name {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin: 0.5rem 0;
+        }
+
+        .autonomy-level .level-desc {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .workflow-step {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .project-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="nav-header" id="navbar">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-text">AR</span>
+            </a>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <i data-lucide="menu" class="menu-icon"></i>
+                <i data-lucide="x" class="close-icon"></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#education">Education</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
+                <li><a href="honors.html">Honors</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Project Hero -->
+        <section class="project-detail-hero">
+            <div class="container">
+                <a href="projects.html" class="back-link">
+                    <i data-lucide="arrow-left"></i>
+                    Back to Projects
+                </a>
+
+                <h1>Development of Scalable Autonomous Car</h1>
+                <p class="project-tagline" style="color: var(--text-secondary); font-size: 1.1rem; max-width: 800px;">
+                    A simulation-based autonomous vehicle project using CARLA simulator, implementing SLAM algorithms to achieve Level 2 autonomy with Indian traffic conditions.
+                </p>
+
+                <div class="project-meta">
+                    <div class="project-meta-item">
+                        <i data-lucide="calendar"></i>
+                        <span>July 2022 - November 2022</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="building"></i>
+                        <span>PSG College of Technology</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="users"></i>
+                        <span>Team Project</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="car"></i>
+                        <span>Autonomous Vehicle Simulation</span>
+                    </div>
+                </div>
+
+                <div class="cta-buttons">
+                    <a href="https://drive.google.com/file/d/1zJ5ajk8yTfrdhIoQuQz9foeddBQ1ZE4_/view" target="_blank" rel="noopener" class="btn-github">
+                        <i data-lucide="file-text"></i>
+                        View Project Report
+                    </a>
+                    <a href="https://drive.google.com/file/d/1-Uc2jZ5KEipDcS5EVqU0B1SKMTNTPPtc/view" target="_blank" rel="noopener" class="btn-github">
+                        <i data-lucide="play-circle"></i>
+                        Watch Demo Video
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Content -->
+        <section class="project-content">
+            <div class="container">
+
+                <!-- Overview -->
+                <div class="project-section">
+                    <h2><i data-lucide="info"></i> Project Overview</h2>
+                    <p>
+                        This project focuses on developing a scalable autonomous car simulation using the CARLA (Car Learning to Act) open-source simulator. Following CARLA's official documentation and baseline implementations, the team built an autonomous driving system capable of navigating through simulated urban environments.
+                    </p>
+                    <p>
+                        The implementation combines <strong>ORB-SLAM2</strong> for visual simultaneous localization and mapping with <strong>Deep Q-Network (DQN)</strong> reinforcement learning for decision making, achieving Level 2 autonomy where the vehicle can control both steering and acceleration/deceleration.
+                    </p>
+
+                    <div class="feature-highlight">
+                        <h3><i data-lucide="target"></i> Project Goal</h3>
+                        <p style="margin: 0;">
+                            Achieve Level 2 autonomy in simulation by implementing ORB-SLAM2 for localization and DQN-based reinforcement learning for autonomous navigation and control.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Media Section -->
+                <div class="project-section">
+                    <h2><i data-lucide="folder-open"></i> Project Documentation</h2>
+                    <p>Access the complete project documentation including the detailed report and demonstration video showing the autonomous car in action.</p>
+
+                    <div class="media-grid">
+                        <a href="https://drive.google.com/file/d/1zJ5ajk8yTfrdhIoQuQz9foeddBQ1ZE4_/view" target="_blank" rel="noopener" class="media-card">
+                            <div class="media-card-content">
+                                <div class="media-card-icon">
+                                    <i data-lucide="file-text"></i>
+                                </div>
+                                <h3>Project Report</h3>
+                                <p>Complete documentation with methodology, implementation details, and results</p>
+                            </div>
+                        </a>
+                        <a href="https://drive.google.com/file/d/1-Uc2jZ5KEipDcS5EVqU0B1SKMTNTPPtc/view" target="_blank" rel="noopener" class="media-card">
+                            <div class="media-card-content">
+                                <div class="media-card-icon video">
+                                    <i data-lucide="play"></i>
+                                </div>
+                                <h3>Demo Video</h3>
+                                <p>Watch the autonomous car navigating through simulated Indian traffic</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Autonomy Levels -->
+                <div class="project-section">
+                    <h2><i data-lucide="layers"></i> Autonomy Levels</h2>
+                    <p>The project targeted Level 2 autonomy, which represents partial automation where the vehicle can perform steering and acceleration tasks.</p>
+
+                    <div class="autonomy-levels">
+                        <div class="autonomy-level">
+                            <div class="level-number">L0</div>
+                            <div class="level-name">No Automation</div>
+                            <div class="level-desc">Human controls everything</div>
+                        </div>
+                        <div class="autonomy-level">
+                            <div class="level-number">L1</div>
+                            <div class="level-name">Driver Assistance</div>
+                            <div class="level-desc">Steering OR acceleration</div>
+                        </div>
+                        <div class="autonomy-level target">
+                            <div class="level-number">L2</div>
+                            <div class="level-name">Partial Automation</div>
+                            <div class="level-desc">Steering AND acceleration</div>
+                        </div>
+                        <div class="autonomy-level">
+                            <div class="level-number">L3</div>
+                            <div class="level-name">Conditional</div>
+                            <div class="level-desc">Limited self-driving</div>
+                        </div>
+                        <div class="autonomy-level">
+                            <div class="level-number">L4</div>
+                            <div class="level-name">High Automation</div>
+                            <div class="level-desc">Most conditions handled</div>
+                        </div>
+                        <div class="autonomy-level">
+                            <div class="level-number">L5</div>
+                            <div class="level-name">Full Automation</div>
+                            <div class="level-desc">Complete autonomy</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Implementation -->
+                <div class="project-section">
+                    <h2><i data-lucide="code"></i> Implementation Approach</h2>
+                    <p>The project followed a systematic approach to develop and test the autonomous driving algorithms in simulation.</p>
+
+                    <div class="workflow-steps">
+                        <div class="workflow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Environment Setup</h3>
+                                <p>Configured CARLA simulator to replicate Indian traffic conditions including auto-rickshaws, two-wheelers, pedestrians, and diverse road conditions with varying lane discipline.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Sensor Integration</h3>
+                                <p>Implemented virtual sensors including cameras, LiDAR, and radar to provide the autonomous system with environmental perception data.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>ORB-SLAM2 Implementation</h3>
+                                <p>Integrated ORB-SLAM2 (Oriented FAST and Rotated BRIEF) for visual simultaneous localization and mapping, enabling real-time camera-based localization and sparse 3D reconstruction of the environment.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>DQN Agent Development</h3>
+                                <p>Implemented Deep Q-Network (DQN) reinforcement learning agent following CARLA's baseline approach, utilizing experience replay and target networks for stable learning of driving policies.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h3>Training & Evaluation</h3>
+                                <p>Trained the DQN agent through multiple episodes in CARLA environment, optimizing reward functions for lane keeping, collision avoidance, and navigation objectives.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Features -->
+                <div class="project-section">
+                    <h2><i data-lucide="star"></i> Key Features</h2>
+
+                    <div class="system-diagram">
+                        <div class="system-card">
+                            <h3><i data-lucide="eye"></i> Perception System</h3>
+                            <ul>
+                                <li>RGB camera sensor integration</li>
+                                <li>Depth camera for distance estimation</li>
+                                <li>LiDAR point cloud processing</li>
+                                <li>Semantic segmentation camera</li>
+                            </ul>
+                        </div>
+
+                        <div class="system-card">
+                            <h3><i data-lucide="navigation"></i> SLAM Algorithm</h3>
+                            <ul>
+                                <li>ORB-SLAM2 implementation</li>
+                                <li>Feature extraction & matching</li>
+                                <li>Real-time localization</li>
+                                <li>Sparse 3D reconstruction</li>
+                            </ul>
+                        </div>
+
+                        <div class="system-card">
+                            <h3><i data-lucide="brain"></i> Reinforcement Learning</h3>
+                            <ul>
+                                <li>DQN (Deep Q-Network) agent</li>
+                                <li>Experience replay buffer</li>
+                                <li>Epsilon-greedy exploration</li>
+                                <li>Target network updates</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technologies -->
+                <div class="project-section">
+                    <h2><i data-lucide="cpu"></i> Technologies Used</h2>
+
+                    <div class="tech-stack-grid">
+                        <div class="tech-item">
+                            <i data-lucide="code"></i>
+                            <span>Python</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="car"></i>
+                            <span>CARLA Simulator</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="map-pin"></i>
+                            <span>SLAM</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="eye"></i>
+                            <span>OpenCV</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="brain"></i>
+                            <span>Reinforcement Learning</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="box"></i>
+                            <span>NumPy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources -->
+                <div class="project-section">
+                    <h2><i data-lucide="download"></i> Project Resources</h2>
+                    <p>Download the complete project documentation and watch the demonstration video:</p>
+
+                    <div class="cta-buttons" style="margin-top: 1rem;">
+                        <a href="https://drive.google.com/file/d/1zJ5ajk8yTfrdhIoQuQz9foeddBQ1ZE4_/view" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="file-text"></i>
+                            Project Report (PDF)
+                        </a>
+                        <a href="https://drive.google.com/file/d/1-Uc2jZ5KEipDcS5EVqU0B1SKMTNTPPtc/view" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="video"></i>
+                            Demo Video
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="index.html#about">About</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+
+                <div class="footer-social">
+                    <a href="https://linkedin.com/in/adithyarajendran" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <i data-lucide="linkedin"></i>
+                    </a>
+                    <a href="https://github.com/Adithya191101" target="_blank" rel="noopener" aria-label="GitHub">
+                        <i data-lucide="github"></i>
+                    </a>
+                    <a href="mailto:adithya191101@gmail.com" aria-label="Email">
+                        <i data-lucide="mail"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    &copy; 2025 Adithya Rajendran. All rights reserved.
+                </p>
+
+                <p class="footer-tagline">
+                    Built with passion for robotics
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

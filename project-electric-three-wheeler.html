@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Electric Three Wheeler - Campus Solar Panel Transport Vehicle by Adithya Rajendran">
+    <meta name="author" content="Adithya Rajendran">
+
+    <title>Electric Three Wheeler | Adithya Rajendran</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .project-detail-hero {
+            padding: 120px 0 60px;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+        }
+
+        .project-detail-hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .project-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .project-meta-item i {
+            width: 18px;
+            height: 18px;
+            color: var(--accent-bright);
+        }
+
+        .project-content {
+            padding: 4rem 0;
+        }
+
+        .project-section {
+            margin-bottom: 3rem;
+        }
+
+        .project-section h2 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .project-section h2 i {
+            width: 24px;
+            height: 24px;
+            color: var(--accent-bright);
+        }
+
+        .project-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .project-image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-image-card {
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-image-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .project-image-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .project-image-card .caption {
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .tech-stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tech-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+        }
+
+        .tech-item i {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-bright);
+        }
+
+        .components-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .component-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+        }
+
+        .component-item i {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-violet);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .component-item span {
+            color: var(--text-secondary);
+        }
+
+        .workflow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .workflow-step {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .step-content h3 {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-github {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-github:hover {
+            border-color: var(--accent-bright);
+            box-shadow: var(--shadow-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-github i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-bright);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .back-link i {
+            width: 18px;
+            height: 18px;
+        }
+
+        .feature-highlight {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-highlight h3 {
+            color: var(--accent-bright);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-highlight h3 i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .specs-table {
+            width: 100%;
+            margin-top: 1.5rem;
+            border-collapse: collapse;
+        }
+
+        .specs-table th,
+        .specs-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-glow);
+        }
+
+        .specs-table th {
+            color: var(--accent-bright);
+            font-weight: 600;
+            width: 40%;
+        }
+
+        .specs-table td {
+            color: var(--text-secondary);
+        }
+
+        .specs-table tr:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .system-diagram {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .system-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .system-card:hover {
+            border-color: var(--accent-bright);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .system-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .system-card h3 i {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-bright);
+        }
+
+        .system-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .system-card li {
+            color: var(--text-secondary);
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .system-card li:last-child {
+            border-bottom: none;
+        }
+
+        .system-card li::before {
+            content: '>';
+            color: var(--accent-bright);
+            font-family: var(--font-mono);
+        }
+
+        @media (max-width: 768px) {
+            .workflow-step {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .project-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="nav-header" id="navbar">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-text">AR</span>
+            </a>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <i data-lucide="menu" class="menu-icon"></i>
+                <i data-lucide="x" class="close-icon"></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#education">Education</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
+                <li><a href="honors.html">Honors</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Project Hero -->
+        <section class="project-detail-hero">
+            <div class="container">
+                <a href="projects.html" class="back-link">
+                    <i data-lucide="arrow-left"></i>
+                    Back to Projects
+                </a>
+
+                <h1>Electric Three Wheeler - Campus Solar Panel Transporter</h1>
+                <p class="project-tagline" style="color: var(--text-secondary); font-size: 1.1rem; max-width: 800px;">
+                    A reverse-engineered electric utility vehicle designed in SOLIDWORKS for transporting solar panels around the college campus. The design has been implemented and is currently in use at PSG College of Technology.
+                </p>
+
+                <div class="project-meta">
+                    <div class="project-meta-item">
+                        <i data-lucide="calendar"></i>
+                        <span>December 2021 - February 2022</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="building"></i>
+                        <span>PSG College of Technology</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="users"></i>
+                        <span>Team Project</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="zap"></i>
+                        <span>Electric Vehicle Design</span>
+                    </div>
+                </div>
+
+                <div class="cta-buttons">
+                    <a href="https://github.com/Adithya191101/Canteen-EV" target="_blank" rel="noopener" class="btn-github">
+                        <i data-lucide="github"></i>
+                        View on GitHub
+                    </a>
+                    <a href="https://github.com/Adithya191101/Canteen-EV/tree/main/Canteen%20EV" target="_blank" rel="noopener" class="btn-github">
+                        <i data-lucide="folder"></i>
+                        CAD Files
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Content -->
+        <section class="project-content">
+            <div class="container">
+
+                <!-- Overview -->
+                <div class="project-section">
+                    <h2><i data-lucide="info"></i> Project Overview</h2>
+                    <p>
+                        This project involved reverse-engineering an existing three-wheeler vehicle and redesigning it as an electric utility vehicle for transporting solar panels around the college campus. The team physically measured an actual three-wheeler, analyzed its dimensions and structure, and modified the design to accommodate an electric powertrain.
+                    </p>
+                    <p>
+                        Extensive field research was conducted to identify suitable motors capable of handling the required payload. The research resulted in motor recommendations that can pull up to <strong>1.3 tons of payload</strong>, ensuring the vehicle can reliably transport heavy solar panel installations across the campus terrain.
+                    </p>
+
+                    <div class="feature-highlight">
+                        <h3><i data-lucide="check-circle"></i> Successfully Implemented</h3>
+                        <p style="margin: 0;">
+                            This design has been implemented and is currently operational at PSG College of Technology, serving as a practical solution for campus solar panel transportation needs.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Design Images -->
+                <div class="project-section">
+                    <h2><i data-lucide="image"></i> Design & Visualization</h2>
+                    <p>The vehicle was designed using SOLIDWORKS with detailed 3D models created for all components including the frame, suspension, steering mechanism, and cargo bed assembly.</p>
+
+                    <div class="project-image-grid">
+                        <div class="project-image-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/Canteen-EV/main/Canteen%20EV/2-2-2022/Assembly%20EV/Assembly%20EV/Parts/Rough%20Assembly1.JPG', '3D CAD Model - Complete Vehicle Assembly')">
+                            <img src="https://raw.githubusercontent.com/Adithya191101/Canteen-EV/main/Canteen%20EV/2-2-2022/Assembly%20EV/Assembly%20EV/Parts/Rough%20Assembly1.JPG" alt="3D CAD Model of Electric Three Wheeler">
+                            <div class="caption">3D CAD Model - Complete Vehicle Assembly</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('https://raw.githubusercontent.com/Adithya191101/Canteen-EV/main/Canteen%20EV/tyre/Wheelbarrow%20Wheel.JPG', 'Pneumatic Wheelbarrow Wheel Design')">
+                            <img src="https://raw.githubusercontent.com/Adithya191101/Canteen-EV/main/Canteen%20EV/tyre/Wheelbarrow%20Wheel.JPG" alt="Wheelbarrow Wheel Design">
+                            <div class="caption">Pneumatic Wheelbarrow Wheel Design</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vehicle Architecture -->
+                <div class="project-section">
+                    <h2><i data-lucide="layout"></i> Vehicle Architecture</h2>
+                    <p>The three-wheeler utilizes a tricycle configuration with a single front steering wheel and dual rear drive wheels, providing excellent stability while maintaining a compact footprint for navigating narrow campus pathways.</p>
+
+                    <div class="system-diagram">
+                        <div class="system-card">
+                            <h3><i data-lucide="box"></i> Chassis System</h3>
+                            <ul>
+                                <li>Square tube steel frame construction</li>
+                                <li>Modular design for easy maintenance</li>
+                                <li>Optimized weight distribution</li>
+                                <li>Rust-resistant coating</li>
+                            </ul>
+                        </div>
+
+                        <div class="system-card">
+                            <h3><i data-lucide="settings"></i> Steering System</h3>
+                            <ul>
+                                <li>Single front wheel configuration</li>
+                                <li>Ackermann steering geometry</li>
+                                <li>Handlebar-style controls</li>
+                                <li>Tight turning radius capability</li>
+                            </ul>
+                        </div>
+
+                        <div class="system-card">
+                            <h3><i data-lucide="truck"></i> Cargo System</h3>
+                            <ul>
+                                <li>Hydraulic cylinder-operated tilting bed</li>
+                                <li>Solar panel securing brackets</li>
+                                <li>Padded contact surfaces</li>
+                                <li>Easy load/unload mechanism</li>
+                            </ul>
+                        </div>
+
+                        <div class="system-card">
+                            <h3><i data-lucide="disc"></i> Suspension System</h3>
+                            <ul>
+                                <li>Fox 40 fork front suspension</li>
+                                <li>Leaf spring rear suspension</li>
+                                <li>Pneumatic wheelbarrow wheels</li>
+                                <li>Vibration dampening for cargo</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Design Process -->
+                <div class="project-section">
+                    <h2><i data-lucide="pencil-ruler"></i> Design Process</h2>
+                    <p>The project followed a systematic reverse-engineering approach combined with field research to create an optimized electric vehicle design.</p>
+
+                    <div class="workflow-steps">
+                        <div class="workflow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Physical Measurement</h3>
+                                <p>The team physically measured an existing three-wheeler vehicle, documenting all critical dimensions, structural components, and mechanical assemblies for accurate CAD reproduction.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Design Modification</h3>
+                                <p>The original design was modified in SOLIDWORKS to accommodate electric vehicle components, including motor mounts, battery housing, and an optimized cargo bed for solar panel transport.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Motor Field Research</h3>
+                                <p>Extensive field research was conducted to identify and recommend suitable electric motors. The selected motors are capable of pulling up to 1.3 tons of payload, ensuring reliable performance for heavy solar panel loads.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>Implementation</h3>
+                                <p>The final design was approved and implemented at PSG College of Technology, where it now serves as an operational vehicle for campus solar panel transportation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical Specifications -->
+                <div class="project-section">
+                    <h2><i data-lucide="clipboard-list"></i> Technical Specifications</h2>
+
+                    <table class="specs-table">
+                        <tr>
+                            <th>Configuration</th>
+                            <td>Three-wheel (1 front, 2 rear)</td>
+                        </tr>
+                        <tr>
+                            <th>Frame Material</th>
+                            <td>Square tube steel</td>
+                        </tr>
+                        <tr>
+                            <th>Drive Type</th>
+                            <td>Dual rear-wheel electric drive</td>
+                        </tr>
+                        <tr>
+                            <th>Payload Capacity</th>
+                            <td>Up to 1.3 tons</td>
+                        </tr>
+                        <tr>
+                            <th>Front Suspension</th>
+                            <td>Fox 40 fork suspension</td>
+                        </tr>
+                        <tr>
+                            <th>Rear Suspension</th>
+                            <td>Leaf spring</td>
+                        </tr>
+                        <tr>
+                            <th>Wheels</th>
+                            <td>Pneumatic wheelbarrow wheels</td>
+                        </tr>
+                        <tr>
+                            <th>Cargo Mechanism</th>
+                            <td>Hydraulic cylinder tilting bed</td>
+                        </tr>
+                        <tr>
+                            <th>Status</th>
+                            <td>Implemented at PSG College of Technology</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- Components -->
+                <div class="project-section">
+                    <h2><i data-lucide="wrench"></i> Key Components</h2>
+
+                    <h3 style="color: var(--text-primary); margin: 1.5rem 0 1rem;">Mechanical Components</h3>
+                    <div class="components-list">
+                        <div class="component-item">
+                            <i data-lucide="circle"></i>
+                            <span><strong>Square Tube Frame</strong> - Main structural chassis</span>
+                        </div>
+                        <div class="component-item">
+                            <i data-lucide="circle"></i>
+                            <span><strong>Fox 40 Fork</strong> - Front suspension system</span>
+                        </div>
+                        <div class="component-item">
+                            <i data-lucide="circle"></i>
+                            <span><strong>Leaf Springs</strong> - Rear axle suspension</span>
+                        </div>
+                        <div class="component-item">
+                            <i data-lucide="circle"></i>
+                            <span><strong>Hydraulic Cylinder</strong> - Cargo bed tilting mechanism</span>
+                        </div>
+                        <div class="component-item">
+                            <i data-lucide="circle"></i>
+                            <span><strong>Pneumatic Wheels</strong> - Wheelbarrow-style for terrain handling</span>
+                        </div>
+                        <div class="component-item">
+                            <i data-lucide="circle"></i>
+                            <span><strong>Steering Linkage</strong> - Single wheel steering assembly</span>
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--text-primary); margin: 1.5rem 0 1rem;">Drive Components (Recommended)</h3>
+                    <div class="components-list">
+                        <div class="component-item">
+                            <i data-lucide="circle"></i>
+                            <span><strong>Electric Motors (x2)</strong> - High-torque motors for 1.3 ton payload capacity</span>
+                        </div>
+                        <div class="component-item">
+                            <i data-lucide="circle"></i>
+                            <span><strong>Battery Pack</strong> - Power source for electric drive system</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Software & Tools -->
+                <div class="project-section">
+                    <h2><i data-lucide="code"></i> Software & Tools</h2>
+                    <p>The project utilized industry-standard CAD software for mechanical design and reverse engineering.</p>
+
+                    <div class="tech-stack-grid">
+                        <div class="tech-item">
+                            <i data-lucide="box"></i>
+                            <span>SOLIDWORKS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Files -->
+                <div class="project-section">
+                    <h2><i data-lucide="folder-open"></i> Project Resources</h2>
+                    <p>Access the complete project files including CAD designs and assembly files:</p>
+
+                    <div class="cta-buttons" style="margin-top: 1rem;">
+                        <a href="https://github.com/Adithya191101/Canteen-EV" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="github"></i>
+                            GitHub Repository
+                        </a>
+                        <a href="https://github.com/Adithya191101/Canteen-EV/tree/main/Canteen%20EV/2-2-2022" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="folder"></i>
+                            Final Assembly Files
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Image Modal -->
+    <div class="certificate-modal" id="imageModal">
+        <div class="modal-overlay" onclick="closeImageModal()"></div>
+        <div class="modal-content image-modal-content">
+            <button class="modal-close" onclick="closeImageModal()">
+                <i data-lucide="x"></i>
+            </button>
+            <h3 class="modal-title" id="imageModalTitle">Image</h3>
+            <img id="modalImage" src="" alt="Project Image">
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="index.html#about">About</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+
+                <div class="footer-social">
+                    <a href="https://linkedin.com/in/adithyarajendran" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <i data-lucide="linkedin"></i>
+                    </a>
+                    <a href="https://github.com/Adithya191101" target="_blank" rel="noopener" aria-label="GitHub">
+                        <i data-lucide="github"></i>
+                    </a>
+                    <a href="mailto:adithya191101@gmail.com" aria-label="Email">
+                        <i data-lucide="mail"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    &copy; 2025 Adithya Rajendran. All rights reserved.
+                </p>
+
+                <p class="footer-tagline">
+                    Built with passion for robotics
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
