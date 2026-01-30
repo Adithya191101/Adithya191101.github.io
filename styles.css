@@ -1,27 +1,30 @@
 /* ===== CSS Variables ===== */
 :root {
-    /* Colors */
-    --bg-primary: #000000;
-    --bg-secondary: #0a0a1a;
-    --bg-card: rgba(15, 23, 42, 0.8);
-    --bg-card-hover: rgba(15, 23, 42, 0.95);
+    /* Colors - Professional Subtle Palette */
+    --bg-primary: #0f0f12;
+    --bg-secondary: #16161a;
+    --bg-card: rgba(26, 26, 32, 0.9);
+    --bg-card-hover: rgba(32, 32, 40, 0.95);
 
-    --accent-blue: #2563eb;
-    --accent-violet: #7c3aed;
-    --accent-purple: #9333ea;
-    --accent-bright: #3b82f6;
+    /* Subtle accent colors - muted teal/slate blue */
+    --accent-blue: #4a90a4;
+    --accent-violet: #6b7b8a;
+    --accent-purple: #5a6a7a;
+    --accent-bright: #5ba3b8;
 
-    --text-primary: #ffffff;
-    --text-secondary: #cbd5e1;
-    --text-muted: #64748b;
+    /* Professional text colors */
+    --text-primary: #f0f0f2;
+    --text-secondary: #a8adb8;
+    --text-muted: #6b7280;
 
-    --border-glow: rgba(99, 102, 241, 0.3);
-    --border-hover: rgba(139, 92, 246, 0.5);
+    /* Subtle borders */
+    --border-glow: rgba(91, 163, 184, 0.15);
+    --border-hover: rgba(91, 163, 184, 0.35);
 
-    /* Gradients */
-    --gradient-accent: linear-gradient(135deg, var(--accent-blue), var(--accent-violet), var(--accent-purple));
-    --gradient-text: linear-gradient(135deg, var(--accent-bright), var(--accent-violet));
-    --gradient-bg: radial-gradient(ellipse at top, #0f172a 0%, #000000 50%, #000000 100%);
+    /* Gradients - More subtle */
+    --gradient-accent: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+    --gradient-text: linear-gradient(135deg, var(--accent-bright), #7a8a9a);
+    --gradient-bg: radial-gradient(ellipse at top, #1a1a22 0%, #0f0f12 50%, #0f0f12 100%);
 
     /* Typography */
     --font-heading: 'Space Grotesk', sans-serif;
@@ -37,9 +40,9 @@
     --transition-normal: 0.3s ease;
     --transition-slow: 0.5s ease;
 
-    /* Shadows */
-    --shadow-glow: 0 0 30px rgba(99, 102, 241, 0.3);
-    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.5);
+    /* Shadows - More subtle */
+    --shadow-glow: 0 0 25px rgba(91, 163, 184, 0.15);
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 /* ===== Reset & Base ===== */
@@ -246,9 +249,9 @@ strong {
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 80% 80%, rgba(147, 51, 234, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+        radial-gradient(circle at 20% 20%, rgba(74, 144, 164, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(91, 163, 184, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(107, 123, 138, 0.05) 0%, transparent 50%);
     animation: meshFloat 20s ease-in-out infinite;
 }
 
@@ -293,10 +296,10 @@ strong {
 
 @keyframes ringGlow {
     0%, 100% {
-        box-shadow: 0 0 20px rgba(99, 102, 241, 0.5), 0 0 40px rgba(147, 51, 234, 0.3);
+        box-shadow: 0 0 15px rgba(91, 163, 184, 0.25), 0 0 30px rgba(74, 144, 164, 0.15);
     }
     50% {
-        box-shadow: 0 0 30px rgba(99, 102, 241, 0.7), 0 0 60px rgba(147, 51, 234, 0.5);
+        box-shadow: 0 0 20px rgba(91, 163, 184, 0.35), 0 0 40px rgba(74, 144, 164, 0.2);
     }
 }
 
@@ -359,12 +362,12 @@ strong {
 .btn-primary {
     background: var(--gradient-accent);
     color: var(--text-primary);
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 4px 15px rgba(91, 163, 184, 0.2);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(99, 102, 241, 0.5);
+    box-shadow: 0 6px 25px rgba(91, 163, 184, 0.3);
     color: var(--text-primary);
 }
 
@@ -593,10 +596,10 @@ strong {
     top: 0;
     width: 12px;
     height: 12px;
-    background: var(--accent-violet);
+    background: var(--accent-bright);
     border-radius: 50%;
     transform: translateX(-5px);
-    box-shadow: 0 0 15px var(--accent-violet);
+    box-shadow: 0 0 10px rgba(91, 163, 184, 0.4);
 }
 
 .timeline-content {
@@ -1220,7 +1223,7 @@ strong {
 
 .btn-contact-nda:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 10px 25px rgba(91, 163, 184, 0.2);
 }
 
 .btn-contact-nda i {
@@ -1906,21 +1909,21 @@ strong {
 
 @keyframes glow {
     0%, 100% {
-        box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+        box-shadow: 0 0 15px rgba(91, 163, 184, 0.25);
     }
     50% {
-        box-shadow: 0 0 40px rgba(147, 51, 234, 0.6);
+        box-shadow: 0 0 25px rgba(91, 163, 184, 0.35);
     }
 }
 
 /* Gradient text animation */
 .hero-name {
-    background: linear-gradient(135deg, var(--text-primary), var(--accent-bright), var(--accent-violet), var(--text-primary));
+    background: linear-gradient(135deg, var(--text-primary), var(--accent-bright), #8a9aa8, var(--text-primary));
     background-size: 300% 300%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: gradientShift 8s ease infinite;
+    animation: gradientShift 10s ease infinite;
 }
 
 @keyframes gradientShift {
@@ -1981,7 +1984,7 @@ strong {
 
 .skill-tag:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 4px 12px rgba(91, 163, 184, 0.15);
 }
 
 /* Timeline marker pulse */
@@ -2008,8 +2011,8 @@ strong {
 }
 
 .social-links a:hover {
-    transform: translateY(-5px) rotate(10deg);
-    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+    transform: translateY(-5px) rotate(5deg);
+    box-shadow: 0 10px 25px rgba(91, 163, 184, 0.2);
 }
 
 /* Nav link underline animation */
@@ -2425,7 +2428,7 @@ main {
 
 /* Subtle text shadow for headings */
 .section-title {
-    text-shadow: 0 0 40px rgba(99, 102, 241, 0.3);
+    text-shadow: 0 0 30px rgba(91, 163, 184, 0.15);
 }
 
 
