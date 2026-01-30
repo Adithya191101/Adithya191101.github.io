@@ -11,7 +11,11 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- GSAP for smooth animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -47,304 +51,408 @@
     <main>
         <!-- Projects Section -->
         <section class="section projects page-section" id="projects">
+            <div class="animated-gradient-bg"></div>
+            <div class="grid-bg"></div>
+            <div class="bg-orb bg-orb-1"></div>
+            <div class="bg-orb bg-orb-2"></div>
+            <div class="moving-lines">
+                <div class="moving-line"></div>
+                <div class="moving-line"></div>
+                <div class="moving-line"></div>
+                <div class="moving-line"></div>
+            </div>
+            <div class="floating-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+            <div class="pulse-ring pulse-ring-1"></div>
+            <div class="pulse-ring pulse-ring-2"></div>
             <div class="container">
-                <h2 class="section-title">
-                    Featured Projects
-                </h2>
+                <h2 class="section-title">Featured Projects</h2>
 
                 <div class="projects-grid">
                     <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-vla-manipulation.html'">
-                        <div class="project-header">
-                            <i data-lucide="folder" class="project-folder"></i>
-                            <div class="project-links">
-                                <a href="https://github.com/Adithya191101/hugging-face_So101" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
-                                    <i data-lucide="github"></i>
-                                </a>
+                        <div class="project-thumbnail">
+                            <img src="assets/vla-manipulation/SmolVLA_thumb.jpg" alt="Vision-Language Manipulation">
+                            <div class="tech-overlay">
+                                <span class="tech-badge">AI/ML</span>
                             </div>
                         </div>
-                        <h3 class="project-title">Vision-Language Manipulation Policies</h3>
-                        <p class="project-date">December 2024 - January 2025</p>
-                        <p class="project-description">ACT and SmolVLA models for robotic pick-and-place on SO-101 arm, achieving 80% success rate with temporal action chunking and language-conditioned grasping.</p>
-                        <div class="project-tags">
-                            <span>SmolVLA</span>
-                            <span>ACT</span>
-                            <span>LeRobot</span>
-                            <span>HuggingFace</span>
+                        <div class="project-card-content">
+                            <div class="project-header">
+                                <h3 class="project-title">Vision-Language Manipulation Policies</h3>
+                                <div class="project-links">
+                                    <a href="https://github.com/Adithya191101/hugging-face_So101" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
+                                        <i data-lucide="github"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="project-date">December 2024 - January 2025</p>
+                            <p class="project-description">ACT and SmolVLA models for robotic pick-and-place on SO-101 arm, achieving 80% success rate with temporal action chunking.</p>
+                            <div class="project-tags">
+                                <span>SmolVLA</span>
+                                <span>ACT</span>
+                                <span>LeRobot</span>
+                                <span>HuggingFace</span>
+                            </div>
                         </div>
-                        <span class="view-details-hint"><i data-lucide="external-link"></i> Click to view details</span>
                     </article>
 
                     <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-feeding-robot.html'">
-                        <div class="project-header">
-                            <i data-lucide="folder" class="project-folder"></i>
-                            <div class="project-links">
-                                <a href="https://github.com/Adithya191101/feeding_robot_ws" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
-                                    <i data-lucide="github"></i>
-                                </a>
+                        <div class="project-thumbnail">
+                            <img src="assets/feeding-robot/gazebo_simulation.png" alt="Feeding Robot Simulation">
+                            <div class="tech-overlay">
+                                <span class="tech-badge">ROS2</span>
                             </div>
                         </div>
-                        <h3 class="project-title">Assistive Feeding Robot Simulation</h3>
-                        <p class="project-date">November - December 2025</p>
-                        <p class="project-description">UR5e-based assistive feeding system with hybrid motion planning and sensorless impedance control, achieving 82.5s execution time with zero safety violations.</p>
-                        <div class="project-tags">
-                            <span>ROS2 Jazzy</span>
-                            <span>MoveIt2</span>
-                            <span>Gazebo</span>
-                            <span>UR5e</span>
+                        <div class="project-card-content">
+                            <div class="project-header">
+                                <h3 class="project-title">Assistive Feeding Robot Simulation</h3>
+                                <div class="project-links">
+                                    <a href="https://github.com/Adithya191101/feeding_robot_ws" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
+                                        <i data-lucide="github"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="project-date">November - December 2024</p>
+                            <p class="project-description">UR5e-based assistive feeding system with hybrid motion planning and sensorless impedance control.</p>
+                            <div class="project-tags">
+                                <span>ROS2 Jazzy</span>
+                                <span>MoveIt2</span>
+                                <span>Gazebo</span>
+                                <span>UR5e</span>
+                            </div>
                         </div>
-                        <span class="view-details-hint"><i data-lucide="external-link"></i> Click to view details</span>
                     </article>
 
                     <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-rl-arm.html'">
-                        <div class="project-header">
-                            <i data-lucide="folder" class="project-folder"></i>
-                            <div class="project-links">
-                                <a href="https://github.com/Adithya191101/RL_final_project" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
-                                    <i data-lucide="github"></i>
-                                </a>
+                        <div class="project-thumbnail">
+                            <img src="assets/rl-arm/report_img_6_2.png" alt="3D RL Robotic Arm Visualization">
+                            <div class="tech-overlay">
+                                <span class="tech-badge">RL</span>
                             </div>
                         </div>
-                        <h3 class="project-title">RL Based Robotic Arm Trajectory Planning</h3>
-                        <p class="project-date">December 2024</p>
-                        <p class="project-description">Hybrid RL approach combining PPO, SMDP, and MPC for robotic arm trajectory planning, achieving 83% success rate with obstacle avoidance in PyBullet simulation.</p>
-                        <div class="project-tags">
-                            <span>PPO</span>
-                            <span>SMDP</span>
-                            <span>MPC</span>
-                            <span>PyBullet</span>
-                        </div>
-                        <span class="view-details-hint"><i data-lucide="external-link"></i> Click to view details</span>
-                    </article>
-
-                    <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-lio-sam.html'">
-                        <div class="project-header">
-                            <i data-lucide="folder" class="project-folder"></i>
-                            <div class="project-links">
-                                <a href="#" onclick="event.stopPropagation()">
-                                    <i data-lucide="bot"></i>
-                                </a>
+                        <div class="project-card-content">
+                            <div class="project-header">
+                                <h3 class="project-title">RL Based Robotic Arm Trajectory Planning</h3>
+                                <div class="project-links">
+                                    <a href="https://github.com/Adithya191101/RL_final_project" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
+                                        <i data-lucide="github"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="project-date">December 2024</p>
+                            <p class="project-description">Hybrid RL approach combining PPO, SMDP, and MPC for robotic arm trajectory planning with obstacle avoidance.</p>
+                            <div class="project-tags">
+                                <span>PPO</span>
+                                <span>SMDP</span>
+                                <span>MPC</span>
+                                <span>PyBullet</span>
                             </div>
                         </div>
-                        <h3 class="project-title">3D Mapping with Boston Dynamics' Spot</h3>
-                        <p class="project-date">September - December 2024</p>
-                        <p class="project-description">Real-time environment mapping on Spot robot using ROS2 and LIO-SAM. Integrated LiDAR, IMU, stereo camera, and Jetson Nano for multimodal SLAM with reliable loop closure.</p>
-                        <div class="project-tags">
-                            <span>ROS2</span>
-                            <span>LIO-SAM</span>
-                            <span>SLAM</span>
-                            <span>LiDAR</span>
-                        </div>
-                        <span class="view-details-hint"><i data-lucide="external-link"></i> Click to view details</span>
-                    </article>
-
-                    <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-gps-analysis.html'">
-                        <div class="project-header">
-                            <i data-lucide="folder" class="project-folder"></i>
-                            <div class="project-links">
-                                <a href="https://github.com/Adithya191101/EECE5554/tree/main/LAB1" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
-                                    <i data-lucide="github"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <h3 class="project-title">GPS Data Analysis & Visualization</h3>
-                        <p class="project-date">September 26, 2024</p>
-                        <p class="project-description">Developed ROS2-based GPS driver to parse GPGGA NMEA sentences, convert to UTM coordinates, and perform statistical analysis including RMSE, variance, and bias calculations.</p>
-                        <div class="project-tags">
-                            <span>ROS2</span>
-                            <span>Python</span>
-                            <span>GPS/NMEA</span>
-                            <span>NumPy</span>
-                        </div>
-                        <span class="view-details-hint"><i data-lucide="external-link"></i> Click to view details</span>
-                    </article>
-
-                    <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-imu-analysis.html'">
-                        <div class="project-header">
-                            <i data-lucide="folder" class="project-folder"></i>
-                            <div class="project-links">
-                                <a href="https://github.com/Adithya191101/EECE5554/tree/main/LAB3" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
-                                    <i data-lucide="github"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <h3 class="project-title">IMU Noise Characterization with Allan Variance</h3>
-                        <p class="project-date">October 14, 2024</p>
-                        <p class="project-description">Comprehensive analysis of IMU sensor noise using Allan Variance methodology, characterizing accelerometer, gyroscope, and magnetometer data to identify bias instability and random walk parameters.</p>
-                        <div class="project-tags">
-                            <span>ROS2</span>
-                            <span>Python</span>
-                            <span>MATLAB</span>
-                            <span>IMU</span>
-                        </div>
-                        <span class="view-details-hint"><i data-lucide="external-link"></i> Click to view details</span>
-                    </article>
-
-                    <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-dead-reckoning.html'">
-                        <div class="project-header">
-                            <i data-lucide="folder" class="project-folder"></i>
-                            <div class="project-links">
-                                <a href="https://github.com/Adithya191101/EECE5554/tree/main/LAB4" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
-                                    <i data-lucide="github"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <h3 class="project-title">IMU & GPS-Based Dead Reckoning Navigation</h3>
-                        <p class="project-date">October 31, 2024</p>
-                        <p class="project-description">Complete navigation stack combining IMU and GPS data through magnetometer calibration, complementary filter sensor fusion, and dead reckoning for accurate vehicle trajectory estimation.</p>
-                        <div class="project-tags">
-                            <span>MATLAB</span>
-                            <span>ROS2</span>
-                            <span>Sensor Fusion</span>
-                            <span>GPS</span>
-                        </div>
-                        <span class="view-details-hint"><i data-lucide="external-link"></i> Click to view details</span>
                     </article>
 
                     <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-image-stitching.html'">
-                        <div class="project-header">
-                            <i data-lucide="folder" class="project-folder"></i>
-                            <div class="project-links">
-                                <a href="https://github.com/Adithya191101/EECE5554/tree/main/LAB5" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
-                                    <i data-lucide="github"></i>
-                                </a>
+                        <div class="project-thumbnail">
+                            <img src="assets/lab5/ruggles_panorama.png" alt="Panorama Image Stitching">
+                            <div class="tech-overlay">
+                                <span class="tech-badge">Vision</span>
                             </div>
                         </div>
-                        <h3 class="project-title">Image Stitching & Panorama Creation</h3>
-                        <p class="project-date">November 14, 2024</p>
-                        <p class="project-description">Complete image stitching pipeline using Harris corner detection, feature matching with Lowe's ratio test, homography estimation, and seamless blending to create panoramic images.</p>
-                        <div class="project-tags">
-                            <span>Python</span>
-                            <span>OpenCV</span>
-                            <span>Computer Vision</span>
-                            <span>Harris</span>
+                        <div class="project-card-content">
+                            <div class="project-header">
+                                <h3 class="project-title">Image Stitching & Panorama</h3>
+                                <div class="project-links">
+                                    <a href="https://github.com/Adithya191101/EECE5554/tree/main/LAB5" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
+                                        <i data-lucide="github"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="project-date">November 14, 2024</p>
+                            <p class="project-description">Harris corner detection, feature matching with Lowe's ratio test, homography estimation for panoramas.</p>
+                            <div class="project-tags">
+                                <span>Python</span>
+                                <span>OpenCV</span>
+                                <span>Computer Vision</span>
+                                <span>Harris</span>
+                            </div>
                         </div>
-                        <span class="view-details-hint"><i data-lucide="external-link"></i> Click to view details</span>
+                    </article>
+
+                    <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-dead-reckoning.html'">
+                        <div class="project-thumbnail">
+                            <img src="assets/lab4/car_sensor_setup.jpeg" alt="Car Sensor Setup for Dead Reckoning">
+                            <div class="tech-overlay">
+                                <span class="tech-badge">Navigation</span>
+                            </div>
+                        </div>
+                        <div class="project-card-content">
+                            <div class="project-header">
+                                <h3 class="project-title">IMU & GPS Dead Reckoning</h3>
+                                <div class="project-links">
+                                    <a href="https://github.com/Adithya191101/EECE5554/tree/main/LAB4" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
+                                        <i data-lucide="github"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="project-date">October 31, 2024</p>
+                            <p class="project-description">Navigation stack with magnetometer calibration, complementary filter sensor fusion, and dead reckoning.</p>
+                            <div class="project-tags">
+                                <span>MATLAB</span>
+                                <span>ROS2</span>
+                                <span>Sensor Fusion</span>
+                                <span>GPS</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-imu-analysis.html'">
+                        <div class="project-thumbnail contain-img">
+                            <img src="assets/lab4/8IMUvsGPS.png" alt="IMU vs GPS Analysis">
+                            <div class="tech-overlay">
+                                <span class="tech-badge">Sensors</span>
+                            </div>
+                        </div>
+                        <div class="project-card-content">
+                            <div class="project-header">
+                                <h3 class="project-title">IMU Noise Characterization</h3>
+                                <div class="project-links">
+                                    <a href="https://github.com/Adithya191101/EECE5554/tree/main/LAB3" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
+                                        <i data-lucide="github"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="project-date">October 14, 2024</p>
+                            <p class="project-description">Allan Variance analysis of IMU sensors - accelerometer, gyroscope, and magnetometer characterization.</p>
+                            <div class="project-tags">
+                                <span>ROS2</span>
+                                <span>Python</span>
+                                <span>MATLAB</span>
+                                <span>IMU</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-lio-sam.html'">
+                        <div class="project-thumbnail">
+                            <img src="assets/lio-sam/spot_with_lidar.jpeg" alt="Spot Robot with LiDAR">
+                            <div class="tech-overlay">
+                                <span class="tech-badge">SLAM</span>
+                            </div>
+                        </div>
+                        <div class="project-card-content">
+                            <div class="project-header">
+                                <h3 class="project-title">3D Mapping with Boston Dynamics' Spot</h3>
+                                <div class="project-links">
+                                    <a href="#" onclick="event.stopPropagation()">
+                                        <i data-lucide="bot"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="project-date">September - December 2024</p>
+                            <p class="project-description">Real-time environment mapping on Spot robot using ROS2 and LIO-SAM with multimodal SLAM.</p>
+                            <div class="project-tags">
+                                <span>ROS2</span>
+                                <span>LIO-SAM</span>
+                                <span>SLAM</span>
+                                <span>LiDAR</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-gps-analysis.html'">
+                        <div class="project-thumbnail contain-img">
+                            <img src="assets/lab4/9gpsvsDD.png" alt="GPS Path Analysis">
+                            <div class="tech-overlay">
+                                <span class="tech-badge">Sensors</span>
+                            </div>
+                        </div>
+                        <div class="project-card-content">
+                            <div class="project-header">
+                                <h3 class="project-title">GPS Data Analysis & Visualization</h3>
+                                <div class="project-links">
+                                    <a href="https://github.com/Adithya191101/EECE5554/tree/main/LAB1" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
+                                        <i data-lucide="github"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="project-date">September 26, 2024</p>
+                            <p class="project-description">ROS2-based GPS driver parsing GPGGA NMEA sentences with UTM conversion and statistical analysis.</p>
+                            <div class="project-tags">
+                                <span>ROS2</span>
+                                <span>Python</span>
+                                <span>GPS/NMEA</span>
+                                <span>NumPy</span>
+                            </div>
+                        </div>
                     </article>
 
                     <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-path-planning.html'">
-                        <div class="project-header">
-                            <i data-lucide="folder" class="project-folder"></i>
-                            <div class="project-links">
-                                <a href="https://github.com/Adithya191101/Mobile-robotics" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
-                                    <i data-lucide="github"></i>
-                                </a>
+                        <div class="project-thumbnail">
+                            <img src="assets/path-planning/rrt_expansion_1_thumb.jpg" alt="Path Planning Visualization">
+                            <div class="tech-overlay">
+                                <span class="tech-badge">Planning</span>
                             </div>
                         </div>
-                        <h3 class="project-title">Path-Planning Algorithm Benchmarking</h3>
-                        <p class="project-date">April 2024</p>
-                        <p class="project-description">Comprehensive benchmarking study of sampling-based path planning algorithms (RRT, RRT*, BRRT, BRRT*) with animated visualizations comparing performance across multiple environments.</p>
-                        <div class="project-tags">
-                            <span>Path Planning</span>
-                            <span>Python</span>
-                            <span>RRT</span>
-                            <span>Motion Planning</span>
+                        <div class="project-card-content">
+                            <div class="project-header">
+                                <h3 class="project-title">Path-Planning Algorithm Benchmarking</h3>
+                                <div class="project-links">
+                                    <a href="https://github.com/Adithya191101/Mobile-robotics" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
+                                        <i data-lucide="github"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="project-date">April 2024</p>
+                            <p class="project-description">Benchmarking RRT, RRT*, BRRT, BRRT* algorithms with animated visualizations.</p>
+                            <div class="project-tags">
+                                <span>Path Planning</span>
+                                <span>Python</span>
+                                <span>RRT</span>
+                                <span>Motion Planning</span>
+                            </div>
                         </div>
-                        <span class="view-details-hint"><i data-lucide="external-link"></i> Click to view details</span>
                     </article>
 
                     <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-autonomous-car.html'">
-                        <div class="project-header">
-                            <i data-lucide="folder" class="project-folder"></i>
-                            <div class="project-links">
-                                <a href="https://drive.google.com/file/d/1zJ5ajk8yTfrdhIoQuQz9foeddBQ1ZE4_/view" target="_blank" rel="noopener" aria-label="Project Report" onclick="event.stopPropagation()">
-                                    <i data-lucide="file-text"></i>
-                                </a>
+                        <div class="project-thumbnail contain-img">
+                            <img src="https://carla.org/img/logo/carla-black-m.png" alt="CARLA Simulator Logo">
+                            <div class="tech-overlay">
+                                <span class="tech-badge">Autonomous</span>
                             </div>
                         </div>
-                        <h3 class="project-title">Development of Scalable Autonomous Car</h3>
-                        <p class="project-date">July 2022 - November 2022</p>
-                        <p class="project-description">Developed the environment and entities to resemble Indian traffic conditions using CARLA. Implemented SLAM algorithm to attain level 2 autonomy in simulations.</p>
-                        <div class="project-tags">
-                            <span>Python</span>
-                            <span>CARLA</span>
-                            <span>SLAM</span>
-                            <span>OpenCV</span>
-                            <span>RL</span>
+                        <div class="project-card-content">
+                            <div class="project-header">
+                                <h3 class="project-title">Scalable Autonomous Car</h3>
+                                <div class="project-links">
+                                    <a href="https://drive.google.com/file/d/1zJ5ajk8yTfrdhIoQuQz9foeddBQ1ZE4_/view" target="_blank" rel="noopener" aria-label="Project Report" onclick="event.stopPropagation()">
+                                        <i data-lucide="file-text"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="project-date">July - November 2022</p>
+                            <p class="project-description">Indian traffic simulation using CARLA with SLAM for level 2 autonomy.</p>
+                            <div class="project-tags">
+                                <span>Python</span>
+                                <span>CARLA</span>
+                                <span>SLAM</span>
+                                <span>OpenCV</span>
+                            </div>
                         </div>
-                        <span class="view-details-hint"><i data-lucide="external-link"></i> Click to view details</span>
                     </article>
 
                     <article class="project-card animate-on-scroll clickable-project" onclick="openNDAModal()">
-                        <div class="project-header">
-                            <i data-lucide="folder-lock" class="project-folder"></i>
-                            <div class="project-links">
-                                <span class="nda-badge">NDA</span>
+                        <div class="project-thumbnail placeholder">
+                            <i data-lucide="lock"></i>
+                            <div class="tech-overlay">
+                                <span class="tech-badge">NDA</span>
                             </div>
                         </div>
-                        <h3 class="project-title">Pre-wash System</h3>
-                        <p class="project-date">February 2022 - March 2022</p>
-                        <p class="project-description">Designed an Automated System in SOLIDWORKS to clean hospital bedspreads that include a variety of stains. Focused on prototyping and product development.</p>
-                        <div class="project-tags">
-                            <span>SOLIDWORKS</span>
-                            <span>AutoCAD</span>
-                            <span>CAD</span>
-                            <span>Prototyping</span>
+                        <div class="project-card-content">
+                            <div class="project-header">
+                                <h3 class="project-title">Pre-wash System</h3>
+                                <div class="project-links">
+                                    <span class="nda-badge">NDA</span>
+                                </div>
+                            </div>
+                            <p class="project-date">February - March 2022</p>
+                            <p class="project-description">Automated system in SOLIDWORKS for hospital bedspread cleaning.</p>
+                            <div class="project-tags">
+                                <span>SOLIDWORKS</span>
+                                <span>AutoCAD</span>
+                                <span>CAD</span>
+                                <span>Prototyping</span>
+                            </div>
                         </div>
-                        <span class="view-details-hint"><i data-lucide="lock"></i> Click for more info</span>
                     </article>
 
                     <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-electric-three-wheeler.html'">
-                        <div class="project-header">
-                            <i data-lucide="folder" class="project-folder"></i>
-                            <div class="project-links">
-                                <a href="https://github.com/Adithya191101/Canteen-EV" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
-                                    <i data-lucide="github"></i>
-                                </a>
+                        <div class="project-thumbnail">
+                            <img src="https://raw.githubusercontent.com/Adithya191101/Canteen-EV/main/Canteen%20EV/2-2-2022/Assembly%20EV/Assembly%20EV/Parts/Rough%20Assembly1.JPG" alt="Electric Three Wheeler CAD Model">
+                            <div class="tech-overlay">
+                                <span class="tech-badge">EV</span>
                             </div>
                         </div>
-                        <h3 class="project-title">Electric Three Wheeler</h3>
-                        <p class="project-date">December 2021 - February 2022</p>
-                        <p class="project-description">Assisted in modelling a three-wheel electric vehicle in SOLIDWORKS for carrying solar panels around the college campus.</p>
-                        <div class="project-tags">
-                            <span>SOLIDWORKS</span>
-                            <span>CAD</span>
-                            <span>AutoCAD</span>
-                            <span>Electromechanical Design</span>
+                        <div class="project-card-content">
+                            <div class="project-header">
+                                <h3 class="project-title">Electric Three Wheeler</h3>
+                                <div class="project-links">
+                                    <a href="https://github.com/Adithya191101/Canteen-EV" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
+                                        <i data-lucide="github"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="project-date">December 2021 - February 2022</p>
+                            <p class="project-description">Three-wheel electric vehicle in SOLIDWORKS for solar panel transport.</p>
+                            <div class="project-tags">
+                                <span>SOLIDWORKS</span>
+                                <span>CAD</span>
+                                <span>AutoCAD</span>
+                                <span>EV Design</span>
+                            </div>
                         </div>
-                        <span class="view-details-hint"><i data-lucide="external-link"></i> Click to view details</span>
                     </article>
 
                     <article class="project-card animate-on-scroll clickable-project" onclick="openVideoModal('syCGKWebg_c', 'Aerobatic Quad - Drone Dance Competition')">
-                        <div class="project-header">
-                            <i data-lucide="folder" class="project-folder"></i>
-                            <div class="project-links">
-                                <a href="https://www.youtube.com/watch?v=syCGKWebg_c" target="_blank" rel="noopener" aria-label="Watch on YouTube" class="youtube-link" onclick="event.stopPropagation()">
-                                    <i data-lucide="youtube"></i>
-                                </a>
+                        <div class="project-thumbnail">
+                            <img src="https://img.youtube.com/vi/syCGKWebg_c/hqdefault.jpg" alt="Aerobatic Quad Drone">
+                            <div class="tech-overlay">
+                                <span class="tech-badge">UAV</span>
                             </div>
                         </div>
-                        <h3 class="project-title">Aerobatic Quad</h3>
-                        <p class="project-date">November 2021 - January 2022</p>
-                        <p class="project-description">Part of a 3 member team that designed and developed an aerobatic drone using Ardupilot as the base. This UAV was engineered for the Drone Dance Competition conducted by the Aviation and Space Federation of India, and placed first in the national level drone ranking contest.</p>
-                        <div class="project-tags">
-                            <span>ArduPilot</span>
-                            <span>UAV</span>
-                            <span>Drone Piloting</span>
-                            <span>Aerial Robotics</span>
+                        <div class="project-card-content">
+                            <div class="project-header">
+                                <h3 class="project-title">Aerobatic Quad</h3>
+                                <div class="project-links">
+                                    <a href="https://www.youtube.com/watch?v=syCGKWebg_c" target="_blank" rel="noopener" aria-label="Watch on YouTube" class="youtube-link" onclick="event.stopPropagation()">
+                                        <i data-lucide="youtube"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="project-date">November 2021 - January 2022</p>
+                            <p class="project-description">National rank 1 drone for Drone Dance Competition by Aviation Federation of India.</p>
+                            <div class="project-tags">
+                                <span>ArduPilot</span>
+                                <span>UAV</span>
+                                <span>Drone Piloting</span>
+                                <span>Aerial Robotics</span>
+                            </div>
                         </div>
-                        <span class="view-details-hint"><i data-lucide="play-circle"></i> Click to watch video</span>
                     </article>
 
                     <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-skyscraper-cleaner.html'">
-                        <div class="project-header">
-                            <i data-lucide="folder" class="project-folder"></i>
-                            <div class="project-links">
-                                <a href="https://github.com/Adithya191101/Skyscrapper-cleaner/tree/main" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
-                                    <i data-lucide="github"></i>
-                                </a>
+                        <div class="project-thumbnail">
+                            <img src="https://raw.githubusercontent.com/Adithya191101/Skyscrapper-cleaner/main/Screenshot%20(13).png" alt="Wall Climber CAD Model">
+                            <div class="tech-overlay">
+                                <span class="tech-badge">Mechatronics</span>
                             </div>
                         </div>
-                        <h3 class="project-title">Vacuum Assisted Wall Climber for Skyscraper Cleaning</h3>
-                        <p class="project-date">January 2020 - March 2020</p>
-                        <p class="project-description">Implemented a vacuum-assisted wall climbing mechanism designed for cleaning skyscraper windows. The system uses pneumatic suction cups to adhere to vertical glass surfaces while providing mobility for cleaning operations.</p>
-                        <div class="project-tags">
-                            <span>SOLIDWORKS</span>
-                            <span>Arduino</span>
-                            <span>Pneumatics</span>
-                            <span>C++</span>
-                            <span>Mechatronics</span>
+                        <div class="project-card-content">
+                            <div class="project-header">
+                                <h3 class="project-title">Vacuum Assisted Wall Climber for Skyscraper Cleaning</h3>
+                                <div class="project-links">
+                                    <a href="https://github.com/Adithya191101/Skyscrapper-cleaner/tree/main" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
+                                        <i data-lucide="github"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="project-date">January 2020 - March 2020</p>
+                            <p class="project-description">Implemented a vacuum-assisted wall climbing mechanism designed for cleaning skyscraper windows. The system uses pneumatic suction cups to adhere to vertical glass surfaces while providing mobility for cleaning operations.</p>
+                            <div class="project-tags">
+                                <span>SOLIDWORKS</span>
+                                <span>Arduino</span>
+                                <span>Pneumatics</span>
+                                <span>C++</span>
+                                <span>Mechatronics</span>
+                            </div>
                         </div>
-                        <span class="view-details-hint"><i data-lucide="external-link"></i> Click to view details</span>
                     </article>
                 </div>
             </div>

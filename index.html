@@ -17,7 +17,11 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- GSAP for smooth animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -41,8 +45,8 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
                 <li><a href="#education">Education</a></li>
-                <li><a href="projects.html">Projects</a></li>
                 <li><a href="honors.html">Honors</a></li>
                 <li><a href="publications.html">Publications</a></li>
                 <li><a href="contact.html">Contact</a></li>
@@ -54,6 +58,7 @@
         <!-- Hero Section -->
         <section class="hero" id="hero">
             <div class="hero-bg">
+                <div class="geometric-pattern"></div>
                 <div class="gradient-mesh"></div>
                 <canvas id="particleCanvas"></canvas>
             </div>
@@ -61,13 +66,13 @@
             <div class="hero-content">
                 <div class="profile-container">
                     <div class="profile-ring">
-                        <img src="assets/profile.jpeg" alt="Adithya Rajendran" class="profile-photo" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%230f172a%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2255%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22%233b82f6%22>AR</text></svg>'">
+                        <img src="assets/profile.jpeg" alt="Adithya Rajendran" class="profile-photo" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23f1f5f9%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2255%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22%23334155%22>AR</text></svg>'">
                     </div>
                 </div>
 
                 <h1 class="hero-name">Adithya Rajendran</h1>
                 <p class="hero-title" id="typingText"></p>
-                <p class="hero-tagline">Building intelligent robotic systems that bridge perception and action through Physical AI</p>
+                <p class="hero-tagline">Building intelligent robotic systems that bridge perception and action.</p>
 
                 <div class="hero-cta">
                     <a href="projects.html" class="btn btn-primary">
@@ -93,20 +98,32 @@
                 </div>
             </div>
 
-            <div class="scroll-indicator">
-                <i data-lucide="chevrons-down"></i>
-            </div>
+            <a href="#about" class="scroll-indicator" id="scrollIndicator">
+                <span class="scroll-text">Scroll Down</span>
+                <div class="scroll-arrows">
+                    <i data-lucide="chevron-down"></i>
+                    <i data-lucide="chevron-down"></i>
+                </div>
+            </a>
         </section>
 
         <!-- About Section -->
         <section class="section about" id="about">
+            <div class="animated-gradient-bg"></div>
+            <div class="bg-orb bg-orb-1"></div>
+            <div class="bg-orb bg-orb-2"></div>
+            <div class="floating-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
             <div class="container">
-                <h2 class="section-title">
-                    About Me
-                </h2>
+                <h2 class="section-title">About Me</h2>
 
-                <div class="about-content animate-on-scroll">
-                    <div class="about-text">
+                <div class="about-content">
+                    <div class="about-text animate-on-scroll">
                         <p>I'm a <strong>Robotics & AI Engineer</strong> passionate about building intelligent systems that can perceive, reason, and interact with the physical world. Currently pursuing my <strong>Master's in Robotics at Northeastern University</strong>, I focus on the intersection of machine learning and robotic manipulation.</p>
 
                         <p>My research interests lie in <strong>Physical AI</strong> — developing robots that learn from vision-language models to perform complex manipulation tasks. I work extensively with frameworks like SmolVLA, ACT policies, and reinforcement learning to create adaptive robotic behaviors.</p>
@@ -114,7 +131,7 @@
                         <p>I believe the future of robotics is in systems that can understand human intent through natural language and visual cues, then translate that understanding into precise physical actions.</p>
                     </div>
 
-                    <div class="focus-areas">
+                    <div class="focus-areas animate-on-scroll">
                         <h3>Research Focus</h3>
                         <ul class="focus-list">
                             <li><i data-lucide="brain"></i> Physical AI & Embodied Intelligence</li>
@@ -129,10 +146,18 @@
 
         <!-- Skills Section -->
         <section class="section skills" id="skills">
+            <div class="animated-gradient-bg"></div>
+            <div class="grid-bg"></div>
+            <div class="bg-orb bg-orb-2"></div>
+            <div class="moving-lines">
+                <div class="moving-line"></div>
+                <div class="moving-line"></div>
+                <div class="moving-line"></div>
+            </div>
+            <div class="pulse-ring pulse-ring-1"></div>
+            <div class="pulse-ring pulse-ring-2"></div>
             <div class="container">
-                <h2 class="section-title">
-                    Technical Skills
-                </h2>
+                <h2 class="section-title">Technical Skills</h2>
 
                 <div class="skills-grid">
                     <div class="skill-card animate-on-scroll">
@@ -218,10 +243,17 @@
 
         <!-- Experience Section -->
         <section class="section experience" id="experience">
+            <div class="animated-gradient-bg"></div>
+            <div class="bg-orb bg-orb-1"></div>
+            <div class="bg-orb bg-orb-3"></div>
+            <div class="floating-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
             <div class="container">
-                <h2 class="section-title">
-                    Experience
-                </h2>
+                <h2 class="section-title">Experience</h2>
 
                 <div class="timeline">
                     <div class="timeline-item animate-on-scroll">
@@ -423,12 +455,198 @@
             </div>
         </section>
 
+        <!-- Featured Projects Section -->
+        <section class="section projects" id="projects">
+            <div class="animated-gradient-bg"></div>
+            <div class="grid-bg"></div>
+            <div class="bg-orb bg-orb-2"></div>
+            <div class="moving-lines">
+                <div class="moving-line"></div>
+                <div class="moving-line"></div>
+            </div>
+            <div class="pulse-ring pulse-ring-1"></div>
+            <div class="container">
+                <h2 class="section-title">Featured Projects</h2>
+
+                <div class="projects-grid">
+                    <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-vla-manipulation.html'">
+                        <div class="project-thumbnail">
+                            <img src="assets/vla-manipulation/SmolVLA_thumb.jpg" alt="Vision-Language Manipulation">
+                            <div class="tech-overlay">
+                                <span class="tech-badge">AI/ML</span>
+                            </div>
+                        </div>
+                        <div class="project-card-content">
+                            <div class="project-header">
+                                <h3 class="project-title">Vision-Language Manipulation Policies</h3>
+                                <div class="project-links">
+                                    <a href="https://github.com/Adithya191101/hugging-face_So101" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
+                                        <i data-lucide="github"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="project-date">December 2024 - January 2025</p>
+                            <p class="project-description">ACT and SmolVLA models for robotic pick-and-place on SO-101 arm, achieving 80% success rate with temporal action chunking.</p>
+                            <div class="project-tags">
+                                <span>SmolVLA</span>
+                                <span>ACT</span>
+                                <span>LeRobot</span>
+                                <span>HuggingFace</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-feeding-robot.html'">
+                        <div class="project-thumbnail">
+                            <img src="assets/feeding-robot/gazebo_simulation.png" alt="Feeding Robot Simulation">
+                            <div class="tech-overlay">
+                                <span class="tech-badge">Robotics</span>
+                            </div>
+                        </div>
+                        <div class="project-card-content">
+                            <div class="project-header">
+                                <h3 class="project-title">Assistive Feeding Robot Simulation</h3>
+                                <div class="project-links">
+                                    <a href="https://github.com/Adithya191101/feeding_robot_ws" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
+                                        <i data-lucide="github"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="project-date">November - December 2024</p>
+                            <p class="project-description">UR5e-based assistive feeding system with hybrid motion planning and sensorless impedance control.</p>
+                            <div class="project-tags">
+                                <span>ROS2 Jazzy</span>
+                                <span>MoveIt2</span>
+                                <span>Gazebo</span>
+                                <span>UR5e</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-rl-arm.html'">
+                        <div class="project-thumbnail">
+                            <img src="assets/rl-arm/report_img_6_2.png" alt="3D RL Robotic Arm Visualization">
+                            <div class="tech-overlay">
+                                <span class="tech-badge">RL</span>
+                            </div>
+                        </div>
+                        <div class="project-card-content">
+                            <div class="project-header">
+                                <h3 class="project-title">RL Based Robotic Arm Trajectory Planning</h3>
+                                <div class="project-links">
+                                    <a href="https://github.com/Adithya191101/RL_final_project" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
+                                        <i data-lucide="github"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="project-date">December 2024</p>
+                            <p class="project-description">Hybrid RL approach combining PPO, SMDP, and MPC for robotic arm trajectory planning with obstacle avoidance.</p>
+                            <div class="project-tags">
+                                <span>PPO</span>
+                                <span>SMDP</span>
+                                <span>MPC</span>
+                                <span>PyBullet</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-lio-sam.html'">
+                        <div class="project-thumbnail">
+                            <img src="assets/lio-sam/spot_with_lidar.jpeg" alt="Spot Robot with LiDAR">
+                            <div class="tech-overlay">
+                                <span class="tech-badge">SLAM</span>
+                            </div>
+                        </div>
+                        <div class="project-card-content">
+                            <div class="project-header">
+                                <h3 class="project-title">3D Mapping with Boston Dynamics' Spot</h3>
+                                <div class="project-links">
+                                    <a href="#" onclick="event.stopPropagation()">
+                                        <i data-lucide="bot"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="project-date">September - December 2024</p>
+                            <p class="project-description">Real-time environment mapping on Spot robot using ROS2 and LIO-SAM with multimodal SLAM.</p>
+                            <div class="project-tags">
+                                <span>ROS2</span>
+                                <span>LIO-SAM</span>
+                                <span>SLAM</span>
+                                <span>LiDAR</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-path-planning.html'">
+                        <div class="project-thumbnail">
+                            <img src="assets/path-planning/rrt_expansion_1_thumb.jpg" alt="Path Planning Visualization">
+                            <div class="tech-overlay">
+                                <span class="tech-badge">Planning</span>
+                            </div>
+                        </div>
+                        <div class="project-card-content">
+                            <div class="project-header">
+                                <h3 class="project-title">Path-Planning Algorithm Benchmarking</h3>
+                                <div class="project-links">
+                                    <a href="https://github.com/Adithya191101/Mobile-robotics" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
+                                        <i data-lucide="github"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="project-date">April 2024</p>
+                            <p class="project-description">Comprehensive benchmarking of sampling-based path planning algorithms (RRT, RRT*, BRRT, BRRT*).</p>
+                            <div class="project-tags">
+                                <span>Path Planning</span>
+                                <span>Python</span>
+                                <span>RRT</span>
+                                <span>Motion Planning</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-autonomous-car.html'">
+                        <div class="project-thumbnail contain-img">
+                            <img src="https://carla.org/img/logo/carla-black-m.png" alt="CARLA Simulator Logo">
+                            <div class="tech-overlay">
+                                <span class="tech-badge">Simulation</span>
+                            </div>
+                        </div>
+                        <div class="project-card-content">
+                            <div class="project-header">
+                                <h3 class="project-title">Scalable Autonomous Car in CARLA</h3>
+                                <div class="project-links">
+                                    <a href="https://drive.google.com/file/d/1zJ5ajk8yTfrdhIoQuQz9foeddBQ1ZE4_/view" target="_blank" rel="noopener" aria-label="Project Report" onclick="event.stopPropagation()">
+                                        <i data-lucide="file-text"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="project-date">July - November 2022</p>
+                            <p class="project-description">Developed Indian traffic conditions simulation using CARLA with SLAM for level 2 autonomy.</p>
+                            <div class="project-tags">
+                                <span>Python</span>
+                                <span>CARLA</span>
+                                <span>SLAM</span>
+                                <span>OpenCV</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="view-all-projects">
+                    <a href="projects.html" class="btn btn-secondary">
+                        <i data-lucide="grid-3x3"></i>
+                        View All 14 Projects
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <!-- Education Section -->
         <section class="section education" id="education">
+            <div class="bg-orb bg-orb-1"></div>
+            <div class="circuit-line circuit-line-2"></div>
             <div class="container">
-                <h2 class="section-title">
-                    Education
-                </h2>
+                <h2 class="section-title">Education</h2>
 
                 <div class="education-grid">
                     <div class="education-card animate-on-scroll">

@@ -11,384 +11,17 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <link rel="stylesheet" href="styles.css">
-    <style>
-        .project-detail-hero {
-            padding: 120px 0 60px;
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
-        }
-
-        .project-detail-hero h1 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .project-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .project-meta-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        .project-meta-item i {
-            width: 18px;
-            height: 18px;
-            color: var(--accent-bright);
-        }
-
-        .project-content {
-            padding: 4rem 0;
-        }
-
-        .project-section {
-            margin-bottom: 3rem;
-        }
-
-        .project-section h2 {
-            font-size: 1.5rem;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .project-section h2 i {
-            width: 24px;
-            height: 24px;
-            color: var(--accent-bright);
-        }
-
-        .project-section p {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-
-        .media-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .media-card {
-            border-radius: 12px;
-            overflow: hidden;
-            background: var(--bg-card);
-            border: 1px solid var(--border-glow);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .media-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-glow);
-            border-color: var(--accent-bright);
-        }
-
-        .media-card-content {
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .media-card-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 1rem;
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(124, 58, 237, 0.2));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .media-card-icon i {
-            width: 28px;
-            height: 28px;
-            color: var(--accent-bright);
-        }
-
-        .media-card-icon.video {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.2));
-        }
-
-        .media-card-icon.video i {
-            color: #ef4444;
-        }
-
-        .media-card h3 {
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .media-card p {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin: 0;
-        }
-
-        .tech-stack-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .tech-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-glow);
-            border-radius: 8px;
-        }
-
-        .tech-item i {
-            width: 20px;
-            height: 20px;
-            color: var(--accent-bright);
-        }
-
-        .workflow-steps {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .workflow-step {
-            display: flex;
-            gap: 1.5rem;
-            align-items: flex-start;
-        }
-
-        .step-number {
-            flex-shrink: 0;
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .step-content h3 {
-            font-size: 1.1rem;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .step-content p {
-            color: var(--text-secondary);
-            margin: 0;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .btn-github {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-glow);
-            border-radius: 8px;
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .btn-github:hover {
-            border-color: var(--accent-bright);
-            box-shadow: var(--shadow-glow);
-            transform: translateY(-2px);
-        }
-
-        .btn-github i {
-            width: 20px;
-            height: 20px;
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--accent-bright);
-            text-decoration: none;
-            margin-bottom: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .back-link:hover {
-            transform: translateX(-5px);
-        }
-
-        .back-link i {
-            width: 18px;
-            height: 18px;
-        }
-
-        .feature-highlight {
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
-            border: 1px solid var(--border-glow);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .feature-highlight h3 {
-            color: var(--accent-bright);
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .feature-highlight h3 i {
-            width: 20px;
-            height: 20px;
-        }
-
-        .system-diagram {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .system-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glow);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .system-card:hover {
-            border-color: var(--accent-bright);
-            box-shadow: var(--shadow-glow);
-        }
-
-        .system-card h3 {
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .system-card h3 i {
-            width: 20px;
-            height: 20px;
-            color: var(--accent-bright);
-        }
-
-        .system-card ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .system-card li {
-            color: var(--text-secondary);
-            padding: 0.5rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .system-card li:last-child {
-            border-bottom: none;
-        }
-
-        .system-card li::before {
-            content: '>';
-            color: var(--accent-bright);
-            font-family: var(--font-mono);
-        }
-
-        .autonomy-levels {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .autonomy-level {
-            text-align: center;
-            padding: 1.5rem 1rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-glow);
-            border-radius: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .autonomy-level.target {
-            border-color: var(--accent-bright);
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(124, 58, 237, 0.1));
-        }
-
-        .autonomy-level .level-number {
-            font-size: 2rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .autonomy-level .level-name {
-            color: var(--text-primary);
-            font-weight: 600;
-            margin: 0.5rem 0;
-        }
-
-        .autonomy-level .level-desc {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-        }
-
-        @media (max-width: 768px) {
-            .workflow-step {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .project-meta {
-                flex-direction: column;
-                gap: 1rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="project-detail.css">
 </head>
 <body>
     <!-- Navigation -->
@@ -454,10 +87,10 @@
                         <i data-lucide="file-text"></i>
                         View Project Report
                     </a>
-                    <a href="https://drive.google.com/file/d/1-Uc2jZ5KEipDcS5EVqU0B1SKMTNTPPtc/view" target="_blank" rel="noopener" class="btn-github">
+                    <button onclick="openDemoVideoModal()" class="btn-github">
                         <i data-lucide="play-circle"></i>
                         Watch Demo Video
-                    </a>
+                    </button>
                 </div>
             </div>
         </section>
@@ -499,15 +132,15 @@
                                 <p>Complete documentation with methodology, implementation details, and results</p>
                             </div>
                         </a>
-                        <a href="https://drive.google.com/file/d/1-Uc2jZ5KEipDcS5EVqU0B1SKMTNTPPtc/view" target="_blank" rel="noopener" class="media-card">
+                        <div class="media-card" onclick="openDemoVideoModal()" style="cursor: pointer;">
                             <div class="media-card-content">
                                 <div class="media-card-icon video">
                                     <i data-lucide="play"></i>
                                 </div>
                                 <h3>Demo Video</h3>
-                                <p>Watch the autonomous car navigating through simulated Indian traffic</p>
+                                <p>Watch the autonomous car navigating through CARLA simulation</p>
                             </div>
-                        </a>
+                        </div>
                     </div>
                 </div>
 
@@ -677,16 +310,59 @@
                             <i data-lucide="file-text"></i>
                             Project Report (PDF)
                         </a>
-                        <a href="https://drive.google.com/file/d/1-Uc2jZ5KEipDcS5EVqU0B1SKMTNTPPtc/view" target="_blank" rel="noopener" class="btn-github">
+                        <button onclick="openDemoVideoModal()" class="btn-github">
                             <i data-lucide="video"></i>
                             Demo Video
-                        </a>
+                        </button>
                     </div>
                 </div>
 
             </div>
         </section>
     </main>
+
+    <!-- Demo Video Modal -->
+    <div class="certificate-modal" id="demoVideoModal">
+        <div class="modal-overlay" onclick="closeDemoVideoModal()"></div>
+        <div class="modal-content video-modal-content" style="max-width: 900px;">
+            <button class="modal-close" onclick="closeDemoVideoModal()">
+                <i data-lucide="x"></i>
+            </button>
+            <h3 class="modal-title">Autonomous Car Demo - CARLA Simulation</h3>
+            <div class="video-embed-wrapper" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
+                <iframe id="demoVideoFrame" src="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+            <p style="text-align: center; margin-top: 1rem; color: var(--text-muted); font-size: 0.9rem;">
+                Autonomous vehicle demonstration in CARLA simulation environment
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function openDemoVideoModal() {
+            const modal = document.getElementById('demoVideoModal');
+            const iframe = document.getElementById('demoVideoFrame');
+            iframe.src = 'https://drive.google.com/file/d/1-Uc2jZ5KEipDcS5EVqU0B1SKMTNTPPtc/preview';
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        function closeDemoVideoModal() {
+            const modal = document.getElementById('demoVideoModal');
+            const iframe = document.getElementById('demoVideoFrame');
+            iframe.src = '';
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeDemoVideoModal();
+            }
+        });
+    </script>
 
     <!-- Footer -->
     <footer class="footer">
