@@ -24,6 +24,11 @@
     --text-muted: #64748b;
     --text-light: #94a3b8;
 
+    /* Icon Colors - More Visible */
+    --icon-primary: #1e40af;
+    --icon-secondary: #0f172a;
+    --icon-muted: #475569;
+
     /* Clean Borders */
     --border-subtle: #e2e8f0;
     --border-medium: #cbd5e1;
@@ -372,6 +377,12 @@ strong {
     border: none;
 }
 
+.btn i {
+    width: 18px;
+    height: 18px;
+    stroke-width: 2;
+}
+
 .btn-primary {
     background: var(--accent-secondary);
     color: #ffffff;
@@ -408,16 +419,22 @@ strong {
 }
 
 .social-links a {
-    color: var(--text-muted);
+    color: var(--icon-muted);
     padding: 0.75rem;
     border-radius: 10px;
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border-medium);
     background: var(--bg-primary);
     transition: all var(--transition-normal);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: var(--shadow-xs);
+    box-shadow: var(--shadow-sm);
+}
+
+.social-links a i {
+    width: 22px;
+    height: 22px;
+    stroke-width: 2;
 }
 
 .social-links a:hover {
@@ -432,8 +449,14 @@ strong {
     bottom: 2rem;
     left: 50%;
     transform: translateX(-50%);
-    color: var(--text-muted);
+    color: var(--icon-muted);
     animation: bounce 2.5s infinite;
+}
+
+.scroll-indicator i {
+    width: 28px;
+    height: 28px;
+    stroke-width: 2;
 }
 
 @keyframes bounce {
@@ -508,9 +531,10 @@ strong {
 }
 
 .focus-list i {
-    color: var(--accent-secondary);
-    width: 18px;
-    height: 18px;
+    color: var(--icon-primary);
+    width: 20px;
+    height: 20px;
+    stroke-width: 2;
 }
 
 /* ===== Skills Section ===== */
@@ -680,8 +704,10 @@ strong {
 }
 
 .timeline-date i {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
+    color: var(--icon-primary);
+    stroke-width: 2;
 }
 
 .timeline-location {
@@ -694,8 +720,10 @@ strong {
 }
 
 .timeline-location i {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
+    color: var(--icon-primary);
+    stroke-width: 2;
 }
 
 .timeline-details {
@@ -770,18 +798,25 @@ strong {
 }
 
 .project-folder {
-    color: var(--accent-secondary);
-    width: 36px;
-    height: 36px;
+    color: var(--icon-primary);
+    width: 40px;
+    height: 40px;
+    stroke-width: 1.5;
 }
 
 .project-links a {
-    color: var(--text-muted);
+    color: var(--icon-muted);
     transition: color var(--transition-fast);
 }
 
 .project-links a:hover {
     color: var(--accent-secondary);
+}
+
+.project-links a i {
+    width: 22px;
+    height: 22px;
+    stroke-width: 2;
 }
 
 .project-title {
@@ -1014,8 +1049,9 @@ strong {
 }
 
 .credential-link i {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
+    stroke-width: 2;
 }
 
 .cert-skills {
@@ -1129,8 +1165,9 @@ strong {
 
 .view-cert-hint i,
 .view-details-hint i {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
+    stroke-width: 2;
 }
 
 .clickable-card:hover .view-cert-hint,
@@ -1608,30 +1645,38 @@ strong {
     align-items: center;
     gap: 0.35rem;
     font-size: 0.8rem;
-    color: var(--accent-secondary);
+    color: var(--icon-primary);
+    font-weight: 500;
 }
 
 .publication-link i {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
+    stroke-width: 2;
+}
+
+.publication-link:hover {
+    color: var(--accent-secondary);
 }
 
 .publications-placeholder {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     font-style: italic;
     padding: 1rem;
     background: rgba(37, 99, 235, 0.05);
     border-radius: 8px;
-    border: 1px dashed var(--border-subtle);
+    border: 1px dashed var(--border-medium);
     font-size: 0.9rem;
 }
 
 .publications-placeholder i {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
+    color: var(--icon-primary);
+    stroke-width: 2;
 }
 
 /* ===== Contact Section ===== */
@@ -1676,9 +1721,10 @@ strong {
 }
 
 .contact-method i {
-    color: var(--accent-secondary);
-    width: 20px;
-    height: 20px;
+    color: var(--icon-primary);
+    width: 22px;
+    height: 22px;
+    stroke-width: 2;
 }
 
 .contact-form {
@@ -1767,7 +1813,7 @@ strong {
 }
 
 .footer-social a {
-    color: var(--text-muted);
+    color: var(--icon-muted);
     padding: 0.5rem;
     border-radius: 8px;
     transition: all var(--transition-fast);
@@ -1776,6 +1822,12 @@ strong {
 .footer-social a:hover {
     color: var(--accent-secondary);
     background: rgba(37, 99, 235, 0.08);
+}
+
+.footer-social a i {
+    width: 22px;
+    height: 22px;
+    stroke-width: 2;
 }
 
 .footer-copyright {
