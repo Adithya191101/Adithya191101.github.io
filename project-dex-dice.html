@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="In-Hand Dice Reorientation with PPO - Dexterous manipulation using Unitree Dex3-1 hand in MuJoCo by Adithya Rajendran">
+    <meta name="author" content="Adithya Rajendran">
+
+    <title>In-Hand Dice Reorientation | Adithya Rajendran</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="project-detail.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="nav-header" id="navbar">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-text">AR</span>
+            </a>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">
+                <i data-lucide="menu" class="menu-icon"></i>
+                <i data-lucide="x" class="close-icon"></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#projects">Featured Projects</a></li>
+                <li><a href="index.html#education">Education</a></li>
+                <li><a href="honors.html">Honors</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+
+            <button class="sidebar-menu-btn" id="sidebarMenuBtn" aria-label="Open sidebar menu">
+                <i data-lucide="menu"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <aside class="sidebar-menu" id="sidebarMenu">
+        <div class="sidebar-header">
+            <span class="sidebar-title">Menu</span>
+            <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close sidebar">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="projects.html"><i data-lucide="folder-open"></i> All Projects</a></li>
+            <li><a href="honors.html"><i data-lucide="award"></i> Honors</a></li>
+            <li><a href="publications.html"><i data-lucide="book-open"></i> Publications</a></li>
+            <li><a href="contact.html"><i data-lucide="mail"></i> Contact</a></li>
+        </ul>
+    </aside>
+
+    <main>
+        <!-- Project Hero -->
+        <section class="project-detail-hero">
+            <div class="container">
+                <a href="projects.html" class="back-link">
+                    <i data-lucide="arrow-left"></i>
+                    Back to Projects
+                </a>
+
+                <h1>In-Hand Dice Reorientation with Reinforcement Learning</h1>
+                <p class="project-tagline" style="color: var(--text-secondary); font-size: 1.1rem; max-width: 800px;">
+                    Training a Unitree Dex3-1 robotic hand (3-finger, 7 DOF) to reorient a dice in-hand to show any target face on top, using Proximal Policy Optimization in MuJoCo simulation with GPU-accelerated MJX physics.
+                </p>
+
+                <div class="project-meta">
+                    <div class="project-meta-item">
+                        <i data-lucide="calendar"></i>
+                        <span>February 2026 - Present</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="loader"></i>
+                        <span>Part-time, Ongoing</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="building"></i>
+                        <span>Personal Research Project</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="user"></i>
+                        <span>Adithya Rajendran</span>
+                    </div>
+                </div>
+
+                <div class="cta-buttons">
+                    <a href="https://github.com/Adithya191101/unitree-dex3-rl" target="_blank" rel="noopener" class="btn-github">
+                        <i data-lucide="github"></i>
+                        View on GitHub
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Content -->
+        <section class="project-content">
+            <div class="container">
+
+                <!-- Overview -->
+                <div class="project-section">
+                    <h2><i data-lucide="info"></i> Project Overview</h2>
+                    <p>
+                        Dexterous in-hand manipulation is one of the hardest challenges in robotics. This project tackles the problem of reorienting a standard dice to show any of its 6 faces on top, using only a 3-fingered robotic hand. The entire pipeline is built from scratch: custom MuJoCo environments, PPO with curriculum learning, finger gaiting reward shaping, and GPU-accelerated training with 2048 parallel environments.
+                    </p>
+                    <p>
+                        The policy learns to coordinate three fingers to hold, rotate, and reposition the dice through a 7-phase curriculum that progressively increases rotation difficulty. A bioinspired finger gaiting reward encourages the hand to lift and replace individual fingers while the other two maintain a stable grip, enabling rotations beyond the static grasp workspace.
+                    </p>
+
+                    <!-- Key Results -->
+                    <div class="results-highlight">
+                        <div class="result-stat">
+                            <div class="value">100%</div>
+                            <div class="label">MJX Eval SR</div>
+                            <div class="comparison">All 6 faces</div>
+                        </div>
+                        <div class="result-stat">
+                            <div class="value">7</div>
+                            <div class="label">DOF</div>
+                            <div class="comparison">3 fingers, 7 joints</div>
+                        </div>
+                        <div class="result-stat">
+                            <div class="value">2048</div>
+                            <div class="label">Parallel Envs</div>
+                            <div class="comparison">MJX GPU training</div>
+                        </div>
+                        <div class="result-stat">
+                            <div class="value">524M</div>
+                            <div class="label">Timesteps</div>
+                            <div class="comparison">~20 hours, RTX 4090</div>
+                        </div>
+                    </div>
+
+                    <div class="feature-highlight">
+                        <h3><i data-lucide="target"></i> Key Contributions</h3>
+                        <ul>
+                            <li>End-to-end RL pipeline for 3-finger dexterous manipulation from scratch in PyTorch</li>
+                            <li>Bioinspired finger gaiting reward that encourages cyclic lift-hold-replace contact patterns</li>
+                            <li>7-phase curriculum learning with per-phase control of exploration noise, reward weights, and action scale</li>
+                            <li>Hybrid MJX training loop: GPU-accelerated JAX physics with PyTorch policy optimization</li>
+                            <li>Domain randomization on friction, mass, damping, stiffness, and observation noise</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- The Hand -->
+                <div class="project-section">
+                    <h2><i data-lucide="hand"></i> The Hand: Unitree Dex3-1</h2>
+                    <p>
+                        The Dex3-1 is a compact 3-finger robotic hand extracted from the Unitree G1 humanoid model in MuJoCo Menagerie. It has a thumb with 3 actuated joints and two fingers (index, middle) with 2 joints each, totaling 7 degrees of freedom. The hand uses native MuJoCo position actuators with PD control for stable, RL-friendly operation.
+                    </p>
+
+                    <div class="project-image-grid" style="grid-template-columns: repeat(4, 1fr);">
+                        <div class="project-image-card" onclick="openImageModal('assets/dex-dice/front_view.png', 'Front View')">
+                            <img src="assets/dex-dice/front_view.png" alt="Dex3-1 Front View">
+                            <div class="caption">Front view</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/dex-dice/side_view.png', 'Side View')">
+                            <img src="assets/dex-dice/side_view.png" alt="Dex3-1 Side View">
+                            <div class="caption">Side view</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/dex-dice/top_view.png', 'Top View')">
+                            <img src="assets/dex-dice/top_view.png" alt="Dex3-1 Top View">
+                            <div class="caption">Top view</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/dex-dice/closeup_view.png', 'Scene Overview')">
+                            <img src="assets/dex-dice/closeup_view.png" alt="Scene Overview">
+                            <div class="caption">Scene overview</div>
+                        </div>
+                    </div>
+
+                    <div class="methodology-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-top: 1.5rem;">
+                        <div class="methodology-card" style="padding: 1rem;">
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem;">Actuator Type</h4>
+                            <p style="margin: 0; color: var(--accent-secondary); font-family: 'JetBrains Mono', monospace;">Position (kp=5)</p>
+                        </div>
+                        <div class="methodology-card" style="padding: 1rem;">
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem;">Damping</h4>
+                            <p style="margin: 0; color: var(--accent-secondary); font-family: 'JetBrains Mono', monospace;">dampratio=1</p>
+                        </div>
+                        <div class="methodology-card" style="padding: 1rem;">
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem;">Force Range</h4>
+                            <p style="margin: 0; color: var(--accent-secondary); font-family: 'JetBrains Mono', monospace;">[-1.5, 1.5] N</p>
+                        </div>
+                        <div class="methodology-card" style="padding: 1rem;">
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem;">Action Scale</h4>
+                            <p style="margin: 0; color: var(--accent-secondary); font-family: 'JetBrains Mono', monospace;">0.3 rad</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grasping -->
+                <div class="project-section">
+                    <h2><i data-lucide="grab"></i> Grasping the Dice</h2>
+                    <p>
+                        The dice is held in a pre-tuned three-finger cradle grip. The reset sequence uses a 2-phase approach: 300-step interpolation to grip position followed by 100-step settle, ensuring stable initial contact. With <code>action = 0</code>, the hand holds the dice indefinitely, giving the policy a safe default to explore from.
+                    </p>
+
+                    <div class="project-image-grid three-col">
+                        <div class="project-image-card" onclick="openImageModal('assets/dex-dice/final_front.png', 'Grasp - Front View')">
+                            <img src="assets/dex-dice/final_front.png" alt="Grasp front view">
+                            <div class="caption">Three-finger precision grip (front)</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/dex-dice/final_closeup.png', 'Grasp - Closeup')">
+                            <img src="assets/dex-dice/final_closeup.png" alt="Grasp closeup">
+                            <div class="caption">Finger contact points on dice</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/dex-dice/final_top.png', 'Grasp - Top View')">
+                            <img src="assets/dex-dice/final_top.png" alt="Grasp top view">
+                            <div class="caption">Overhead view of grip geometry</div>
+                        </div>
+                    </div>
+
+                    <div class="project-image-grid three-col" style="margin-top: 1rem;">
+                        <div class="project-image-card" onclick="openImageModal('assets/dex-dice/palmup_front.png', 'Palm-up Front')">
+                            <img src="assets/dex-dice/palmup_front.png" alt="Palm-up front">
+                            <div class="caption">Palm-up grasp (front)</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/dex-dice/palmup_side.png', 'Palm-up Side')">
+                            <img src="assets/dex-dice/palmup_side.png" alt="Palm-up side">
+                            <div class="caption">Palm-up grasp (side)</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/dex-dice/palmup_top.png', 'Palm-up Top')">
+                            <img src="assets/dex-dice/palmup_top.png" alt="Palm-up top">
+                            <div class="caption">Palm-up grasp (top)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Observation & Action Space -->
+                <div class="project-section">
+                    <h2><i data-lucide="scan-eye"></i> Observation & Action Space</h2>
+
+                    <h3><i data-lucide="layers"></i> Observation Space (48 dimensions)</h3>
+                    <table class="specs-table">
+                        <tbody>
+                            <tr>
+                                <th>Joint positions (7)</th>
+                                <td>Hand joint angles</td>
+                            </tr>
+                            <tr>
+                                <th>Joint velocities (7)</th>
+                                <td>Hand joint angular velocities</td>
+                            </tr>
+                            <tr>
+                                <th>Relative cube pos (3)</th>
+                                <td>Cube position relative to palm center</td>
+                            </tr>
+                            <tr>
+                                <th>Cube quaternion (4)</th>
+                                <td>Current dice orientation [w, x, y, z]</td>
+                            </tr>
+                            <tr>
+                                <th>Cube angular vel (3)</th>
+                                <td>Dice rotation rate</td>
+                            </tr>
+                            <tr>
+                                <th>Target quaternion (4)</th>
+                                <td>Desired orientation for target face</td>
+                            </tr>
+                            <tr>
+                                <th>Fingertip positions (9)</th>
+                                <td>3D position of each fingertip (3 x 3)</td>
+                            </tr>
+                            <tr>
+                                <th>Current face (1)</th>
+                                <td>Which face is currently on top (normalized)</td>
+                            </tr>
+                            <tr>
+                                <th>Previous action (7)</th>
+                                <td>Last action taken (for smoothing awareness)</td>
+                            </tr>
+                            <tr>
+                                <th>Contact forces (3)</th>
+                                <td>Per-finger contact strength with dice</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3><i data-lucide="move"></i> Action Space (7 dimensions)</h3>
+                    <p>
+                        Actions are residual position offsets applied to a pre-tuned grip configuration. The control law is <code>ctrl = grip_qpos + action * action_scale</code>, where <code>action_scale = 0.3 rad</code>. MuJoCo's native position actuators handle PD control internally, providing stable torque output without manual PD tuning.
+                    </p>
+                </div>
+
+                <!-- Reward Design -->
+                <div class="project-section">
+                    <h2><i data-lucide="award"></i> Reward Design</h2>
+                    <p>
+                        The reward function combines continuous shaping signals with sparse terminal rewards and bioinspired finger gaiting bonuses. A cooldown timer (5 steps) prevents the policy from farming gait reward through rapid lift/replace cycling.
+                    </p>
+
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Component</th>
+                                <th>Value</th>
+                                <th>Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Distance</strong></td>
+                                <td><code>-quat_dist * 1.0</code></td>
+                                <td>Potential-based shaping toward target orientation</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Progress</strong></td>
+                                <td><code>(prev - curr) * 15.0</code></td>
+                                <td>Directional signal rewarding improvement</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Goal bonus</strong></td>
+                                <td><code>+100.0</code></td>
+                                <td>Sparse reward for reaching target face</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Drop penalty</strong></td>
+                                <td><code>-50.0</code></td>
+                                <td>Penalize losing the cube</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Gait lift</strong></td>
+                                <td><code>+0.5</code></td>
+                                <td>Finger lifts while 2 others hold firmly</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Gait replace</strong></td>
+                                <td><code>+0.3</code></td>
+                                <td>Finger re-contacts to complete gait cycle</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Contact (3 fingers)</strong></td>
+                                <td><code>+0.1</code></td>
+                                <td>Encourage stable grip</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Action smooth</strong></td>
+                                <td><code>-0.02 * ||delta||^2</code></td>
+                                <td>Penalize jittery actions</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="feature-highlight" style="margin-top: 1.5rem;">
+                        <h3><i data-lucide="rotate-ccw"></i> Finger Gaiting</h3>
+                        <ul>
+                            <li><strong>Bioinspired approach:</strong> 2 fingers hold the object while 1 lifts, repositions, and re-engages</li>
+                            <li><strong>Lift event:</strong> Triggered when a finger loses contact while the other two maintain force above threshold</li>
+                            <li><strong>Replace event:</strong> Triggered when a lifted finger re-contacts while the other two remain in contact</li>
+                            <li><strong>Anti-hacking:</strong> 5-step cooldown between gait events prevents reward farming without rotation progress</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Curriculum Learning -->
+                <div class="project-section">
+                    <h2><i data-lucide="graduation-cap"></i> Curriculum Learning (7 Phases)</h2>
+                    <p>
+                        Training progresses through graduated difficulty levels. Each phase controls its own learning rate, exploration noise (log_std bounds), entropy bonus, episode length, action scale, and reward weights. Phases advance when eval success rate exceeds the threshold.
+                    </p>
+
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Phase</th>
+                                <th>Task</th>
+                                <th>Max Angle</th>
+                                <th>Advance SR</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1. GRIP</strong></td>
+                                <td>Hold cube stable</td>
+                                <td>0.0 rad</td>
+                                <td>95%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2. MICRO_ROTATE</strong></td>
+                                <td>Tiny rotations</td>
+                                <td>0.3 rad (~17 deg)</td>
+                                <td>70%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3. GAIT_EMERGE</strong></td>
+                                <td>Medium rotations, gaiting bonus</td>
+                                <td>0.8 rad (~46 deg)</td>
+                                <td>45%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>4. MED_ROTATE</strong></td>
+                                <td>~90 degree rotations</td>
+                                <td>1.57 rad (~90 deg)</td>
+                                <td>40%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>5. SINGLE_FULL</strong></td>
+                                <td>Full rotation, one start face</td>
+                                <td>3.15 rad</td>
+                                <td>35%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>6. MULTI_FULL</strong></td>
+                                <td>Full rotation, multiple starts</td>
+                                <td>3.15 rad</td>
+                                <td>30%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>7. ALL_FACES</strong></td>
+                                <td>Any face to any face</td>
+                                <td>3.15 rad</td>
+                                <td class="highlight-row">80%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Dice Face Mapping -->
+                <div class="project-section">
+                    <h2><i data-lucide="dice-5"></i> Dice Face Mapping</h2>
+                    <p>
+                        The dice uses standard layout where opposite faces sum to 7. Face detection is geometric: the axis with maximum Z-component of the cube frame determines which face points up.
+                    </p>
+
+                    <div class="project-image-grid" style="grid-template-columns: repeat(6, 1fr);">
+                        <div class="project-image-card" onclick="openImageModal('assets/dex-dice/face_1.png', 'Face 1 (+Z)')">
+                            <img src="assets/dex-dice/face_1.png" alt="Face 1">
+                            <div class="caption">Face 1 (+Z)</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/dex-dice/face_2.png', 'Face 2 (+Y)')">
+                            <img src="assets/dex-dice/face_2.png" alt="Face 2">
+                            <div class="caption">Face 2 (+Y)</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/dex-dice/face_3.png', 'Face 3 (+X)')">
+                            <img src="assets/dex-dice/face_3.png" alt="Face 3">
+                            <div class="caption">Face 3 (+X)</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/dex-dice/face_4.png', 'Face 4 (-X)')">
+                            <img src="assets/dex-dice/face_4.png" alt="Face 4">
+                            <div class="caption">Face 4 (-X)</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/dex-dice/face_5.png', 'Face 5 (-Y)')">
+                            <img src="assets/dex-dice/face_5.png" alt="Face 5">
+                            <div class="caption">Face 5 (-Y)</div>
+                        </div>
+                        <div class="project-image-card" onclick="openImageModal('assets/dex-dice/face_6.png', 'Face 6 (-Z)')">
+                            <img src="assets/dex-dice/face_6.png" alt="Face 6">
+                            <div class="caption">Face 6 (-Z)</div>
+                        </div>
+                    </div>
+
+                    <div class="project-image-card" onclick="openImageModal('assets/dex-dice/dice_texture.png', 'UV-mapped Dice Texture')" style="max-width: 300px; margin: 1.5rem auto;">
+                        <img src="assets/dex-dice/dice_texture.png" alt="Dice texture">
+                        <div class="caption">UV-mapped dice texture (standard layout)</div>
+                    </div>
+                </div>
+
+                <!-- Training -->
+                <div class="project-section">
+                    <h2><i data-lucide="cpu"></i> Training</h2>
+
+                    <div class="methodology-grid">
+                        <div class="methodology-card">
+                            <h4><i data-lucide="zap"></i> MJX GPU Training</h4>
+                            <p>
+                                2048 parallel environments on GPU using MuJoCo XLA. Hybrid architecture: JAX handles physics stepping, PyTorch handles policy optimization. 131K transitions per update with domain randomization on friction, mass, damping, stiffness, and observation noise.
+                            </p>
+                            <div class="properties">
+                                <span class="property">2048 Envs</span>
+                                <span class="property">RTX 4090</span>
+                                <span class="property">~18s/update</span>
+                                <span class="property">Domain Rand</span>
+                            </div>
+                        </div>
+
+                        <div class="methodology-card">
+                            <h4><i data-lucide="server"></i> CPU Parallel Training</h4>
+                            <p>
+                                16-64 parallel environments using SubprocVecEnv with multiprocessing. Trains on the same mesh-collision physics used for deployment, avoiding the sim-to-sim transfer gap. Per-env GAE computation for correct advantage estimation across workers.
+                            </p>
+                            <div class="properties">
+                                <span class="property">64 Envs</span>
+                                <span class="property">SubprocVecEnv</span>
+                                <span class="property">Mesh Collisions</span>
+                                <span class="property">Per-env GAE</span>
+                            </div>
+                        </div>
+
+                        <div class="methodology-card">
+                            <h4><i data-lucide="brain"></i> PPO Configuration</h4>
+                            <p>
+                                Custom PPO implementation with value function clipping, running observation normalization, and per-phase log_std bounds for curriculum-controlled exploration. The actor-critic network uses a 512-256-128 MLP with tanh activations.
+                            </p>
+                            <div class="properties">
+                                <span class="property">Custom PPO</span>
+                                <span class="property">512-256-128</span>
+                                <span class="property">Obs Normalization</span>
+                                <span class="property">Value Clipping</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3><i data-lucide="settings-2"></i> Hyperparameters</h3>
+                    <div class="methodology-grid" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+                        <div class="methodology-card" style="padding: 1rem;">
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem;">Learning Rate</h4>
+                            <p style="margin: 0; color: var(--accent-secondary); font-family: 'JetBrains Mono', monospace;">3e-4 -> 1e-5</p>
+                        </div>
+                        <div class="methodology-card" style="padding: 1rem;">
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem;">Discount</h4>
+                            <p style="margin: 0; color: var(--accent-secondary); font-family: 'JetBrains Mono', monospace;">0.99</p>
+                        </div>
+                        <div class="methodology-card" style="padding: 1rem;">
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem;">GAE Lambda</h4>
+                            <p style="margin: 0; color: var(--accent-secondary); font-family: 'JetBrains Mono', monospace;">0.95</p>
+                        </div>
+                        <div class="methodology-card" style="padding: 1rem;">
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem;">Clip Epsilon</h4>
+                            <p style="margin: 0; color: var(--accent-secondary); font-family: 'JetBrains Mono', monospace;">0.2</p>
+                        </div>
+                        <div class="methodology-card" style="padding: 1rem;">
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem;">Rollout Steps</h4>
+                            <p style="margin: 0; color: var(--accent-secondary); font-family: 'JetBrains Mono', monospace;">64</p>
+                        </div>
+                        <div class="methodology-card" style="padding: 1rem;">
+                            <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem;">Total Updates</h4>
+                            <p style="margin: 0; color: var(--accent-secondary); font-family: 'JetBrains Mono', monospace;">4000</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div class="project-section">
+                    <h2><i data-lucide="bar-chart-2"></i> Results</h2>
+
+                    <h3><i data-lucide="check-circle"></i> MJX Training (GPU, 2048 envs)</h3>
+                    <ul>
+                        <li>All 7 curriculum phases completed successfully</li>
+                        <li><strong>100% eval success rate</strong> on all 6 target faces in MJX physics</li>
+                        <li>524M timesteps, approximately 20 hours on RTX 4090</li>
+                        <li>0% drop rate throughout training</li>
+                    </ul>
+
+                    <h3><i data-lucide="alert-triangle"></i> Sim-to-Sim Transfer Gap</h3>
+                    <p>
+                        The MJX-trained policy achieves approximately 24% success rate when transferred to CPU MuJoCo without fine-tuning. This gap stems from collision geometry differences: MJX requires primitive shapes (boxes, spheres) while the CPU model uses full mesh collisions (STL files), producing fundamentally different contact responses that parameter-level domain randomization cannot bridge.
+                    </p>
+
+                    <div class="results-highlight" style="margin-top: 1rem;">
+                        <div class="result-stat">
+                            <div class="value">100%</div>
+                            <div class="label">MJX SR</div>
+                            <div class="comparison">Primitive collisions</div>
+                        </div>
+                        <div class="result-stat">
+                            <div class="value">~24%</div>
+                            <div class="label">CPU SR</div>
+                            <div class="comparison">Mesh collisions</div>
+                        </div>
+                        <div class="result-stat">
+                            <div class="value">0%</div>
+                            <div class="label">Drop Rate</div>
+                            <div class="comparison">During MJX training</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Challenges -->
+                <div class="project-section">
+                    <h2><i data-lucide="alert-circle"></i> Challenges Overcome</h2>
+
+                    <div class="debugging-section">
+                        <h4><i data-lucide="zap-off"></i> Actuator Instability</h4>
+                        <div class="debug-item">
+                            <div class="issue">Torque actuators caused uncontrollable jittering</div>
+                            <div class="solution">Switched to native position actuators (kp=5, dampratio=1) with residual action space. action=0 holds dice stably, giving the policy a safe default.</div>
+                        </div>
+                    </div>
+
+                    <div class="debugging-section">
+                        <h4><i data-lucide="eye-off"></i> Evaluation Bias</h4>
+                        <div class="debug-item">
+                            <div class="issue">First-to-finish sampling showed 100% SR while true rate was 33-40%</div>
+                            <div class="solution">Successful episodes terminate early and get overrepresented. Fixed with evaluate_per_face(): exactly N episodes per face, independently measured.</div>
+                        </div>
+                    </div>
+
+                    <div class="debugging-section">
+                        <h4><i data-lucide="trending-down"></i> Curriculum Collapse</h4>
+                        <div class="debug-item">
+                            <div class="issue">Jumping from 0.8 rad to 3.15 rad caused 90% to 0% SR crash</div>
+                            <div class="solution">Added intermediate MED_ROTATE phase at 1.57 rad. Difficulty gaps greater than ~2x cause catastrophic forgetting.</div>
+                        </div>
+                    </div>
+
+                    <div class="debugging-section">
+                        <h4><i data-lucide="infinity"></i> NaN Explosion on Phase Transitions</h4>
+                        <div class="debug-item">
+                            <div class="issue">Stale observation normalization statistics corrupted gradients after phase change</div>
+                            <div class="solution">Added obs normalization warmup: collect 10 steps under new phase before any policy update.</div>
+                        </div>
+                    </div>
+
+                    <div class="debugging-section">
+                        <h4><i data-lucide="database"></i> Data Diversity Bottleneck</h4>
+                        <div class="debug-item">
+                            <div class="issue">16 CPU envs gave only ~1.8 episodes per face combination per update</div>
+                            <div class="solution">MJX with 2048 envs provides ~57 episodes per combination per update, sufficient for learning hard rotations.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Future Scope -->
+                <div class="project-section">
+                    <h2><i data-lucide="rocket"></i> Future Scope</h2>
+
+                    <div class="methodology-grid">
+                        <div class="methodology-card">
+                            <h4><i data-lucide="waves"></i> Diffusion Policy</h4>
+                            <p>
+                                Replace the unimodal Gaussian policy with a diffusion-based policy that generates actions through iterative denoising. Dexterous manipulation is inherently multimodal: multiple valid finger coordination strategies exist for the same reorientation goal.
+                            </p>
+                            <div class="properties">
+                                <span class="property">Multimodal Actions</span>
+                                <span class="property">Denoising</span>
+                                <span class="property">Structured Sequences</span>
+                            </div>
+                        </div>
+
+                        <div class="methodology-card">
+                            <h4><i data-lucide="settings"></i> DPPO</h4>
+                            <p>
+                                Diffusion Policy Policy Optimization combines diffusion representations with PPO-style policy gradient fine-tuning. Enables direct optimization against reward without requiring demonstrations, matching the existing self-play RL paradigm.
+                            </p>
+                            <div class="properties">
+                                <span class="property">No Demos Needed</span>
+                                <span class="property">Reward Optimization</span>
+                                <span class="property">Curriculum Compatible</span>
+                            </div>
+                        </div>
+
+                        <div class="methodology-card">
+                            <h4><i data-lucide="move-3d"></i> Sim-to-Real Transfer</h4>
+                            <p>
+                                Deploy trained policies on physical Unitree Dex3-1 hardware with real-time inference. Requires addressing sensor noise, actuation delays, and unified collision geometry between simulation and real-world contact.
+                            </p>
+                            <div class="properties">
+                                <span class="property">Hardware Deploy</span>
+                                <span class="property">Domain Adaptation</span>
+                                <span class="property">Real-time Control</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technologies -->
+                <div class="project-section">
+                    <h2><i data-lucide="wrench"></i> Technologies Used</h2>
+
+                    <div class="tech-stack-grid">
+                        <div class="tech-item">
+                            <i data-lucide="box"></i>
+                            <span>MuJoCo</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="zap"></i>
+                            <span>MJX (JAX)</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="brain"></i>
+                            <span>PyTorch</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="code"></i>
+                            <span>Python</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="bar-chart"></i>
+                            <span>NumPy</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="activity"></i>
+                            <span>TensorBoard</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="gpu-card"></i>
+                            <span>CUDA</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="terminal"></i>
+                            <span>RunPod</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources -->
+                <div class="project-section">
+                    <h2><i data-lucide="folder-open"></i> Project Resources</h2>
+                    <p>Access the complete source code, training configurations, and model files:</p>
+
+                    <div class="cta-buttons" style="margin-top: 1rem;">
+                        <a href="https://github.com/Adithya191101/unitree-dex3-rl" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="github"></i>
+                            GitHub Repository
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Image Modal -->
+    <div class="certificate-modal" id="imageModal">
+        <div class="modal-overlay" onclick="closeImageModal()"></div>
+        <div class="modal-content image-modal-content">
+            <button class="modal-close" onclick="closeImageModal()">
+                <i data-lucide="x"></i>
+            </button>
+            <h3 class="modal-title" id="imageModalTitle">Image</h3>
+            <img id="modalImage" src="" alt="Project Image">
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="index.html#about">About</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+
+                <div class="footer-social">
+                    <a href="https://linkedin.com/in/adithyarajendran" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <i data-lucide="linkedin"></i>
+                    </a>
+                    <a href="https://github.com/Adithya191101" target="_blank" rel="noopener" aria-label="GitHub">
+                        <i data-lucide="github"></i>
+                    </a>
+                    <a href="mailto:adithya191101@gmail.com" aria-label="Email">
+                        <i data-lucide="mail"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    &copy; 2025 Adithya Rajendran. All rights reserved.
+                </p>
+
+                <p class="footer-tagline">
+                    Built with passion for robotics
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
