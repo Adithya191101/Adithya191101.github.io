@@ -81,7 +81,7 @@
 
                 <h1>In-Hand Dice Reorientation with Reinforcement Learning</h1>
                 <p class="project-tagline" style="color: var(--text-secondary); font-size: 1.1rem; max-width: 800px;">
-                    Training a Unitree Dex3-1 robotic hand (3-finger, 7 DOF) to reorient a dice in-hand to show any target face on top, using Proximal Policy Optimization in MuJoCo simulation with GPU-accelerated MJX physics.
+                    Training a Unitree Dex3-1 robotic hand (3-finger, 7 DOF) to reorient a dice in-hand to show any target face on top, using Proximal Policy Optimization with a 9-phase curriculum in MuJoCo simulation. 256 parallel environments, per-minibatch advantage normalization, and reward normalization for robust training.
                 </p>
 
                 <div class="project-meta">
@@ -123,15 +123,15 @@
                         Dexterous in-hand manipulation is one of the hardest challenges in robotics. This project tackles the problem of reorienting a standard dice to show any of its 6 faces on top, using only a 3-fingered robotic hand. The entire pipeline is built from scratch: custom MuJoCo environments, PPO with curriculum learning, finger gaiting reward shaping, and GPU-accelerated training with 2048 parallel environments.
                     </p>
                     <p>
-                        The policy learns to coordinate three fingers to hold, rotate, and reposition the dice through a 7-phase curriculum that progressively increases rotation difficulty. A bioinspired finger gaiting reward encourages the hand to lift and replace individual fingers while the other two maintain a stable grip, enabling rotations beyond the static grasp workspace.
+                        The policy learns to coordinate three fingers to hold, rotate, and reposition the dice through a 9-phase curriculum that progressively increases rotation difficulty and gradually introduces new target faces. A bioinspired finger gaiting reward encourages the hand to lift and replace individual fingers while the other two maintain a stable grip, enabling rotations beyond the static grasp workspace.
                     </p>
 
                     <!-- Key Results -->
                     <div class="results-highlight">
                         <div class="result-stat">
-                            <div class="value">100%</div>
-                            <div class="label">MJX Eval SR</div>
-                            <div class="comparison">All 6 faces</div>
+                            <div class="value">9</div>
+                            <div class="label">Curriculum Phases</div>
+                            <div class="comparison">GRIP → ALL_FACES</div>
                         </div>
                         <div class="result-stat">
                             <div class="value">7</div>
@@ -139,14 +139,14 @@
                             <div class="comparison">3 fingers, 7 joints</div>
                         </div>
                         <div class="result-stat">
-                            <div class="value">2048</div>
+                            <div class="value">256</div>
                             <div class="label">Parallel Envs</div>
-                            <div class="comparison">MJX GPU training</div>
+                            <div class="comparison">CPU MuJoCo training</div>
                         </div>
                         <div class="result-stat">
-                            <div class="value">524M</div>
-                            <div class="label">Timesteps</div>
-                            <div class="comparison">~20 hours, RTX 4090</div>
+                            <div class="value">v2</div>
+                            <div class="label">Pipeline Status</div>
+                            <div class="comparison">Audited & verified</div>
                         </div>
                     </div>
 
@@ -155,9 +155,10 @@
                         <ul>
                             <li>End-to-end RL pipeline for 3-finger dexterous manipulation from scratch in PyTorch</li>
                             <li>Bioinspired finger gaiting reward that encourages cyclic lift-hold-replace contact patterns</li>
-                            <li>7-phase curriculum learning with per-phase control of exploration noise, reward weights, and action scale</li>
-                            <li>Hybrid MJX training loop: GPU-accelerated JAX physics with PyTorch policy optimization</li>
-                            <li>Domain randomization on friction, mass, damping, stiffness, and observation noise</li>
+                            <li>9-phase curriculum with gradual target face introduction — smooth progression from grip stability to all 36 face-to-face transitions</li>
+                            <li>PPO pipeline audit: per-minibatch advantage normalization, reward normalization, KL early stopping fix</li>
+                            <li>Reward incentive analysis: identified and fixed perverse drop incentive in later curriculum phases</li>
+                            <li>Actuator calibration to Unitree menagerie specs (kp=50, per-joint forcerange)</li>
                         </ul>
                     </div>
                 </div>
@@ -191,7 +192,7 @@
                     <div class="methodology-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-top: 1.5rem;">
                         <div class="methodology-card" style="padding: 1rem;">
                             <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem;">Actuator Type</h4>
-                            <p style="margin: 0; color: var(--accent-secondary); font-family: 'JetBrains Mono', monospace;">Position (kp=5)</p>
+                            <p style="margin: 0; color: var(--accent-secondary); font-family: 'JetBrains Mono', monospace;">Position (kp=50)</p>
                         </div>
                         <div class="methodology-card" style="padding: 1rem;">
                             <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem;">Damping</h4>
@@ -199,11 +200,11 @@
                         </div>
                         <div class="methodology-card" style="padding: 1rem;">
                             <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem;">Force Range</h4>
-                            <p style="margin: 0; color: var(--accent-secondary); font-family: 'JetBrains Mono', monospace;">[-1.5, 1.5] N</p>
+                            <p style="margin: 0; color: var(--accent-secondary); font-family: 'JetBrains Mono', monospace;">Per-joint (±2.45/±1.4)</p>
                         </div>
                         <div class="methodology-card" style="padding: 1rem;">
                             <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem;">Action Scale</h4>
-                            <p style="margin: 0; color: var(--accent-secondary); font-family: 'JetBrains Mono', monospace;">0.3 rad</p>
+                            <p style="margin: 0; color: var(--accent-secondary); font-family: 'JetBrains Mono', monospace;">0.25 rad</p>
                         </div>
                     </div>
                 </div>
@@ -212,7 +213,7 @@
                 <div class="project-section">
                     <h2><i data-lucide="grab"></i> Grasping the Dice</h2>
                     <p>
-                        The dice is held in a pre-tuned three-finger cradle grip. The reset sequence uses a 2-phase approach: 300-step interpolation to grip position followed by 100-step settle, ensuring stable initial contact. With <code>action = 0</code>, the hand holds the dice indefinitely, giving the policy a safe default to explore from.
+                        The dice is held in a pre-tuned three-finger cradle grip. The reset sequence uses a 3-phase approach: 300-step close (kinematic hold), 100-step gradual release (ramp down external support force), and 300-step settle (free dynamics), ensuring stable initial contact without pop-out. With <code>action = 0</code>, the hand holds the dice indefinitely, giving the policy a safe default to explore from.
                     </p>
 
                     <div class="project-image-grid three-col">
@@ -374,9 +375,12 @@
 
                 <!-- Curriculum Learning -->
                 <div class="project-section">
-                    <h2><i data-lucide="graduation-cap"></i> Curriculum Learning (7 Phases)</h2>
+                    <h2><i data-lucide="graduation-cap"></i> Curriculum Learning (9 Phases)</h2>
                     <p>
-                        Training progresses through graduated difficulty levels. Each phase controls its own learning rate, exploration noise (log_std bounds), entropy bonus, episode length, action scale, and reward weights. Phases advance when eval success rate exceeds the threshold.
+                        Training progresses through 9 graduated difficulty levels. Each phase controls its own exploration noise (log_std bounds), entropy bonus, episode length, action scale, and reward weights. Phases advance only when <strong>eval success rate</strong> (not training SR) exceeds the threshold, with minimum update counts to prevent premature advancement.
+                    </p>
+                    <p>
+                        A key design insight: phases 1-6 only target face 1, building rotation skills incrementally. Phase 7 introduces 2 new target faces, phase 8 expands to all 36 transitions, and phase 9 requires mastery. This prevents the catastrophic forgetting that occurred when all target faces were introduced at once.
                     </p>
 
                     <table class="comparison-table">
@@ -384,7 +388,7 @@
                             <tr>
                                 <th>Phase</th>
                                 <th>Task</th>
-                                <th>Max Angle</th>
+                                <th>Start → Target</th>
                                 <th>Advance SR</th>
                             </tr>
                         </thead>
@@ -392,43 +396,55 @@
                             <tr>
                                 <td><strong>1. GRIP</strong></td>
                                 <td>Hold cube stable</td>
-                                <td>0.0 rad</td>
+                                <td>angle(0.0) → [1]</td>
                                 <td>95%</td>
                             </tr>
                             <tr>
                                 <td><strong>2. MICRO_ROTATE</strong></td>
-                                <td>Tiny rotations</td>
-                                <td>0.3 rad (~17 deg)</td>
+                                <td>Tiny rotations (~17 deg)</td>
+                                <td>angle(0.3) → [1]</td>
                                 <td>70%</td>
                             </tr>
                             <tr>
                                 <td><strong>3. GAIT_EMERGE</strong></td>
-                                <td>Medium rotations, gaiting bonus</td>
-                                <td>0.8 rad (~46 deg)</td>
+                                <td>Medium rotations, gaiting begins</td>
+                                <td>angle(0.8) → [1]</td>
                                 <td>45%</td>
                             </tr>
                             <tr>
-                                <td><strong>4. MED_ROTATE</strong></td>
-                                <td>~90 degree rotations</td>
-                                <td>1.57 rad (~90 deg)</td>
-                                <td>40%</td>
-                            </tr>
-                            <tr>
-                                <td><strong>5. SINGLE_FULL</strong></td>
-                                <td>Full rotation, one start face</td>
-                                <td>3.15 rad</td>
+                                <td><strong>4. MED_ROT</strong></td>
+                                <td>Half rotations (~90 deg)</td>
+                                <td>angle(1.57) → [1]</td>
                                 <td>35%</td>
                             </tr>
                             <tr>
-                                <td><strong>6. MULTI_FULL</strong></td>
-                                <td>Full rotation, multiple starts</td>
-                                <td>3.15 rad</td>
+                                <td><strong>5. SINGLE_90</strong></td>
+                                <td>Full rotation, one start face</td>
+                                <td>[2] → [1]</td>
                                 <td>30%</td>
                             </tr>
                             <tr>
-                                <td><strong>7. ALL_FACES</strong></td>
-                                <td>Any face to any face</td>
-                                <td>3.15 rad</td>
+                                <td><strong>6. MULTI_90</strong></td>
+                                <td>Full rotation, all start faces</td>
+                                <td>[2,3,4,5,6] → [1]</td>
+                                <td>40%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>7. MULTI_TARGET</strong></td>
+                                <td>Introduce non-face-1 targets</td>
+                                <td>[1-6] → [1,2,6]</td>
+                                <td>30%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>8. EXPAND_TARGET</strong></td>
+                                <td>All 36 transitions (warm-up)</td>
+                                <td>[1-6] → [1-6]</td>
+                                <td>25%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>9. ALL_FACES</strong></td>
+                                <td>Any face to any face (terminal)</td>
+                                <td>[1-6] → [1-6]</td>
                                 <td class="highlight-row">80%</td>
                             </tr>
                         </tbody>
@@ -496,10 +512,10 @@
                         <div class="methodology-card">
                             <h4><i data-lucide="server"></i> CPU Parallel Training</h4>
                             <p>
-                                16-64 parallel environments using SubprocVecEnv with multiprocessing. Trains on the same mesh-collision physics used for deployment, avoiding the sim-to-sim transfer gap. Per-env GAE computation for correct advantage estimation across workers.
+                                256 parallel environments using SubprocVecEnv with multiprocessing. Trains on mesh-collision physics for deployment fidelity, avoiding the sim-to-sim transfer gap. Per-env GAE computation for correct advantage estimation across workers.
                             </p>
                             <div class="properties">
-                                <span class="property">64 Envs</span>
+                                <span class="property">256 Envs</span>
                                 <span class="property">SubprocVecEnv</span>
                                 <span class="property">Mesh Collisions</span>
                                 <span class="property">Per-env GAE</span>
@@ -509,13 +525,13 @@
                         <div class="methodology-card">
                             <h4><i data-lucide="brain"></i> PPO Configuration</h4>
                             <p>
-                                Custom PPO implementation with value function clipping, running observation normalization, and per-phase log_std bounds for curriculum-controlled exploration. The actor-critic network uses a 512-256-128 MLP with tanh activations.
+                                Custom PPO implementation with per-minibatch advantage normalization, running observation and reward normalization, value function clipping, KL early stopping, and per-phase log_std bounds. The actor-critic network uses a 512-256-128 MLP with tanh activations.
                             </p>
                             <div class="properties">
                                 <span class="property">Custom PPO</span>
                                 <span class="property">512-256-128</span>
-                                <span class="property">Obs Normalization</span>
-                                <span class="property">Value Clipping</span>
+                                <span class="property">Reward Normalization</span>
+                                <span class="property">KL Early Stopping</span>
                             </div>
                         </div>
                     </div>
@@ -544,7 +560,7 @@
                         </div>
                         <div class="methodology-card" style="padding: 1rem;">
                             <h4 style="font-size: 0.9rem; margin-bottom: 0.25rem;">Total Updates</h4>
-                            <p style="margin: 0; color: var(--accent-secondary); font-family: 'JetBrains Mono', monospace;">4000</p>
+                            <p style="margin: 0; color: var(--accent-secondary); font-family: 'JetBrains Mono', monospace;">15000</p>
                         </div>
                     </div>
                 </div>
@@ -553,35 +569,59 @@
                 <div class="project-section">
                     <h2><i data-lucide="bar-chart-2"></i> Results</h2>
 
-                    <h3><i data-lucide="check-circle"></i> MJX Training (GPU, 2048 envs)</h3>
+                    <h3><i data-lucide="check-circle"></i> v1: MJX Training (GPU, 2048 envs)</h3>
                     <ul>
                         <li>All 7 curriculum phases completed successfully</li>
                         <li><strong>100% eval success rate</strong> on all 6 target faces in MJX physics</li>
-                        <li>524M timesteps, approximately 20 hours on RTX 4090</li>
-                        <li>0% drop rate throughout training</li>
+                        <li>262M timesteps, ~8.3 hours on RTX 4090</li>
+                        <li><strong>However:</strong> MJX→CPU transfer gap of ~76% due to collision geometry mismatch (primitives vs meshes). MJX approach abandoned.</li>
                     </ul>
 
-                    <h3><i data-lucide="alert-triangle"></i> Sim-to-Sim Transfer Gap</h3>
+                    <h3><i data-lucide="cpu"></i> v1: CPU Training Peak</h3>
+                    <ul>
+                        <li>Peak eval SR: <strong>94.1%</strong> at update ~8000, final: 80.9% at update 15000</li>
+                        <li>F3 oscillation due to catastrophic interference in multi-task RL</li>
+                        <li>Motivated the full v2 pipeline overhaul</li>
+                    </ul>
+
+                    <h3><i data-lucide="rocket"></i> v2: CPU Training Pipeline (In Progress)</h3>
                     <p>
-                        The MJX-trained policy achieves approximately 24% success rate when transferred to CPU MuJoCo without fine-tuning. This gap stems from collision geometry differences: MJX requires primitive shapes (boxes, spheres) while the CPU model uses full mesh collisions (STL files), producing fundamentally different contact responses that parameter-level domain randomization cannot bridge.
+                        The v2 pipeline trains directly on CPU MuJoCo with mesh collisions, avoiding the sim-to-sim gap entirely. All components have been audited and verified:
                     </p>
+                    <ul>
+                        <li><strong>9-phase curriculum</strong> with gradual target face introduction (phases 1-6 target face 1 only, phases 7-9 expand to all faces)</li>
+                        <li><strong>256 parallel environments</strong> providing 16,384 transitions per update</li>
+                        <li><strong>PPO fixes:</strong> per-minibatch advantage normalization, reward normalization, KL early stopping</li>
+                        <li><strong>Reward audit:</strong> drop_penalty calibrated to -50 in later phases to prevent perverse drop incentives</li>
+                        <li><strong>Smoke test:</strong> all 9 phases verified — no NaN, valid rewards, finite losses</li>
+                    </ul>
 
                     <div class="results-highlight" style="margin-top: 1rem;">
                         <div class="result-stat">
-                            <div class="value">100%</div>
-                            <div class="label">MJX SR</div>
-                            <div class="comparison">Primitive collisions</div>
+                            <div class="value">9</div>
+                            <div class="label">Phases</div>
+                            <div class="comparison">Verified via smoke test</div>
                         </div>
                         <div class="result-stat">
-                            <div class="value">~24%</div>
-                            <div class="label">CPU SR</div>
-                            <div class="comparison">Mesh collisions</div>
+                            <div class="value">256</div>
+                            <div class="label">CPU Envs</div>
+                            <div class="comparison">16K transitions/update</div>
                         </div>
                         <div class="result-stat">
-                            <div class="value">0%</div>
-                            <div class="label">Drop Rate</div>
-                            <div class="comparison">During MJX training</div>
+                            <div class="value">6</div>
+                            <div class="label">PPO Fixes</div>
+                            <div class="comparison">Pipeline fully audited</div>
                         </div>
+                    </div>
+
+                    <div class="feature-highlight" style="margin-top: 1.5rem;">
+                        <h3><i data-lucide="clock"></i> Current Status</h3>
+                        <ul>
+                            <li>v2 pipeline is <strong>fully audited and verified</strong> — ready for clean-slate retrain</li>
+                            <li>Target: <strong>80%+ eval success rate</strong> across all 6 faces on CPU MuJoCo with mesh collisions</li>
+                            <li>Training will run on <strong>RunPod</strong> with 256 parallel environments</li>
+                            <li>Results will be updated here upon completion</li>
+                        </ul>
                     </div>
                 </div>
 
@@ -625,7 +665,31 @@
                         <h4><i data-lucide="database"></i> Data Diversity Bottleneck</h4>
                         <div class="debug-item">
                             <div class="issue">16 CPU envs gave only ~1.8 episodes per face combination per update</div>
-                            <div class="solution">MJX with 2048 envs provides ~57 episodes per combination per update, sufficient for learning hard rotations.</div>
+                            <div class="solution">Scaled to 256 CPU envs, providing ~7 episodes per combination per update — sufficient for stable multi-face learning.</div>
+                        </div>
+                    </div>
+
+                    <div class="debugging-section">
+                        <h4><i data-lucide="calculator"></i> Advantage Normalization Bug (v2)</h4>
+                        <div class="debug-item">
+                            <div class="issue">Advantages normalized globally across the entire buffer, distorting per-minibatch gradients</div>
+                            <div class="solution">Moved normalization from buffer to PPO update loop. Standard PPO practice: normalize advantages per minibatch for stable gradient estimation.</div>
+                        </div>
+                    </div>
+
+                    <div class="debugging-section">
+                        <h4><i data-lucide="arrow-down-circle"></i> Drop Penalty Incentive Bug (v2)</h4>
+                        <div class="debug-item">
+                            <div class="issue">With drop_penalty=-30, a 150-step episode accumulates ~-53 reward from r_distance alone — dropping early at step 10 gives only -34 total</div>
+                            <div class="solution">The policy could learn that dropping is better than struggling on unfamiliar transitions. Increased drop_penalty to -50 in later phases so dropping is never preferable.</div>
+                        </div>
+                    </div>
+
+                    <div class="debugging-section">
+                        <h4><i data-lucide="layers"></i> Target Face Introduction Gap (v2)</h4>
+                        <div class="debug-item">
+                            <div class="issue">Phases 1-6 all targeted only face 1, then Phase 7 suddenly required all 6 target faces — 5 never-seen targets at once</div>
+                            <div class="solution">Added 2 intermediate phases: MULTI_TARGET (faces [1,2,6]) and EXPAND_TARGET (all faces at low threshold). Gradual introduction prevents catastrophic forgetting.</div>
                         </div>
                     </div>
                 </div>
@@ -635,6 +699,19 @@
                     <h2><i data-lucide="rocket"></i> Future Scope</h2>
 
                     <div class="methodology-grid">
+                        <div class="methodology-card">
+                            <h4><i data-lucide="play"></i> v2 Retrain (Immediate)</h4>
+                            <p>
+                                Clean-slate retrain with the audited v2 pipeline: 9-phase curriculum, 256 CPU envs, per-minibatch advantage normalization, reward normalization, and calibrated actuators. Target: 80%+ eval SR on all 6 faces with mesh collisions.
+                            </p>
+                            <div class="properties">
+                                <span class="property">256 Envs</span>
+                                <span class="property">9 Phases</span>
+                                <span class="property">RunPod</span>
+                                <span class="property">15K Updates</span>
+                            </div>
+                        </div>
+
                         <div class="methodology-card">
                             <h4><i data-lucide="waves"></i> Diffusion Policy</h4>
                             <p>
