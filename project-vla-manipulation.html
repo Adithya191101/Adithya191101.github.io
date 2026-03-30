@@ -185,11 +185,21 @@
                     </div>
                 </div>
 
-                <!-- Overview -->
-                <div class="project-section">
+
+                <!-- Project Overview -->
+                <div class="project-section animate-on-scroll">
                     <h2><i data-lucide="info"></i> Project Overview</h2>
                     <p>
-                        This project implements Vision-Language-Action (VLA) models for robotic manipulation of deformable objects on a low-cost SO-101 robot arm. Two architectures were explored: ACT (80% success) and SmolVLA (85% success via curriculum training). The project spans 17 technical challenges across two phases, culminating in a curriculum training pipeline with optimized inference parameters that achieved 85% success on 20+ continuous evaluation episodes.
+                        During the Christmas and New Year break of 2025, I set out to explore how Vision-Language-Action (VLA) models and transformer-based policies work on real robots. What started as curiosity turned into a four-month research project that pushed a 500M parameter model from 0% to 85% success rate on a real manipulation task, through systematic debugging, curriculum training, and one critical inference discovery.
+                    </p>
+                    <p>
+                        The setup: a <strong>SO-101 6-DOF manipulator arm</strong> with Feetech STS3215 servos, a <strong>low-quality Logitech 720p USB webcam</strong> as the front camera, and a basic camera from the SO-101 kit mounted at the wrist. SmolVLA supports three camera inputs, but I only had two. Both cameras run at 640x480 with noticeable noise and limited dynamic range. Not ideal, but that's what makes the results meaningful.
+                    </p>
+                    <p>
+                        The task: <strong>grasp a deformable brain toy and place it inside a green container</strong>. This isn't a standard pick-and-place. The brain toy is squeezable (deforms under gripper pressure), has irregular geometry (no consistent grasp surface), and is elastic (bounces away on imprecise contact). The robot needs to approach from the right angle, apply the right pressure, and not drop the toy during transport.
+                    </p>
+                    <p>
+                        I collected <strong>239 teleoperation episodes</strong> (99,845 frames at 30 FPS) using the SO-101 leader arm, trained two different architectures (ACT and SmolVLA), and resolved 17 distinct technical challenges across two phases of development.
                     </p>
 
                     <!-- Key Metrics -->
@@ -217,240 +227,151 @@
                     </div>
                 </div>
 
-                <!-- Models -->
-                <div class="project-section">
-                    <h2><i data-lucide="brain"></i> Model Architectures</h2>
-                    <p>
-                        Two complementary approaches to vision-based robotic manipulation, each with distinct strengths.
-                    </p>
-
-                    <div class="model-grid">
-                        <div class="model-card">
-                            <div class="model-header">
-                                <h4><i data-lucide="layers"></i> ACT</h4>
-                                <span class="success-rate">80%</span>
-                            </div>
-                            <p>
-                                Action Chunking Transformer uses temporal action chunking for smooth, fluid trajectories. The model predicts sequences of actions rather than single steps, enabling natural robot motion.
-                            </p>
-                            <div class="properties">
-                                <span class="property">Temporal Ensembling</span>
-                                <span class="property">CVAE Decoder</span>
-                                <span class="property">CNN Encoder</span>
-                            </div>
-                            <div class="specs">
-                                <div class="spec-item">
-                                    <span class="label">Architecture</span>
-                                    <span class="value">CNN → Transformer → CVAE</span>
-                                </div>
-                                <div class="spec-item">
-                                    <span class="label">Input</span>
-                                    <span class="value">Dual RGB (640×480) + 6-DOF</span>
-                                </div>
-                                <div class="spec-item">
-                                    <span class="label">Action Chunk</span>
-                                    <span class="value">100 steps</span>
-                                </div>
-                                <div class="spec-item">
-                                    <span class="label">Objects</span>
-                                    <span class="value">Soft irregular shapes</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="model-card">
-                            <div class="model-header">
-                                <h4><i data-lucide="message-square"></i> SmolVLA</h4>
-                                <span class="success-rate">~33%</span>
-                            </div>
-                            <p>
-                                500M parameter VLA model fine-tuned from SmolVLM2-500M-Video-Instruct. Uses flow-matching diffusion for action prediction. Trained 9 versions with systematic HPO and Real-Time Chunking (RTC) inference.
-                            </p>
-                            <div class="properties">
-                                <span class="property">Language-Conditioned</span>
-                                <span class="property">Flow Matching</span>
-                                <span class="property">500M Params</span>
-                                <span class="property">RTC Inference</span>
-                            </div>
-                            <div class="specs">
-                                <div class="spec-item">
-                                    <span class="label">Base Model</span>
-                                    <span class="value">SmolVLM2-500M-Video</span>
-                                </div>
-                                <div class="spec-item">
-                                    <span class="label">Chunk Size</span>
-                                    <span class="value">10 (HPO-optimized)</span>
-                                </div>
-                                <div class="spec-item">
-                                    <span class="label">LR</span>
-                                    <span class="value">4.24e-5 (HPO-optimized)</span>
-                                </div>
-                                <div class="spec-item">
-                                    <span class="label">Versions</span>
-                                    <span class="value">9 (v1 - v9)</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Architecture -->
-                <div class="project-section">
-                    <h2><i data-lucide="git-branch"></i> System Pipeline</h2>
-                    <p>
-                        The inference pipeline uses Real-Time Chunking (RTC) for asynchronous action generation while the robot executes.
-                    </p>
-
-                    <div class="architecture-flow">
-                        <span class="component">Dual Cameras (640×480 @ 30fps)</span> <span class="arrow">→</span>
-                        <span class="component">Image Preprocessing + Augmentation</span> <span class="arrow">→</span>
-                        <span class="component">Vision Encoder (Frozen)</span> <span class="arrow">→</span>
-                        <span class="component">Language Instruction Embedding</span> <span class="arrow">→</span>
-                        <span class="component">Action Expert (Flow Matching)</span> <span class="arrow">→</span>
-                        <span class="component">RTC Action Queue</span> <span class="arrow">→</span>
-                        <span class="component">SO-101 Motor Commands</span>
-                    </div>
-                </div>
-
-                <!-- Hardware -->
-                <div class="project-section">
-                    <h2><i data-lucide="cpu"></i> Hardware Setup</h2>
-                    <p>
-                        Low-cost robotic manipulation platform using the SO-101 arm with teleoperation capability.
-                    </p>
-
-                    <div class="hardware-grid">
-                        <div class="hardware-item">
-                            <i data-lucide="bot"></i>
-                            <div class="name">SO-101 Follower Arm</div>
-                            <div class="desc">6-DOF manipulator with Feetech servos</div>
-                        </div>
-                        <div class="hardware-item">
-                            <i data-lucide="hand"></i>
-                            <div class="name">SO-101 Leader Arm</div>
-                            <div class="desc">Teleoperation for demonstration</div>
-                        </div>
-                        <div class="hardware-item">
-                            <i data-lucide="camera"></i>
-                            <div class="name">Front Camera</div>
-                            <div class="desc">Scene understanding (640×480)</div>
-                        </div>
-                        <div class="hardware-item">
-                            <i data-lucide="eye"></i>
-                            <div class="name">Wrist Camera</div>
-                            <div class="desc">Close-up manipulation view</div>
-                        </div>
-                    </div>
-
-                    <div class="feature-highlight">
-                        <h3><i data-lucide="database"></i> Training Dataset</h3>
-                        <ul style="color: var(--text-secondary); margin: 0; padding-left: 1.5rem; line-height: 2;">
-                            <li><strong>Dataset:</strong> <a href="https://huggingface.co/datasets/AdithyaRajendran/so101_grab_brain_t2" target="_blank" style="color: var(--accent-primary);">so101_grab_brain_t2</a> on HuggingFace Hub</li>
-                            <li><strong>Episodes:</strong> 239 demonstrations (2 bad episodes identified and removed)</li>
-                            <li><strong>Frames:</strong> 99,845 total with full metadata</li>
-                            <li><strong>Task:</strong> "Grab the grey brain toy and place it inside the green container"</li>
-                            <li><strong>Recording:</strong> 30 FPS, synchronized dual cameras + joint states</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- HPO -->
-                <div class="project-section">
-                    <h2><i data-lucide="settings"></i> Hyperparameter Optimization</h2>
-                    <p>
-                        Ran Optuna HPO with 30 trials (15 completed, 15 pruned) to systematically find optimal SmolVLA training hyperparameters. The search space covered learning rate, weight decay, chunk size, vision encoder freezing, and augmentation.
-                    </p>
-
-                    <div class="feature-highlight">
-                        <h3><i data-lucide="trophy"></i> Best Trial (#11) — Loss: 0.02300</h3>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
-                            <div>
-                                <div style="color: var(--text-secondary); font-size: 0.85rem;">Learning Rate</div>
-                                <div style="color: var(--text-primary); font-family: 'JetBrains Mono', monospace; font-size: 1.1rem;">4.24e-5</div>
-                                <div style="color: var(--text-secondary); font-size: 0.75rem;">2.4x lower than default</div>
-                            </div>
-                            <div>
-                                <div style="color: var(--text-secondary); font-size: 0.85rem;">Weight Decay</div>
-                                <div style="color: var(--text-primary); font-family: 'JetBrains Mono', monospace; font-size: 1.1rem;">8.49e-5</div>
-                                <div style="color: var(--text-secondary); font-size: 0.75rem;">Much more regularization</div>
-                            </div>
-                            <div>
-                                <div style="color: var(--text-secondary); font-size: 0.85rem;">Chunk Size</div>
-                                <div style="color: var(--text-primary); font-family: 'JetBrains Mono', monospace; font-size: 1.1rem;">10</div>
-                                <div style="color: var(--text-secondary); font-size: 0.75rem;">Confirmed optimal</div>
-                            </div>
-                            <div>
-                                <div style="color: var(--text-secondary); font-size: 0.85rem;">Freeze Vision</div>
-                                <div style="color: var(--text-primary); font-family: 'JetBrains Mono', monospace; font-size: 1.1rem;">True</div>
-                                <div style="color: var(--text-secondary); font-size: 0.75rem;">Frozen encoder wins</div>
-                            </div>
-                            <div>
-                                <div style="color: var(--text-secondary); font-size: 0.85rem;">Augmentation</div>
-                                <div style="color: var(--text-primary); font-family: 'JetBrains Mono', monospace; font-size: 1.1rem;">10° / 11%</div>
-                                <div style="color: var(--text-secondary); font-size: 0.75rem;">Affine rotation + translate</div>
-                            </div>
-                            <div>
-                                <div style="color: var(--text-secondary); font-size: 0.85rem;">GPU / Time</div>
-                                <div style="color: var(--text-primary); font-family: 'JetBrains Mono', monospace; font-size: 1.1rem;">A100 / ~2.5h</div>
-                                <div style="color: var(--text-secondary); font-size: 0.75rem;">6.5 epochs, batch 32</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Gripper Diagnosis -->
-                <div class="project-section">
-                    <h2><i data-lucide="search"></i> Gripper Oscillation Diagnosis</h2>
-                    <p>
-                        All 9 SmolVLA models with vastly different hyperparameters showed identical behavior: the robot approaches correctly but gets jittery near the grasp point. Added action logging during inference to capture every prediction — revealing the root cause.
-                    </p>
-
-                    <div class="feature-highlight">
-                        <h3><i data-lucide="alert-triangle"></i> Finding: Gripper Oscillates Between Open and Closed</h3>
-                        <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.8; margin-top: 1rem;">
-                            t=0.0s &nbsp; gripper=0.48 &nbsp; (open)<br>
-                            t=5.6s &nbsp; gripper=31.04 (closed)<br>
-                            t=11.8s gripper=2.29 &nbsp; (open!)<br>
-                            t=18.1s gripper=36.53 (closed)<br>
-                            t=31.3s gripper=-0.11 (open!)<br>
-                            t=37.7s gripper=32.78 (closed)
-                        </div>
-                        <p style="color: var(--text-secondary); margin-top: 1rem;">
-                            Max step-to-step gripper change: <strong style="color: var(--text-primary);">30.1 degrees</strong> in a single step.
-                        </p>
-                    </div>
-
-                    <div class="feature-highlight" style="margin-top: 1.5rem;">
-                        <h3><i data-lucide="pie-chart"></i> Root Cause: Training Data Imbalance</h3>
-                        <ul style="color: var(--text-secondary); margin: 0.5rem 0 0; padding-left: 1.5rem; line-height: 2;">
-                            <li><strong>76% of frames:</strong> Gripper open (approach phase) — normalizes to -0.54 sigma</li>
-                            <li><strong>12% of frames:</strong> Gripper grasping — normalizes to +2.21 sigma</li>
-                            <li>Model loss dominated by approach behavior; grasping requires a rare high-confidence prediction</li>
-                            <li>RTC prefix guidance amplifies uncertainty between consecutive chunks</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Phase 2: Curriculum Training -->
+                <!-- Phase 1 -->
                 <div class="project-section animate-on-scroll">
-                    <h2><i data-lucide="trending-up"></i> Phase 2: Curriculum Training to 85% Success</h2>
+                    <h2><i data-lucide="search"></i> Phase 1: Exploration and Diagnosis (December 2025 - January 2026)</h2>
+
+                    <h3>ACT: The Baseline That Worked</h3>
                     <p>
-                        After diagnosing the gripper oscillation, we adopted a curriculum training approach [Bengio et al., 2009] inspired by iterative policy refinement in Diffusion Policy [Chi et al., 2023]. The key insight: rather than training from scratch, iteratively refine a pretrained policy through multiple stages, allowing the model to specialize for the target object's unique properties.
-                    </p>
-                    <p>
-                        The brain toy presents specific manipulation challenges: it is <strong>deformable</strong> (changes shape under gripper pressure), has <strong>irregular geometry</strong> (no consistent grasp surface), and is <strong>elastic</strong> (bounces away on imprecise contact). These properties demand both precision and adaptability.
+                        I started with the <strong>Action Chunking Transformer (ACT)</strong> [3] as a baseline. ACT uses a ResNet18 CNN encoder, a Transformer backbone, and a CVAE decoder to predict action chunks of 100 steps. It trains all ~20M parameters end-to-end, including the vision backbone. After 50K steps on a V100 GPU (~6 hours), ACT achieved <strong>80% success rate</strong>. The robot produced smooth, coordinated trajectories with temporal ensembling. A solid starting point.
                     </p>
 
-                    <h3>Methodology</h3>
+                    <h3>SmolVLA: The Ambitious Attempt</h3>
                     <p>
-                        <strong>Step 1 — LoRA Fine-Tuning:</strong> Applied Low-Rank Adaptation [Hu et al., 2021] targeting q_proj/v_proj in the language model expert and state/action projections to efficiently explore the action manifold.<br>
-                        <strong>Step 2 — Full Expert Training:</strong> Enabled full training of the action expert head while keeping the pretrained SmolVLM2-500M backbone frozen. This leverages pretrained visual features through Conditional Flow Matching [Lipman et al., 2023].<br>
-                        <strong>Step 3 — Curriculum Training:</strong> Three progressive iterations, each starting from the previous checkpoint.
+                        Next, I moved to <strong>SmolVLA</strong> [1] &mdash; a 500M parameter Vision-Language-Action model built on SmolVLM2-500M-Video-Instruct. Unlike ACT, SmolVLA understands language instructions. Its architecture: a <strong>frozen SigLIP vision encoder</strong> (pretrained on internet-scale images) feeds into a language model expert, which generates actions through <strong>Conditional Flow Matching</strong> [5]. Only the action expert head (~100M parameters) is trainable.
+                    </p>
+                    <p>
+                        I trained <strong>9 versions</strong> (v1-v9) exploring every dimension: chunk sizes (10, 15, 30, 50), learning rates (1e-4, 4.24e-5), weight decay, augmentation strategies. I ran <strong>30 Optuna HPO trials</strong> (15 completed, 15 pruned). The best trial (#11) found lr=4.24e-5, weight_decay=8.49e-5, chunk_size=10. Loss looked great.
+                    </p>
+                    <p>
+                        But on the robot: <strong>maximum 33% success across all 9 versions</strong>. Every model showed the same behavior &mdash; the robot approaches the object correctly (visual understanding works), but the gripper oscillates wildly between open and closed near the grasp point. Max step-to-step gripper change: 30.1 degrees. The robot couldn't commit to a grasp.
                     </p>
 
-                    <table class="metrics-table" style="width:100%; border-collapse: collapse; margin: 1.5rem 0;">
+                    <h3>Diagnosing the Gripper Oscillation</h3>
+                    <p>
+                        I added action logging to capture every prediction during inference. The data told the story: 76% of training frames have the gripper open (approach phase), only 12% show active grasping. With MEAN_STD normalization, predicting a grasp requires the model to output a +2.21 sigma prediction &mdash; a rare, high-confidence event that the model hedges against by oscillating between "keep approaching" and "grasp now."
+                    </p>
+                    <p>
+                        All 9 versions showed identical behavior despite wildly different hyperparameters. My initial conclusion: <strong>SmolVLA 500M lacks the capacity for precise manipulation. Move to Pi0.5 (3B parameters).</strong>
+                    </p>
+                    <p style="color: var(--primary); font-weight: 600;">
+                        That conclusion was wrong. The model was fine. The training methodology was wrong.
+                    </p>
+                </div>
+
+                <!-- Phase 1 Debugging -->
+                <div class="project-section animate-on-scroll">
+                    <h2><i data-lucide="bug"></i> Phase 1: Seven Debugging Challenges</h2>
+                    <p>
+                        Before reaching the 33% mark, I resolved seven critical deployment failures through systematic investigation. Each taught a fundamental lesson about VLA deployment.
+                    </p>
+
+                    <div class="debugging-section">
+                        <div class="debug-item">
+                            <div class="issue">1. Language Instruction Mismatch (0% success)</div>
+                            <div class="solution">
+                                The robot had 0% success despite 100% success in training data. Root cause: training used "Grab the brain" but deployment used "Grasp a brain and put it in the bin." VLA models create entirely different embeddings for semantically similar but textually different instructions. Using the exact training string fixed success from 0% to 33%. This took two weeks to discover &mdash; the first week was spent suspecting overfitting.
+                            </div>
+                        </div>
+
+                        <div class="debug-item">
+                            <div class="issue">2. Camera Configuration Swap (Complete failure)</div>
+                            <div class="solution">
+                                After adjusting the environment, the robot started crashing into the bin instead of approaching the object. All models failed identically. The cameras had been physically swapped: the front camera was wired to the wrist input and vice versa. The model's spatial reasoning was completely inverted. Running <code>--display_data=true</code> to visually verify camera feeds revealed the swap instantly. Lesson: always visually verify camera assignments before deployment.
+                            </div>
+                        </div>
+
+                        <div class="debug-item">
+                            <div class="issue">3. Overfitting (15.87 epochs on 241 episodes)</div>
+                            <div class="solution">
+                                Training for 50,000 steps with batch=32 resulted in 15.87 epochs &mdash; far too many for a 241-episode dataset (industry standard: 3-7 epochs for this size). The model memorized specific trajectories. Reduced to 20,000 steps (6.35 epochs), cutting training from 9 hours to 3.5 hours with better generalization.
+                            </div>
+                        </div>
+
+                        <div class="debug-item">
+                            <div class="issue">4. Action Smoothness vs Reactivity</div>
+                            <div class="solution">
+                                chunk_size=10 produced jerky motion (10-26 degree jumps between frames). chunk_size=30 was smoother but less reactive. This fundamental trade-off &mdash; trajectory smoothness versus visual feedback frequency &mdash; would later be resolved in Phase 2 by decoupling chunk_size from n_action_steps.
+                            </div>
+                        </div>
+
+                        <div class="debug-item">
+                            <div class="issue">5. Robot Calibration Drift</div>
+                            <div class="solution">Joint offsets drift over time with Feetech servos. Must recalibrate before every evaluation session.</div>
+                        </div>
+
+                        <div class="debug-item">
+                            <div class="issue">6. Starting State Inconsistency</div>
+                            <div class="solution">
+                                Success varied 0-33% between episodes because the robot didn't auto-reset. Training data started with gripper closed at 0.5 degrees; deployment started with gripper open at 2.8-40 degrees. Implementing a consistent home position reset (especially gripper CLOSED) before each episode improved consistency.
+                            </div>
+                        </div>
+
+                        <div class="debug-item">
+                            <div class="issue">7. Visual Distribution Shift</div>
+                            <div class="solution">Camera physically moved since data collection. Built a live preview tool to compare current camera view against training data screenshots from the HuggingFace dataset visualizer.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- The Turning Point -->
+                <div class="project-section animate-on-scroll">
+                    <h2><i data-lucide="trending-up"></i> The Turning Point: Why Curriculum Training?</h2>
+                    <p>
+                        After Phase 1, I stepped back and studied the literature more carefully. Three insights changed the direction of the project:
+                    </p>
+                    <p>
+                        <strong>Insight 1:</strong> The <strong>SmolVLA paper ablation tables</strong> [1] showed that lr=1e-5 gives <strong>0% success rate</strong>. Our Optuna HPO had converged toward lower learning rates &mdash; exactly the wrong direction. The paper's recommended config (batch=64, lr=1e-4, frozen vision, expert-only training) was fundamentally different from what HPO found optimal on our loss landscape.
+                    </p>
+                    <p>
+                        <strong>Insight 2:</strong> <strong>Diffusion Policy</strong> [2] demonstrated that behavior policies can be trained through iterative denoising &mdash; starting from random noise and progressively refining into precise actions. SmolVLA uses <strong>Conditional Flow Matching</strong> [5], which follows the same principle at inference: iteratively denoise a noise sample into actions through multiple denoising steps.
+                    </p>
+                    <p>
+                        <strong>Insight 3:</strong> If iterative refinement works for converting noise into actions at inference time, <strong>why not apply it at training time too?</strong> Start with a generic pretrained policy and progressively refine it into a specialized one through multiple training iterations. This is <strong>curriculum learning</strong> [7] applied to policy fine-tuning.
+                    </p>
+                    <p>
+                        This approach was particularly suited to our constraints:
+                    </p>
+                    <ul style="color: var(--text-secondary); padding-left: 1.5rem; line-height: 2;">
+                        <li><strong>Small dataset (239 episodes):</strong> Training from scratch doesn't provide enough signal. Starting from pretrained weights preserves the VLM's prior knowledge of objects and spatial relationships.</li>
+                        <li><strong>Unique deformable object:</strong> The brain toy has no standard grasp geometry. The model needs to discover object-specific strategies through progressive refinement, not memorize fixed trajectories.</li>
+                        <li><strong>Frozen vision encoder:</strong> Only ~100M of 500M parameters are trainable. Each iteration must efficiently specialize limited capacity rather than learning everything from scratch.</li>
+                    </ul>
+                </div>
+
+                <!-- Phase 2 Methodology -->
+                <div class="project-section animate-on-scroll">
+                    <h2><i data-lucide="layers"></i> Phase 2: Curriculum Training to 85% (March 2026)</h2>
+
+                    <h3>Step 1: LoRA Fine-Tuning (Action Space Exploration)</h3>
+                    <p>
+                        Applied <strong>Low-Rank Adaptation (LoRA)</strong> [4] targeting q_proj/v_proj in the language model expert and state/action projections. This efficiently explored the action manifold without full parameter updates, identifying the effective action subspace for manipulating the deformable brain toy. LoRA served as a lightweight probe before committing to full training.
+                    </p>
+
+                    <h3>Step 2: Full Expert Training with Pretrained Backbone</h3>
+                    <p>
+                        Enabled full training of the action expert head while keeping the pretrained SmolVLM2-500M vision-language backbone frozen. This leverages the pretrained SigLIP vision encoder's internet-scale knowledge of objects, scenes, and spatial relationships, while learning task-specific action distributions through Conditional Flow Matching [5].
+                    </p>
+                    <p>
+                        The training configuration that worked:
+                    </p>
+                    <div style="background: var(--bg-secondary, #f1f5f9); border-radius: 8px; padding: 1.25rem; margin: 1rem 0; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; line-height: 1.8;">
+                        batch_size=64, lr=1e-4, weight_decay=1e-10<br>
+                        chunk_size=50, n_action_steps=50<br>
+                        freeze_vision_encoder=True, train_expert_only=True<br>
+                        use_amp=False<br>
+                        Augmentation: ColorJitter (brightness, contrast, saturation, hue),<br>
+                        SharpnessJitter, RandomAffine (degrees, translate)
+                    </div>
+
+                    <h3>Step 3: Three Curriculum Training Iterations</h3>
+                    <p>
+                        Each iteration starts from the previous checkpoint, applying curriculum learning [7] where the model progressively refines its policy. Batch size was varied across iterations following the linear scaling rule [6].
+                    </p>
+
+                    <table style="width:100%; border-collapse: collapse; margin: 1.5rem 0;">
                         <thead>
-                            <tr style="border-bottom: 2px solid var(--border);">
+                            <tr style="border-bottom: 2px solid var(--border, #e2e8f0);">
                                 <th style="text-align:left; padding:0.75rem;">Version</th>
                                 <th style="text-align:left; padding:0.75rem;">Batch</th>
                                 <th style="text-align:left; padding:0.75rem;">Steps</th>
@@ -459,88 +380,107 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr style="border-bottom: 1px solid var(--border);">
+                            <tr style="border-bottom: 1px solid var(--border, #e2e8f0);">
                                 <td style="padding:0.75rem;">Proven v1</td>
                                 <td style="padding:0.75rem;">64</td>
                                 <td style="padding:0.75rem;">50K</td>
-                                <td style="padding:0.75rem;">0.052</td>
-                                <td style="padding:0.75rem;">~50% grasp, placing works</td>
+                                <td style="padding:0.75rem;">0.449 &rarr; 0.052</td>
+                                <td style="padding:0.75rem;">~50% grasp, placing works consistently</td>
                             </tr>
-                            <tr style="border-bottom: 1px solid var(--border);">
+                            <tr style="border-bottom: 1px solid var(--border, #e2e8f0);">
                                 <td style="padding:0.75rem;">Proven v2</td>
                                 <td style="padding:0.75rem;">128</td>
-                                <td style="padding:0.75rem;">20K</td>
-                                <td style="padding:0.75rem;">0.038</td>
-                                <td style="padding:0.75rem;">Smoother, grasping improved</td>
+                                <td style="padding:0.75rem;">20K (from v1)</td>
+                                <td style="padding:0.75rem;">0.062 &rarr; 0.038</td>
+                                <td style="padding:0.75rem;">Smoother actions, grasping improved</td>
                             </tr>
-                            <tr style="border-bottom: 1px solid var(--border); font-weight: 600;">
+                            <tr style="border-bottom: 1px solid var(--border, #e2e8f0); font-weight: 600;">
                                 <td style="padding:0.75rem;">Proven v3</td>
                                 <td style="padding:0.75rem;">64</td>
-                                <td style="padding:0.75rem;">70K</td>
-                                <td style="padding:0.75rem; color: var(--primary);">0.028</td>
-                                <td style="padding:0.75rem; color: var(--primary);">85% success (17/20+)</td>
+                                <td style="padding:0.75rem;">70K (from v2)</td>
+                                <td style="padding:0.75rem; color: var(--primary);">0.040 &rarr; 0.028</td>
+                                <td style="padding:0.75rem; color: var(--primary);">85% success (17/20+ episodes)</td>
                             </tr>
                         </tbody>
                     </table>
 
-                    <h3>Inference Optimization — The Critical Breakthrough</h3>
                     <p>
-                        The single most impactful discovery was tuning the flow matching denoising process at inference time. Default <code>num_steps=10</code> produced insufficient precision — the model oscillated between multiple grasping strategies. Increasing to <strong>num_steps=20</strong> allowed the model to commit to a single strategy, while reducing <strong>n_action_steps</strong> from 20 to <strong>10</strong> enabled more frequent visual feedback during the critical grasping phase. This change alone improved success from ~50% to 85%.
+                        <strong>Batch size journey:</strong> v1 at batch=64 established the base. v2 at batch=128 gave smoother gradients and lower loss (0.038 vs 0.052). I then tried batch=200, but hit diminishing returns &mdash; the linear scaling rule [6] says larger batches need proportionally larger learning rates. I kept lr=1e-4 constant, so batch=200 was effectively under-learning. Returned to batch=64 with extended training (70K steps) for the best result: loss 0.028, the lowest achieved across the entire project.
                     </p>
 
-                    <h3>Dataset Quality and Prompt Engineering</h3>
-                    <p>
-                        Comprehensive dataset auditing revealed a garbage episode (533 frames of static robot with zero action variance) corrupting the training signal. Removed this alongside exact prompt alignment between training data ("Grab the brain") and evaluation. Verified: 239 clean episodes, 99,845 frames, continuous indices.
+                    <h3>Step 4: Inference Optimization &mdash; The Critical Breakthrough</h3>
+                    <p style="background: linear-gradient(135deg, rgba(3,105,161,0.05), rgba(14,165,233,0.05)); border-left: 4px solid var(--primary); padding: 1.25rem; border-radius: 0 8px 8px 0; margin: 1.5rem 0;">
+                        Even after curriculum training with loss 0.028, the robot only grasped about 50% of the time. It would approach the object, try to find the perfect angle, open and close the gripper, then try a different approach &mdash; oscillating between multiple grasping strategies. The model had learned different grasps for different object positions in the training data, but couldn't commit to one at inference time.
+                        <br><br>
+                        The root cause: SmolVLA's flow matching denoising process with the default <strong>num_steps=10</strong> produced insufficient precision. The 10-step denoising couldn't resolve the multimodal action distribution into a single, committed trajectory.
+                        <br><br>
+                        <strong>The fix: num_steps=20 (double the denoising) + n_action_steps=10 (re-observe twice as often).</strong>
+                        <br><br>
+                        This single change took success from ~50% to 85%. It was the most impactful discovery in the entire project. More denoising steps allowed the model to commit to one grasping strategy. More frequent re-observation let the model correct mid-grasp when the deformable toy shifted under pressure.
                     </p>
 
-                    <h3>Evaluation Protocol</h3>
+                    <h3>Step 5: Dataset Quality and Prompt Engineering</h3>
                     <p>
-                        All benchmarks were conducted with the policy running <strong>continuously without stopping or restarting</strong> between episodes. Restarting the policy resets the stochastic state of the flow matching denoising process, eliminating the natural action variability the model relies on. Continuous execution provides a more rigorous evaluation of real-world performance.
+                        A comprehensive dataset audit revealed a critical data quality issue: <strong>episode 240 contained 533 frames of a completely static robot</strong> &mdash; zero action variance across all 6 joints. This garbage episode was an artifact of an earlier dataset cleaning (episode 239 was deleted, but episode 240 was orphaned in a separate parquet file). Those 533 frames of "do nothing" were silently teaching the model to hesitate during grasping.
                     </p>
                     <p>
-                        <strong>Hardware constraints:</strong> Results achieved with low-quality cameras (Logitech 720p front + SO-101 kit wrist camera) and only 2 of 3 supported camera inputs. The pretrained SigLIP vision encoder's robustness to image quality degradation enabled effective performance despite these limitations.
+                        Additionally, the evaluation prompt had drifted again: the dataset stored the task as "Grab the brain" but the client was using the full description "Grab the grey brain toy and place it inside the green container." VLA language conditioning requires exact text matching [1] &mdash; the same class of bug I had fixed in Phase 1, recurring with different text.
+                    </p>
+
+                    <h3>Evaluation Protocol and Results</h3>
+                    <p>
+                        All benchmarks were conducted with the policy running <strong>continuously without stopping or restarting</strong> between episodes. This is a critical methodological detail: restarting the policy resets the stochastic state of the flow matching denoising process, eliminating the natural action variability that the model relies on for adaptive behavior. Continuous execution preserves the model's exploration distribution, providing a more rigorous and realistic evaluation.
+                    </p>
+                    <p style="font-size: 1.15rem; font-weight: 600; color: var(--primary); margin: 1.5rem 0;">
+                        Final result: 17 successful episodes out of 20+ continuous attempts (~85% success rate).
+                    </p>
+                    <p>
+                        The robot consistently grasps the deformable brain toy and places it in the target container across varied starting positions, under different lighting conditions (natural daylight, artificial overhead, dim evening), and with slight camera displacement from the original training setup. All achieved with low-quality cameras and only 2 of 3 supported camera inputs.
                     </p>
                 </div>
 
-                <!-- ACT vs SmolVLA Comparison -->
+                <!-- ACT vs SmolVLA -->
                 <div class="project-section animate-on-scroll">
-                    <h2><i data-lucide="git-compare"></i> ACT vs SmolVLA: Architectural Comparison</h2>
+                    <h2><i data-lucide="git-compare"></i> ACT vs SmolVLA: What We Learned</h2>
+                    <p>
+                        Training both architectures on the same dataset and evaluating on the same task revealed fundamental differences in how they handle real-world manipulation.
+                    </p>
 
                     <table style="width:100%; border-collapse: collapse; margin: 1.5rem 0;">
                         <thead>
-                            <tr style="border-bottom: 2px solid var(--border);">
+                            <tr style="border-bottom: 2px solid var(--border, #e2e8f0);">
                                 <th style="text-align:left; padding:0.75rem;">Aspect</th>
-                                <th style="text-align:left; padding:0.75rem;">ACT</th>
-                                <th style="text-align:left; padding:0.75rem;">SmolVLA</th>
+                                <th style="text-align:left; padding:0.75rem;">ACT [3]</th>
+                                <th style="text-align:left; padding:0.75rem;">SmolVLA [1]</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr style="border-bottom: 1px solid var(--border);">
+                            <tr style="border-bottom: 1px solid var(--border, #e2e8f0);">
                                 <td style="padding:0.75rem;">Vision</td>
-                                <td style="padding:0.75rem;">ResNet18 (end-to-end)</td>
-                                <td style="padding:0.75rem;">Frozen SigLIP (pretrained)</td>
+                                <td style="padding:0.75rem;">ResNet18 (end-to-end trained)</td>
+                                <td style="padding:0.75rem;">Frozen SigLIP (internet-scale pretrained)</td>
                             </tr>
-                            <tr style="border-bottom: 1px solid var(--border);">
+                            <tr style="border-bottom: 1px solid var(--border, #e2e8f0);">
                                 <td style="padding:0.75rem;">Action prediction</td>
-                                <td style="padding:0.75rem;">Deterministic</td>
-                                <td style="padding:0.75rem;">Stochastic (flow matching)</td>
+                                <td style="padding:0.75rem;">Deterministic regression</td>
+                                <td style="padding:0.75rem;">Stochastic flow matching (20-step denoising)</td>
                             </tr>
-                            <tr style="border-bottom: 1px solid var(--border);">
-                                <td style="padding:0.75rem;">Language</td>
+                            <tr style="border-bottom: 1px solid var(--border, #e2e8f0);">
+                                <td style="padding:0.75rem;">Language understanding</td>
                                 <td style="padding:0.75rem;">None</td>
-                                <td style="padding:0.75rem;">Language-conditioned</td>
+                                <td style="padding:0.75rem;">Language-conditioned via SmolVLM2</td>
                             </tr>
-                            <tr style="border-bottom: 1px solid var(--border);">
-                                <td style="padding:0.75rem;">Camera robustness</td>
-                                <td style="padding:0.75rem;">Brittle to displacement</td>
-                                <td style="padding:0.75rem; font-weight:600;">Handles displacement</td>
+                            <tr style="border-bottom: 1px solid var(--border, #e2e8f0);">
+                                <td style="padding:0.75rem;">Camera displacement</td>
+                                <td style="padding:0.75rem;">Brittle &mdash; performance degrades</td>
+                                <td style="padding:0.75rem; font-weight:600;">Handles it without retraining</td>
                             </tr>
-                            <tr style="border-bottom: 1px solid var(--border);">
-                                <td style="padding:0.75rem;">Lighting robustness</td>
-                                <td style="padding:0.75rem;">Degrades under shifts</td>
-                                <td style="padding:0.75rem; font-weight:600;">Consistent</td>
+                            <tr style="border-bottom: 1px solid var(--border, #e2e8f0);">
+                                <td style="padding:0.75rem;">Lighting changes</td>
+                                <td style="padding:0.75rem;">Degrades</td>
+                                <td style="padding:0.75rem; font-weight:600;">Consistent across conditions</td>
                             </tr>
-                            <tr style="border-bottom: 1px solid var(--border);">
+                            <tr style="border-bottom: 1px solid var(--border, #e2e8f0);">
                                 <td style="padding:0.75rem;">Success rate</td>
                                 <td style="padding:0.75rem;">80%</td>
                                 <td style="padding:0.75rem; font-weight:600; color: var(--primary);">85%</td>
@@ -549,157 +489,161 @@
                     </table>
 
                     <p>
-                        <strong>Grasping behavior:</strong> ACT executes deterministic trajectories — identical every time. SmolVLA's stochastic flow matching produces slight variation, enabling natural exploration when grasping deformable objects that may shift or bounce. <strong>Recovery:</strong> SmolVLA re-plans every 10 steps from fresh visual state; ACT repeats failed trajectories. <strong>Multi-object scaling:</strong> SmolVLA's language conditioning enables curriculum training across multiple objects without catastrophic forgetting — architecturally impossible with ACT.
+                        <strong>On deformable objects:</strong> ACT executes deterministic grasps &mdash; the same trajectory every time. For the elastic brain toy, this means it either succeeds consistently or fails consistently for a given position. SmolVLA's stochastic flow matching produces slightly different trajectories each attempt. When one approach fails (toy deforms or bounces), the next attempt naturally varies, sometimes finding a better grasp. This makes SmolVLA more resilient to the toy's unpredictable shape.
+                    </p>
+                    <p>
+                        <strong>On recovery:</strong> When ACT fails a grasp, it repeats the same trajectory. SmolVLA, re-observing every 10 action steps, adjusts mid-execution. If the toy shifts during contact, the model re-plans from the new visual state.
+                    </p>
+                    <p>
+                        <strong>On multi-object scaling:</strong> SmolVLA's language conditioning enables curriculum training across multiple objects without catastrophic forgetting. Train "Grab the brain" then add "Grab the cube" &mdash; different text embeddings map to different action subspaces, preserving existing skills. This is architecturally impossible with ACT.
                     </p>
                 </div>
 
-                <!-- Debugging Discoveries -->
+                <!-- Phase 2 Debugging -->
                 <div class="project-section animate-on-scroll">
-                    <h2><i data-lucide="bug"></i> Critical Debugging Discoveries</h2>
+                    <h2><i data-lucide="wrench"></i> Phase 2: Ten More Challenges</h2>
                     <p>
-                        Seventeen challenges identified and systematically resolved across two phases of development (December 2025 — March 2026).
+                        Phase 2 introduced a new set of technical challenges, from training methodology to systems engineering.
                     </p>
 
                     <div class="debugging-section">
-                        <h4>Phase 1 (7 challenges)</h4>
-
-                        <div class="debug-item">
-                            <div class="issue">1. Language Instruction Mismatch</div>
-                            <div class="solution">VLA models create different embeddings for different text. Exact training task string required. Fixed 0% to 33% success.</div>
-                        </div>
-
-                        <div class="debug-item">
-                            <div class="issue">2. Camera Configuration Swap</div>
-                            <div class="solution">Physical cameras reversed, causing complete spatial reasoning failure. Built preview tool to verify feeds.</div>
-                        </div>
-
-                        <div class="debug-item">
-                            <div class="issue">3. Overfitting (15.87 epochs)</div>
-                            <div class="solution">Optimized to 6.5 epochs — 2.5x faster training with better generalization.</div>
-                        </div>
-
-                        <div class="debug-item">
-                            <div class="issue">4-7. Calibration, Camera Angle, Starting State, Config</div>
-                            <div class="solution">Systematic resolution of hardware drift, visual consistency, and framework compatibility issues.</div>
-                        </div>
-
-                        <h4>Phase 2 (10 challenges)</h4>
-
                         <div class="debug-item">
                             <div class="issue">8. Training Methodology</div>
-                            <div class="solution">Literature review revealed correct config (batch=64, lr=1e-4, frozen vision). The issue was methodology, not model capacity.</div>
+                            <div class="solution">Literature review of SmolVLA paper ablations revealed the correct config (batch=64, lr=1e-4). Our HPO had converged to lr=4.24e-5 &mdash; the paper showed lr=1e-5 gives 0% success. The issue was methodology, not model capacity.</div>
                         </div>
 
                         <div class="debug-item">
                             <div class="issue">9. Normalization Mismatch (use_degrees)</div>
-                            <div class="solution">LeRobot v0.5+ changed defaults. Dataset recorded with RANGE_M100_100 required explicit use_degrees=False.</div>
+                            <div class="solution">LeRobot v0.5+ changed the default normalization from RANGE_M100_100 to DEGREES. Dataset was recorded with use_degrees=False. The mismatch caused 5-degree errors on all joints. Required explicit configuration override.</div>
                         </div>
 
                         <div class="debug-item">
                             <div class="issue">10. Garbage Episode in Dataset</div>
-                            <div class="solution">Episode 240: 533 static frames with zero action variance. Removed from local and HuggingFace Hub.</div>
+                            <div class="solution">Episode 240: 533 frames of a static robot with zero action variance across all 6 joints. An orphan from earlier dataset cleaning. Removed from local storage and HuggingFace Hub.</div>
                         </div>
 
                         <div class="debug-item">
-                            <div class="issue">11. Task Text Mismatch (Refined)</div>
-                            <div class="solution">Same bug class as #1, rediscovered with different text. Dataset: "Grab the brain" vs eval: full description.</div>
+                            <div class="issue">11. Task Text Mismatch (Recurrence)</div>
+                            <div class="solution">Same class of bug as Challenge #1, discovered again with different text. Dataset stores "Grab the brain"; eval used the full description. VLA language conditioning requires exact matching.</div>
                         </div>
 
-                        <div class="debug-item" style="border-left: 3px solid var(--primary); padding-left: 1rem;">
-                            <div class="issue" style="color: var(--primary); font-weight: 700;">12. Flow Matching Denoising Precision — THE Breakthrough</div>
-                            <div class="solution">Default num_steps=10 caused mode-switching between grasping strategies. Doubling to 20 + halving n_action_steps to 10 achieved ~50% to 85%. Single most impactful discovery.</div>
-                        </div>
-
-                        <div class="debug-item">
-                            <div class="issue">13. Batch Size / Linear Scaling</div>
-                            <div class="solution">Batch=200 underperformed without LR scaling [Goyal et al., 2017]. Batch=64 with 70K steps gave best results.</div>
+                        <div class="debug-item" style="border-left: 4px solid var(--primary); padding-left: 1rem; background: linear-gradient(135deg, rgba(3,105,161,0.03), transparent);">
+                            <div class="issue" style="color: var(--primary); font-weight: 700; font-size: 1.05rem;">12. Flow Matching Denoising Precision &mdash; THE Breakthrough</div>
+                            <div class="solution">Default num_steps=10 caused mode-switching between grasping strategies. Model couldn't commit. Doubling to 20 + halving n_action_steps to 10 achieved ~50% to 85% success. The single most impactful change in the entire project.</div>
                         </div>
 
                         <div class="debug-item">
-                            <div class="issue">14-17. Curriculum Training, Remote Inference, Recording, Disk</div>
-                            <div class="solution">Progressive checkpoint refinement, FastAPI server on RunPod, shared frame buffer for recording, storage management.</div>
+                            <div class="issue">13. Batch Size and Linear Scaling Rule</div>
+                            <div class="solution">Batch=200 underperformed without proportional LR increase [6]. Batch=64 with 70K steps (more gradient updates) outperformed batch=200 with the same learning rate.</div>
+                        </div>
+
+                        <div class="debug-item">
+                            <div class="issue">14. Curriculum Checkpoint Training</div>
+                            <div class="solution">Progressive refinement from checkpoints (v1&rarr;v2&rarr;v3) converged faster and to lower loss than training from scratch. Each iteration inherits and refines learned representations.</div>
+                        </div>
+
+                        <div class="debug-item">
+                            <div class="issue">15. Remote Inference Architecture</div>
+                            <div class="solution">Local RTX 3050 too slow (~2.5s per inference). Designed FastAPI server on RunPod (RTX 4090, 48GB) + multi-threaded local client with SSH tunnel. ~200-300ms round-trip latency.</div>
+                        </div>
+
+                        <div class="debug-item">
+                            <div class="issue">16. Video Recording Thread Contention</div>
+                            <div class="solution">Recording competed with inference for the robot lock, degrading control. Solved with shared frame buffer &mdash; inference writes frames, recorder reads without locking. Used pyav h264 encoder with signal handler for graceful shutdown.</div>
+                        </div>
+
+                        <div class="debug-item">
+                            <div class="issue">17. Disk Space Management</div>
+                            <div class="solution">RunPod (30GB) filling from 10 checkpoints (13GB), HF cache (8GB), wandb cache (12GB). Local machine at 1GB free. Systematic checkpoint pruning and cache cleanup.</div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Remote Inference -->
+                <div class="project-section animate-on-scroll">
+                    <h2><i data-lucide="server"></i> Remote Inference Architecture</h2>
+                    <p>
+                        The local RTX 3050 was too slow for real-time SmolVLA inference (~2.5 seconds per action chunk). I designed a server-client split:
+                    </p>
+
+                    <div class="architecture-flow">
+                        <span class="component">Dual Cameras (640x480)</span> <span class="arrow">&rarr;</span>
+                        <span class="component">Local Client (SO-101 Robot)</span> <span class="arrow">&rarr;</span>
+                        <span class="component">SSH Tunnel</span> <span class="arrow">&rarr;</span>
+                        <span class="component">RunPod GPU Server (RTX 4090)</span> <span class="arrow">&rarr;</span>
+                        <span class="component">SmolVLA (20-step denoising)</span> <span class="arrow">&rarr;</span>
+                        <span class="component">Action Chunk (50 actions)</span> <span class="arrow">&rarr;</span>
+                        <span class="component">Motor Commands @ 10 FPS</span>
+                    </div>
+
+                    <p>
+                        The <strong>server</strong> (<code>smolvla_server.py</code>) runs on RunPod as a FastAPI HTTP endpoint. It loads the model once, runs warmup inference, and serves predictions via JSON. The <strong>client</strong> (<code>smolvla_client.py</code>) runs locally with three threads: inference (requests action chunks), actor (executes actions on the robot), and recorder (captures video from the inference thread's shared frame buffer without contending for the robot lock). Inference latency: ~200-300ms per round-trip including network.
+                    </p>
+                </div>
+
                 <!-- Key Lessons -->
-                <div class="project-section">
-                    <h2><i data-lucide="lightbulb"></i> Key Lessons Learned</h2>
+                <div class="project-section animate-on-scroll">
+                    <h2><i data-lucide="lightbulb"></i> Key Lessons</h2>
 
                     <div class="feature-highlight">
-                        <h3><i data-lucide="book-open"></i> Key Insights</h3>
-                        <ul style="color: var(--text-secondary); margin: 0; padding-left: 1.5rem; line-height: 2;">
-                            <li><strong>Inference parameters can matter as much as training:</strong> Doubling denoising steps was the single largest improvement in the entire project</li>
-                            <li><strong>Curriculum training outperforms training from scratch:</strong> Progressive checkpoint refinement converges faster and to lower loss</li>
-                            <li><strong>Pretrained vision provides environmental robustness:</strong> Frozen SigLIP handles camera displacement and lighting variation without retraining</li>
-                            <li><strong>Language conditioning enables multi-object scaling:</strong> Different task prompts map to different action subspaces, preventing catastrophic forgetting</li>
-                            <li><strong>Data quality has outsized impact:</strong> One garbage episode (0.5% of data) measurably degraded grasping performance</li>
-                            <li><strong>Stochastic policies suit deformable objects:</strong> Flow matching's natural variation helps recover from failed grasps on elastic objects</li>
+                        <ul style="color: var(--text-secondary); margin: 0; padding-left: 1.5rem; line-height: 2.2;">
+                            <li><strong>Inference parameters can matter as much as training:</strong> Doubling denoising steps was the single largest improvement &mdash; bigger impact than 70K steps of additional training.</li>
+                            <li><strong>Curriculum training outperforms training from scratch:</strong> Progressive checkpoint refinement (v1&rarr;v2&rarr;v3) converged to lower loss faster than any single training run.</li>
+                            <li><strong>Pretrained vision provides environmental robustness:</strong> Frozen SigLIP handles camera displacement and lighting variation without retraining &mdash; a capability ACT's task-specific ResNet18 cannot match.</li>
+                            <li><strong>Language conditioning enables multi-object scaling:</strong> Different task prompts map to different action subspaces, preventing catastrophic forgetting when adding new objects.</li>
+                            <li><strong>Data quality has outsized impact:</strong> One garbage episode (0.5% of data) measurably degraded grasping. Dataset auditing is not optional.</li>
+                            <li><strong>Stochastic policies suit deformable objects:</strong> Flow matching's natural action variation helps recover from failed grasps on elastic, irregular objects.</li>
+                            <li><strong>HPO can converge wrong:</strong> When the search space excludes the correct configuration, optimization finds a local optimum that doesn't transfer to real performance.</li>
                         </ul>
                     </div>
                 </div>
 
                 <!-- Future Work -->
-                <div class="project-section">
+                <div class="project-section animate-on-scroll">
                     <h2><i data-lucide="rocket"></i> Next Steps</h2>
-                    <ul style="color: var(--text-secondary); margin: 0; padding-left: 1.5rem; line-height: 2;">
-                        <li><strong>Immediate:</strong> Pi0.5 fine-tuning (3B parameter VLA with LoRA) for improved precision</li>
-                        <li><strong>Short-term:</strong> Multi-object curriculum training — add cube, cylinder to same model via language conditioning</li>
-                        <li><strong>Medium-term:</strong> Sim-to-real transfer leveraging pretrained visual features; Pi0.5 vs SmolVLA comparison</li>
-                        <li><strong>Long-term:</strong> Multi-task VLA (pick, place, push, stack) with single model; open-vocabulary manipulation</li>
+                    <ul style="color: var(--text-secondary); margin: 0; padding-left: 1.5rem; line-height: 2.2;">
+                        <li><strong>Pi0.5 fine-tuning:</strong> 3B parameter VLA with LoRA [4], expected to improve precision with the same dataset</li>
+                        <li><strong>Multi-object curriculum training:</strong> Add cube, cylinder, and other objects to the same model via language conditioning &mdash; testing catastrophic forgetting resistance</li>
+                        <li><strong>Sim-to-real transfer:</strong> Leverage pretrained visual features for domain transfer from simulation</li>
+                        <li><strong>Multi-task VLA:</strong> Pick, place, push, stack with a single language-conditioned model</li>
+                        <li><strong>Open-vocabulary manipulation:</strong> Test generalization to novel language instructions not seen during training</li>
                     </ul>
                 </div>
 
                 <!-- Technologies -->
-                <div class="project-section">
-                    <h2><i data-lucide="wrench"></i> Technologies Used</h2>
-
+                <div class="project-section animate-on-scroll">
+                    <h2><i data-lucide="cpu"></i> Technologies</h2>
                     <div class="tech-stack-grid">
-                        <div class="tech-item">
-                            <i data-lucide="brain"></i>
-                            <span>PyTorch</span>
-                        </div>
-                        <div class="tech-item">
-                            <i data-lucide="box"></i>
-                            <span>HuggingFace</span>
-                        </div>
-                        <div class="tech-item">
-                            <i data-lucide="bot"></i>
-                            <span>LeRobot</span>
-                        </div>
-                        <div class="tech-item">
-                            <i data-lucide="activity"></i>
-                            <span>Weights & Biases</span>
-                        </div>
-                        <div class="tech-item">
-                            <i data-lucide="target"></i>
-                            <span>Optuna HPO</span>
-                        </div>
-                        <div class="tech-item">
-                            <i data-lucide="cloud"></i>
-                            <span>Google Colab (A100)</span>
-                        </div>
-                        <div class="tech-item">
-                            <i data-lucide="image"></i>
-                            <span>OpenCV</span>
-                        </div>
-                        <div class="tech-item">
-                            <i data-lucide="bar-chart"></i>
-                            <span>NumPy/Pandas</span>
-                        </div>
-                        <div class="tech-item">
-                            <i data-lucide="server"></i>
-                            <span>RunPod (RTX 4090)</span>
-                        </div>
-                        <div class="tech-item">
-                            <i data-lucide="zap"></i>
-                            <span>FastAPI</span>
-                        </div>
+                        <div class="tech-item"><i data-lucide="brain"></i><span>PyTorch</span></div>
+                        <div class="tech-item"><i data-lucide="box"></i><span>HuggingFace</span></div>
+                        <div class="tech-item"><i data-lucide="bot"></i><span>LeRobot [8]</span></div>
+                        <div class="tech-item"><i data-lucide="activity"></i><span>Weights &amp; Biases</span></div>
+                        <div class="tech-item"><i data-lucide="target"></i><span>Optuna HPO</span></div>
+                        <div class="tech-item"><i data-lucide="cloud"></i><span>Google Colab (A100)</span></div>
+                        <div class="tech-item"><i data-lucide="server"></i><span>RunPod (RTX 4090)</span></div>
+                        <div class="tech-item"><i data-lucide="zap"></i><span>FastAPI</span></div>
+                        <div class="tech-item"><i data-lucide="image"></i><span>OpenCV</span></div>
+                        <div class="tech-item"><i data-lucide="bar-chart"></i><span>NumPy / Pandas</span></div>
                     </div>
                 </div>
 
+                <!-- References -->
+                <div class="project-section animate-on-scroll">
+                    <h2><i data-lucide="book-open"></i> References</h2>
+                    <ol style="color: var(--text-secondary); padding-left: 1.5rem; line-height: 2;">
+                        <li>Ranzato et al., "SmolVLA: A Small Vision-Language-Action Model for Efficient Robot Learning," arXiv:2506.01844, 2025.</li>
+                        <li>Chi et al., "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion," RSS 2023.</li>
+                        <li>Zhao et al., "Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware," RSS 2023.</li>
+                        <li>Hu et al., "LoRA: Low-Rank Adaptation of Large Language Models," ICLR 2022.</li>
+                        <li>Lipman et al., "Flow Matching for Generative Modeling," ICLR 2023.</li>
+                        <li>Goyal et al., "Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour," arXiv:1706.02677, 2017.</li>
+                        <li>Bengio et al., "Curriculum Learning," ICML 2009.</li>
+                        <li>Cadene et al., "LeRobot: State-of-the-Art Machine Learning for Real-World Robotics," github.com/huggingface/lerobot, 2024.</li>
+                    </ol>
+                </div>
+
                 <!-- Resources -->
-                <div class="project-section">
+                <div class="project-section animate-on-scroll">
                     <h2><i data-lucide="folder-open"></i> Project Resources</h2>
                     <p>Access the complete source code, trained models, and dataset:</p>
 
