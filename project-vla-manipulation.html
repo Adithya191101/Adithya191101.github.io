@@ -81,13 +81,13 @@
 
                 <h1>Vision-Language Manipulation Policies</h1>
                 <p class="project-tagline" style="color: var(--text-secondary); font-size: 1.1rem; max-width: 800px;">
-                    Training and deploying Vision-Language-Action (VLA) models on the SO-101 robot arm for pick-and-place tasks. Trained 9 SmolVLA versions with Optuna HPO (30 trials), performed systematic gripper diagnostics via action logging, and achieved 80% success with ACT.
+                    Training and deploying Vision-Language-Action (VLA) models on the SO-101 robot arm for deformable object manipulation. Achieved 85% success rate with SmolVLA through curriculum training, inference optimization, and systematic debugging across 17 technical challenges. Also achieved 80% with ACT baseline.
                 </p>
 
                 <div class="project-meta">
                     <div class="project-meta-item">
                         <i data-lucide="calendar"></i>
-                        <span>December 2025 & March 2026</span>
+                        <span>December 2025 — March 2026</span>
                     </div>
                     <div class="project-meta-item">
                         <i data-lucide="bot"></i>
@@ -129,13 +129,24 @@
 
                     <div class="video-grid">
                         <div class="video-card">
+                            <video controls poster="assets/vla-manipulation/Imitation_thumb.jpg">
+                                <source src="assets/vla-manipulation/Imitation.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <div class="caption">
+                                <strong>1. Teleoperation Data Collection</strong>
+                                Leader-follower demonstration capturing 239 episodes (99,845 frames)
+                            </div>
+                        </div>
+
+                        <div class="video-card">
                             <video controls poster="assets/vla-manipulation/ACT_policy_thumb.jpg">
                                 <source src="assets/vla-manipulation/ACT_policy.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                             <div class="caption">
-                                <strong>ACT Model - 80% Success Rate</strong>
-                                Action Chunking Transformer performing smooth pick-and-place with temporal ensembling
+                                <strong>2. ACT Baseline - 80% Success</strong>
+                                Deterministic action chunking with temporal ensembling. Consistent but brittle to environmental changes.
                             </div>
                         </div>
 
@@ -145,19 +156,30 @@
                                 Your browser does not support the video tag.
                             </video>
                             <div class="caption">
-                                <strong>SmolVLA - Language-Conditioned Grasping</strong>
-                                500M parameter VLA model responding to language instructions with RTC inference
+                                <strong>3. SmolVLA Phase 1 - ~33% Success</strong>
+                                Gripper oscillation diagnosed. Led to curriculum training approach in Phase 2.
                             </div>
                         </div>
 
                         <div class="video-card">
-                            <video controls poster="assets/vla-manipulation/Imitation_thumb.jpg">
-                                <source src="assets/vla-manipulation/Imitation.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="assets/vla-manipulation/smolvla_eval_v3.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                             <div class="caption">
-                                <strong>Teleoperation Data Collection</strong>
-                                Leader-follower demonstration capturing 239 episodes (99,845 frames)
+                                <strong>4. SmolVLA Phase 2 - 85% Success (Robot View)</strong>
+                                Curriculum training v3 + inference optimization. Dual-camera side-by-side from robot's perspective.
+                            </div>
+                        </div>
+
+                        <div class="video-card">
+                            <video controls>
+                                <source src="assets/vla-manipulation/SmolVLA_v3_phone.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <div class="caption">
+                                <strong>5. SmolVLA Phase 2 - Full Robot View</strong>
+                                External camera showing complete workspace. Demonstrates camera displacement robustness and lighting variation handling.
                             </div>
                         </div>
                     </div>
@@ -167,30 +189,30 @@
                 <div class="project-section">
                     <h2><i data-lucide="info"></i> Project Overview</h2>
                     <p>
-                        This project implements Vision-Language-Action (VLA) models for robotic manipulation on a low-cost SO-101 robot arm. Two architectures were explored: ACT (Action Chunking Transformer) achieving 80% success, and SmolVLA with 9 iterative versions including systematic hyperparameter optimization using Optuna (30 trials). Comprehensive action logging and diagnostic analysis identified gripper oscillation as the core challenge in SmolVLA fine-grained control.
+                        This project implements Vision-Language-Action (VLA) models for robotic manipulation of deformable objects on a low-cost SO-101 robot arm. Two architectures were explored: ACT (80% success) and SmolVLA (85% success via curriculum training). The project spans 17 technical challenges across two phases, culminating in a curriculum training pipeline with optimized inference parameters that achieved 85% success on 20+ continuous evaluation episodes.
                     </p>
 
                     <!-- Key Metrics -->
                     <div class="results-highlight">
                         <div class="result-stat">
+                            <div class="value">85<span class="unit">%</span></div>
+                            <div class="label">SmolVLA Success Rate</div>
+                        </div>
+                        <div class="result-stat">
                             <div class="value">80<span class="unit">%</span></div>
                             <div class="label">ACT Success Rate</div>
                         </div>
                         <div class="result-stat">
-                            <div class="value">9</div>
-                            <div class="label">SmolVLA Versions</div>
+                            <div class="value">0.028</div>
+                            <div class="label">Final Training Loss</div>
                         </div>
                         <div class="result-stat">
-                            <div class="value">30</div>
-                            <div class="label">Optuna HPO Trials</div>
+                            <div class="value">17</div>
+                            <div class="label">Challenges Solved</div>
                         </div>
                         <div class="result-stat">
                             <div class="value">239</div>
                             <div class="label">Training Episodes</div>
-                        </div>
-                        <div class="result-stat">
-                            <div class="value">99.8<span class="unit">K</span></div>
-                            <div class="label">Training Frames</div>
                         </div>
                     </div>
                 </div>
@@ -409,54 +431,193 @@
                     </div>
                 </div>
 
+                <!-- Phase 2: Curriculum Training -->
+                <div class="project-section animate-on-scroll">
+                    <h2><i data-lucide="trending-up"></i> Phase 2: Curriculum Training to 85% Success</h2>
+                    <p>
+                        After diagnosing the gripper oscillation, we adopted a curriculum training approach [Bengio et al., 2009] inspired by iterative policy refinement in Diffusion Policy [Chi et al., 2023]. The key insight: rather than training from scratch, iteratively refine a pretrained policy through multiple stages, allowing the model to specialize for the target object's unique properties.
+                    </p>
+                    <p>
+                        The brain toy presents specific manipulation challenges: it is <strong>deformable</strong> (changes shape under gripper pressure), has <strong>irregular geometry</strong> (no consistent grasp surface), and is <strong>elastic</strong> (bounces away on imprecise contact). These properties demand both precision and adaptability.
+                    </p>
+
+                    <h3>Methodology</h3>
+                    <p>
+                        <strong>Step 1 — LoRA Fine-Tuning:</strong> Applied Low-Rank Adaptation [Hu et al., 2021] targeting q_proj/v_proj in the language model expert and state/action projections to efficiently explore the action manifold.<br>
+                        <strong>Step 2 — Full Expert Training:</strong> Enabled full training of the action expert head while keeping the pretrained SmolVLM2-500M backbone frozen. This leverages pretrained visual features through Conditional Flow Matching [Lipman et al., 2023].<br>
+                        <strong>Step 3 — Curriculum Training:</strong> Three progressive iterations, each starting from the previous checkpoint.
+                    </p>
+
+                    <table class="metrics-table" style="width:100%; border-collapse: collapse; margin: 1.5rem 0;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--border);">
+                                <th style="text-align:left; padding:0.75rem;">Version</th>
+                                <th style="text-align:left; padding:0.75rem;">Batch</th>
+                                <th style="text-align:left; padding:0.75rem;">Steps</th>
+                                <th style="text-align:left; padding:0.75rem;">Loss</th>
+                                <th style="text-align:left; padding:0.75rem;">Performance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding:0.75rem;">Proven v1</td>
+                                <td style="padding:0.75rem;">64</td>
+                                <td style="padding:0.75rem;">50K</td>
+                                <td style="padding:0.75rem;">0.052</td>
+                                <td style="padding:0.75rem;">~50% grasp, placing works</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding:0.75rem;">Proven v2</td>
+                                <td style="padding:0.75rem;">128</td>
+                                <td style="padding:0.75rem;">20K</td>
+                                <td style="padding:0.75rem;">0.038</td>
+                                <td style="padding:0.75rem;">Smoother, grasping improved</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border); font-weight: 600;">
+                                <td style="padding:0.75rem;">Proven v3</td>
+                                <td style="padding:0.75rem;">64</td>
+                                <td style="padding:0.75rem;">70K</td>
+                                <td style="padding:0.75rem; color: var(--primary);">0.028</td>
+                                <td style="padding:0.75rem; color: var(--primary);">85% success (17/20+)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Inference Optimization — The Critical Breakthrough</h3>
+                    <p>
+                        The single most impactful discovery was tuning the flow matching denoising process at inference time. Default <code>num_steps=10</code> produced insufficient precision — the model oscillated between multiple grasping strategies. Increasing to <strong>num_steps=20</strong> allowed the model to commit to a single strategy, while reducing <strong>n_action_steps</strong> from 20 to <strong>10</strong> enabled more frequent visual feedback during the critical grasping phase. This change alone improved success from ~50% to 85%.
+                    </p>
+
+                    <h3>Dataset Quality and Prompt Engineering</h3>
+                    <p>
+                        Comprehensive dataset auditing revealed a garbage episode (533 frames of static robot with zero action variance) corrupting the training signal. Removed this alongside exact prompt alignment between training data ("Grab the brain") and evaluation. Verified: 239 clean episodes, 99,845 frames, continuous indices.
+                    </p>
+
+                    <h3>Evaluation Protocol</h3>
+                    <p>
+                        All benchmarks were conducted with the policy running <strong>continuously without stopping or restarting</strong> between episodes. Restarting the policy resets the stochastic state of the flow matching denoising process, eliminating the natural action variability the model relies on. Continuous execution provides a more rigorous evaluation of real-world performance.
+                    </p>
+                    <p>
+                        <strong>Hardware constraints:</strong> Results achieved with low-quality cameras (Logitech 720p front + SO-101 kit wrist camera) and only 2 of 3 supported camera inputs. The pretrained SigLIP vision encoder's robustness to image quality degradation enabled effective performance despite these limitations.
+                    </p>
+                </div>
+
+                <!-- ACT vs SmolVLA Comparison -->
+                <div class="project-section animate-on-scroll">
+                    <h2><i data-lucide="git-compare"></i> ACT vs SmolVLA: Architectural Comparison</h2>
+
+                    <table style="width:100%; border-collapse: collapse; margin: 1.5rem 0;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--border);">
+                                <th style="text-align:left; padding:0.75rem;">Aspect</th>
+                                <th style="text-align:left; padding:0.75rem;">ACT</th>
+                                <th style="text-align:left; padding:0.75rem;">SmolVLA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding:0.75rem;">Vision</td>
+                                <td style="padding:0.75rem;">ResNet18 (end-to-end)</td>
+                                <td style="padding:0.75rem;">Frozen SigLIP (pretrained)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding:0.75rem;">Action prediction</td>
+                                <td style="padding:0.75rem;">Deterministic</td>
+                                <td style="padding:0.75rem;">Stochastic (flow matching)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding:0.75rem;">Language</td>
+                                <td style="padding:0.75rem;">None</td>
+                                <td style="padding:0.75rem;">Language-conditioned</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding:0.75rem;">Camera robustness</td>
+                                <td style="padding:0.75rem;">Brittle to displacement</td>
+                                <td style="padding:0.75rem; font-weight:600;">Handles displacement</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding:0.75rem;">Lighting robustness</td>
+                                <td style="padding:0.75rem;">Degrades under shifts</td>
+                                <td style="padding:0.75rem; font-weight:600;">Consistent</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding:0.75rem;">Success rate</td>
+                                <td style="padding:0.75rem;">80%</td>
+                                <td style="padding:0.75rem; font-weight:600; color: var(--primary);">85%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>
+                        <strong>Grasping behavior:</strong> ACT executes deterministic trajectories — identical every time. SmolVLA's stochastic flow matching produces slight variation, enabling natural exploration when grasping deformable objects that may shift or bounce. <strong>Recovery:</strong> SmolVLA re-plans every 10 steps from fresh visual state; ACT repeats failed trajectories. <strong>Multi-object scaling:</strong> SmolVLA's language conditioning enables curriculum training across multiple objects without catastrophic forgetting — architecturally impossible with ACT.
+                    </p>
+                </div>
+
                 <!-- Debugging Discoveries -->
-                <div class="project-section">
+                <div class="project-section animate-on-scroll">
                     <h2><i data-lucide="bug"></i> Critical Debugging Discoveries</h2>
                     <p>
-                        Eight major challenges identified and systematically resolved over 3 months of iterative development.
+                        Seventeen challenges identified and systematically resolved across two phases of development (December 2025 — March 2026).
                     </p>
 
                     <div class="debugging-section">
-                        <h4><i data-lucide="alert-circle"></i> Issues Solved</h4>
+                        <h4>Phase 1 (7 challenges)</h4>
 
                         <div class="debug-item">
                             <div class="issue">1. Language Instruction Mismatch</div>
-                            <div class="solution">VLA models create different embeddings for different text. Using the exact training task string fixed 0% to 33% success.</div>
+                            <div class="solution">VLA models create different embeddings for different text. Exact training task string required. Fixed 0% to 33% success.</div>
                         </div>
 
                         <div class="debug-item">
                             <div class="issue">2. Camera Configuration Swap</div>
-                            <div class="solution">Physical cameras were reversed, causing complete spatial reasoning failure. Built preview tool to verify camera feeds against training data.</div>
+                            <div class="solution">Physical cameras reversed, causing complete spatial reasoning failure. Built preview tool to verify feeds.</div>
                         </div>
 
                         <div class="debug-item">
                             <div class="issue">3. Overfitting (15.87 epochs)</div>
-                            <div class="solution">Optimized to 6.5 epochs using HPO — 2.5x faster training with better generalization.</div>
+                            <div class="solution">Optimized to 6.5 epochs — 2.5x faster training with better generalization.</div>
                         </div>
 
                         <div class="debug-item">
-                            <div class="issue">4. Robot Calibration Drift</div>
-                            <div class="solution">Joint offsets drift over time. Must recalibrate before every evaluation session.</div>
+                            <div class="issue">4-7. Calibration, Camera Angle, Starting State, Config</div>
+                            <div class="solution">Systematic resolution of hardware drift, visual consistency, and framework compatibility issues.</div>
+                        </div>
+
+                        <h4>Phase 2 (10 challenges)</h4>
+
+                        <div class="debug-item">
+                            <div class="issue">8. Training Methodology</div>
+                            <div class="solution">Literature review revealed correct config (batch=64, lr=1e-4, frozen vision). The issue was methodology, not model capacity.</div>
                         </div>
 
                         <div class="debug-item">
-                            <div class="issue">5. Camera Angle Shift</div>
-                            <div class="solution">Camera physically moved since data collection. Built live preview tool to compare and realign with training data.</div>
+                            <div class="issue">9. Normalization Mismatch (use_degrees)</div>
+                            <div class="solution">LeRobot v0.5+ changed defaults. Dataset recorded with RANGE_M100_100 required explicit use_degrees=False.</div>
                         </div>
 
                         <div class="debug-item">
-                            <div class="issue">6. Starting State Inconsistency</div>
-                            <div class="solution">Robot must reset to exact home position between episodes. Gripper state (open vs closed) is critical.</div>
+                            <div class="issue">10. Garbage Episode in Dataset</div>
+                            <div class="solution">Episode 240: 533 static frames with zero action variance. Removed from local and HuggingFace Hub.</div>
                         </div>
 
                         <div class="debug-item">
-                            <div class="issue">7. Config Compatibility</div>
-                            <div class="solution">Model trained on newer LeRobot (Colab) had unsupported config fields locally. Removed fields from Hub config.</div>
+                            <div class="issue">11. Task Text Mismatch (Refined)</div>
+                            <div class="solution">Same bug class as #1, rediscovered with different text. Dataset: "Grab the brain" vs eval: full description.</div>
+                        </div>
+
+                        <div class="debug-item" style="border-left: 3px solid var(--primary); padding-left: 1rem;">
+                            <div class="issue" style="color: var(--primary); font-weight: 700;">12. Flow Matching Denoising Precision — THE Breakthrough</div>
+                            <div class="solution">Default num_steps=10 caused mode-switching between grasping strategies. Doubling to 20 + halving n_action_steps to 10 achieved ~50% to 85%. Single most impactful discovery.</div>
                         </div>
 
                         <div class="debug-item">
-                            <div class="issue">8. Gripper Oscillation</div>
-                            <div class="solution">Diagnosed via action logging: 76% open-gripper training data causes model to oscillate. Same behavior across all 9 model versions confirms this is data-related, not hyperparameter-related.</div>
+                            <div class="issue">13. Batch Size / Linear Scaling</div>
+                            <div class="solution">Batch=200 underperformed without LR scaling [Goyal et al., 2017]. Batch=64 with 70K steps gave best results.</div>
+                        </div>
+
+                        <div class="debug-item">
+                            <div class="issue">14-17. Curriculum Training, Remote Inference, Recording, Disk</div>
+                            <div class="solution">Progressive checkpoint refinement, FastAPI server on RunPod, shared frame buffer for recording, storage management.</div>
                         </div>
                     </div>
                 </div>
@@ -466,13 +627,14 @@
                     <h2><i data-lucide="lightbulb"></i> Key Lessons Learned</h2>
 
                     <div class="feature-highlight">
-                        <h3><i data-lucide="book-open"></i> VLA Deployment Insights</h3>
+                        <h3><i data-lucide="book-open"></i> Key Insights</h3>
                         <ul style="color: var(--text-secondary); margin: 0; padding-left: 1.5rem; line-height: 2;">
-                            <li><strong>Exact Configuration Matching:</strong> VLA models require identical language, cameras, and calibration between training and deployment</li>
-                            <li><strong>Hyperparameters Have Limits:</strong> When 9 versions with different configs show identical behavior, the issue is data or architecture</li>
-                            <li><strong>Action Logging is Essential:</strong> Logging raw predictions during inference reveals issues that qualitative observation cannot</li>
-                            <li><strong>Data Distribution Matters:</strong> Imbalanced action distributions (76% open gripper) cause the model to hedge on underrepresented behaviors</li>
-                            <li><strong>Systematic HPO Pays Off:</strong> Optuna found LR 2.4x lower than manual tuning — but confirmed the core issue was not hyperparameters</li>
+                            <li><strong>Inference parameters can matter as much as training:</strong> Doubling denoising steps was the single largest improvement in the entire project</li>
+                            <li><strong>Curriculum training outperforms training from scratch:</strong> Progressive checkpoint refinement converges faster and to lower loss</li>
+                            <li><strong>Pretrained vision provides environmental robustness:</strong> Frozen SigLIP handles camera displacement and lighting variation without retraining</li>
+                            <li><strong>Language conditioning enables multi-object scaling:</strong> Different task prompts map to different action subspaces, preventing catastrophic forgetting</li>
+                            <li><strong>Data quality has outsized impact:</strong> One garbage episode (0.5% of data) measurably degraded grasping performance</li>
+                            <li><strong>Stochastic policies suit deformable objects:</strong> Flow matching's natural variation helps recover from failed grasps on elastic objects</li>
                         </ul>
                     </div>
                 </div>
@@ -481,10 +643,10 @@
                 <div class="project-section">
                     <h2><i data-lucide="rocket"></i> Next Steps</h2>
                     <ul style="color: var(--text-secondary); margin: 0; padding-left: 1.5rem; line-height: 2;">
-                        <li><strong>Immediate:</strong> Test SmolVLA with n_action_steps=1 (re-observe every step to reduce gripper oscillation)</li>
-                        <li><strong>Short-term:</strong> Train Pi0.5 (~3B params) with LoRA fine-tuning on the same dataset for better grasp precision</li>
-                        <li><strong>Medium-term:</strong> Multi-object scenarios, diverse language instructions</li>
-                        <li><strong>Long-term:</strong> Multi-task VLA, open-source contributions to LeRobot</li>
+                        <li><strong>Immediate:</strong> Pi0.5 fine-tuning (3B parameter VLA with LoRA) for improved precision</li>
+                        <li><strong>Short-term:</strong> Multi-object curriculum training — add cube, cylinder to same model via language conditioning</li>
+                        <li><strong>Medium-term:</strong> Sim-to-real transfer leveraging pretrained visual features; Pi0.5 vs SmolVLA comparison</li>
+                        <li><strong>Long-term:</strong> Multi-task VLA (pick, place, push, stack) with single model; open-vocabulary manipulation</li>
                     </ul>
                 </div>
 
@@ -525,6 +687,14 @@
                             <i data-lucide="bar-chart"></i>
                             <span>NumPy/Pandas</span>
                         </div>
+                        <div class="tech-item">
+                            <i data-lucide="server"></i>
+                            <span>RunPod (RTX 4090)</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="zap"></i>
+                            <span>FastAPI</span>
+                        </div>
                     </div>
                 </div>
 
@@ -546,9 +716,9 @@
                             <i data-lucide="database"></i>
                             Training Dataset
                         </a>
-                        <a href="https://huggingface.co/AdithyaRajendran/smolvla_so101_grab_brain_t2_v9" target="_blank" rel="noopener" class="btn-github">
+                        <a href="https://huggingface.co/AdithyaRajendran/smolvla_so101_grab_brain_t2_proven_v3" target="_blank" rel="noopener" class="btn-github">
                             <i data-lucide="sparkles"></i>
-                            Latest Model (v9)
+                            SmolVLA Proven v3 (85%)
                         </a>
                     </div>
                 </div>
