@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Reproducing NVIDIA Alpamayo 1.5 - a 10B reasoning Vision-Language-Action model for autonomous driving - inside AlpaSim closed-loop simulation. Project by Adithya Rajendran.">
+    <meta name="author" content="Adithya Rajendran">
+
+    <title>Reasoning VLA in Closed-Loop AV Simulation | Adithya Rajendran</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@0.344.0"></script>
+
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="project-detail.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="nav-header" id="navbar">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-text">AR</span>
+            </a>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">
+                <i data-lucide="menu" class="menu-icon"></i>
+                <i data-lucide="x" class="close-icon"></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#projects">Featured Projects</a></li>
+                <li><a href="index.html#education">Education</a></li>
+                <li><a href="honors.html">Honors</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+
+            <button class="sidebar-menu-btn" id="sidebarMenuBtn" aria-label="Open sidebar menu">
+                <i data-lucide="menu"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <aside class="sidebar-menu" id="sidebarMenu">
+        <div class="sidebar-header">
+            <span class="sidebar-title">Menu</span>
+            <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close sidebar">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="projects.html"><i data-lucide="folder-open"></i> All Projects</a></li>
+            <li><a href="honors.html"><i data-lucide="award"></i> Honors</a></li>
+            <li><a href="publications.html"><i data-lucide="book-open"></i> Publications</a></li>
+            <li><a href="contact.html"><i data-lucide="mail"></i> Contact</a></li>
+        </ul>
+    </aside>
+
+    <main>
+        <!-- Project Hero -->
+        <section class="project-detail-hero">
+            <div class="container">
+                <a href="projects.html" class="back-link">
+                    <i data-lucide="arrow-left"></i>
+                    Back to Projects
+                </a>
+
+                <h1>Reasoning VLA in Closed-Loop AV Simulation</h1>
+                <p class="project-tagline" style="color: var(--text-secondary); font-size: 1.1rem; max-width: 800px;">
+                    Reproduced NVIDIA Alpamayo 1.5 - a 10B-parameter reasoning Vision-Language-Action model - inside AlpaSim on a Hyperstack H100. Built an end-to-end open-source reproduction guide and a 15-page study companion on the architecture.
+                </p>
+
+                <div class="project-meta">
+                    <div class="project-meta-item">
+                        <i data-lucide="calendar"></i>
+                        <span>May 2026</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="user"></i>
+                        <span>Personal Exploration</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="cpu"></i>
+                        <span>Hyperstack H100 80GB PCIe</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="car"></i>
+                        <span>Autonomous-Driving VLA</span>
+                    </div>
+                </div>
+
+                <div class="cta-buttons">
+                    <a href="https://github.com/Adithya191101/alphamayo" target="_blank" rel="noopener" class="btn-github">
+                        <i data-lucide="github"></i>
+                        View on GitHub
+                    </a>
+                    <a href="https://github.com/Adithya191101/alphamayo/raw/main/documents/learning_pdf/document.pdf" target="_blank" rel="noopener" class="btn-github">
+                        <i data-lucide="file-text"></i>
+                        Study Guide (PDF)
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Content -->
+        <section class="project-content">
+            <div class="container">
+
+                <!-- Overview -->
+                <div class="project-section">
+                    <h2><i data-lucide="info"></i> Project Overview</h2>
+                    <p>
+                        Self-driving cars do well on common scenarios and struggle on the long tail - construction zones, ambiguous merges, pedestrians stepping out from between parked cars. NVIDIA's <strong>Alpamayo</strong> family addresses this with a reasoning Vision-Language-Action model that, alongside its trajectory prediction, emits a written chain-of-causation explaining what it saw and why it chose the action it did.
+                    </p>
+                    <p>
+                        This project reproduces <strong>Alpamayo 1.5</strong> end-to-end on real driving scenes. The model runs inside <strong>AlpaSim</strong>, NVIDIA's closed-loop simulator, on neural reconstructions of recorded drives from the NuRec dataset. The artifacts include verified setup scripts, demo videos, a curated showcase, and a 15-page study guide on the underlying architecture.
+                    </p>
+
+                    <div class="feature-highlight">
+                        <h3><i data-lucide="target"></i> Project Goal</h3>
+                        <p style="margin: 0;">
+                            Get NVIDIA Alpamayo 1.5 running on real driving scenes in closed-loop simulation, extract and analyze its chain-of-causation reasoning traces, and publish a complete open-source reproduction guide so others can do the same in under an hour.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Demo Section -->
+                <div class="project-section">
+                    <h2><i data-lucide="play-circle"></i> Demos</h2>
+                    <p>
+                        Two driving scenarios run on Alpamayo 1.5 in AlpaSim. Each frame composites the bird's-eye-view map, the front-camera with the model's planned (green) vs ground-truth (yellow) trajectory, the navigation command, scrolling eval metrics, the live reasoning banner, and the future-trajectory chart.
+                    </p>
+
+                    <h3 style="margin-top: 1.5rem;">Scene 1: Construction Zone</h3>
+                    <p>NVIDIA's published showcase scene. Urban drive with a slow lead truck, red light, encroaching vehicles, and a pedestrian crossing.</p>
+                    <div class="video-card" style="max-width: 900px; margin: 1rem auto;">
+                        <video controls poster="assets/alpamayo/construction_demo.jpg">
+                            <source src="assets/alpamayo/construction_demo.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="caption">Composite view: BEV map and metrics on the left, camera and chain-of-causation reasoning banner on the right, trajectory prediction chart bottom-right.</div>
+                    </div>
+
+                    <h3 style="margin-top: 2rem;">Scene 2: Urban Intersection with Pedestrian Crossing</h3>
+                    <p>Curated 26.02 NuRec scene. Stop signs, an active crosswalk, bollards, and one-way signage. Selected by filtering the NuRec labels for visual cleanliness and reasoning interest.</p>
+                    <div class="video-card" style="max-width: 900px; margin: 1rem auto;">
+                        <video controls poster="assets/alpamayo/pedestrian_demo.jpg">
+                            <source src="assets/alpamayo/pedestrian_demo.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="caption">The model emits stop-sign, pedestrian-yield, and one-way-sign reasoning across an 18-second drive.</div>
+                    </div>
+                </div>
+
+                <!-- Architecture Stack -->
+                <div class="project-section">
+                    <h2><i data-lucide="layers"></i> The Three-Piece Stack</h2>
+                    <p>Understanding Alpamayo 1.5 requires understanding the two other open NVIDIA components it depends on, and the simulator that exercises it on real scenes.</p>
+
+                    <div class="system-diagram">
+                        <div class="system-card">
+                            <h3><i data-lucide="brain-circuit"></i> Alpamayo 1.5 - The Driver</h3>
+                            <ul>
+                                <li>10B-parameter VLA model</li>
+                                <li>4 camera views in, trajectory + reasoning out</li>
+                                <li>Diffusion-based action decoder (2.3B params)</li>
+                                <li>Closed-loop benchmark: 0.81 on AlpaSim</li>
+                            </ul>
+                        </div>
+
+                        <div class="system-card">
+                            <h3><i data-lucide="cpu"></i> Cosmos Reason 2 - The Backbone</h3>
+                            <ul>
+                                <li>8B reasoning VLM for physical AI</li>
+                                <li>ViT + dense LLM transformer</li>
+                                <li>Post-trained from Qwen3-VL-8B-Instruct</li>
+                                <li>256K context for multi-camera history</li>
+                            </ul>
+                        </div>
+
+                        <div class="system-card">
+                            <h3><i data-lucide="server"></i> AlpaSim - The Testbed</h3>
+                            <ul>
+                                <li>Microservices via docker-compose</li>
+                                <li>Runtime + Driver + Physics + SensorSim</li>
+                                <li>Plays NuRec USDZ scene reconstructions</li>
+                                <li>Emits rollout.asl binary trace + mp4 video</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Implementation -->
+                <div class="project-section">
+                    <h2><i data-lucide="code"></i> Implementation Approach</h2>
+                    <p>The reproduction took several iterations. The non-obvious lesson up front: most cloud GPU providers cannot host AlpaSim because their container-based pods block the syscalls Docker needs to register image layers. Hyperstack's KVM VMs work; RunPod doesn't.</p>
+
+                    <div class="workflow-steps">
+                        <div class="workflow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Provider selection</h3>
+                                <p>Verified empirically that RunPod's standard pods block the <code>unshare()</code> syscall via seccomp, so Docker image-layer registration fails. Switched to Hyperstack's KVM virtual machines (full root, full Docker support) at H100 80GB PCIe.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Automated VM bootstrap</h3>
+                                <p>Wrote a single-shot bootstrap script that disables <code>apt-daily.timer</code> (otherwise unattended-upgrades holds the dpkg lock for 25 min on a fresh Ubuntu image), installs Docker + NVIDIA Container Toolkit, sets up uv + Rust, clones AlpaSim, and pre-builds the <code>alpasim-base</code> image serially to avoid parallel-build disk explosion.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Storage layout fix</h3>
+                                <p>AlpaSim's docker-compose builds blow past a 100 GB boot disk. Solution: symlink <code>/workspace</code> to Hyperstack's 750 GB ephemeral SSD, pre-configure <code>/etc/docker/daemon.json</code> to use that path as data-root, and relocate <code>/var/lib/containerd</code> there.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>Gated-model access</h3>
+                                <p>Alpamayo 1.5 internally loads <code>nvidia/Cosmos-Reason2-8B</code> as its reasoning backbone - both are HuggingFace-gated and must be approved separately, along with the NuRec scenes dataset.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h3>Scene curation</h3>
+                                <p>Wrote a filter that scans NuRec's per-scene <code>labels.json</code> metadata for visual cleanliness (clear weather, dry surface, daytime) plus reasoning interest (intersection + pedestrian crossing, construction zone, lane changes). Ranked the 824 labeled scenes and ran the top candidates.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">6</div>
+                            <div class="step-content">
+                                <h3>Reasoning extraction</h3>
+                                <p>Parsed the binary <code>rollout.asl</code> protobuf log to extract per-timestep reasoning text from the driver's debug field, coalesced consecutive duplicates, and surfaced the unique reasoning chains across each 20-second run.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">7</div>
+                            <div class="step-content">
+                                <h3>LinkedIn-ready compositor</h3>
+                                <p>Built an ffmpeg pipeline that composites AlpaSim's DEFAULT and REASONING_OVERLAY layouts into a single 1920×1080 video - BEV map + camera + reasoning banner + trajectory chart in one frame.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sample Reasoning -->
+                <div class="project-section">
+                    <h2><i data-lucide="message-circle"></i> Sample Chain-of-Causation Reasoning</h2>
+                    <p>The model emits a short causal explanation alongside every trajectory. These are pulled directly from the <code>rollout.asl</code> log of the construction-zone scenario:</p>
+
+                    <div class="feature-highlight" style="margin-top: 1rem;">
+                        <p style="margin-bottom: 0.75rem;">"Stop to yield to the pedestrian in the crosswalk since they are walking across our path"</p>
+                        <p style="margin-bottom: 0.75rem;">"Slow down to create a gap for a merge to the left because our current right lane narrows ahead while a bus is occupying the left lane, blocking an immediate merge"</p>
+                        <p style="margin-bottom: 0.75rem;">"Nudge left due to the stopped truck blocking the right side of our lane"</p>
+                        <p style="margin: 0;">"Turn right because the one-way sign indicates right only"</p>
+                    </div>
+
+                    <p style="margin-top: 1rem;">
+                        Each reasoning chain identifies the action, names the cause(s) it observed in the scene, and (often) sketches the plan that follows. The model emitted 30+ distinct reasoning chains in a single 20-second scenario.
+                    </p>
+                </div>
+
+                <!-- Key Outcomes -->
+                <div class="project-section">
+                    <h2><i data-lucide="star"></i> Key Outcomes</h2>
+
+                    <div class="system-diagram">
+                        <div class="system-card">
+                            <h3><i data-lucide="book-open"></i> Reproduction Guide</h3>
+                            <ul>
+                                <li>Seven-step tutorial in the repo README</li>
+                                <li>Cost-aware (~$5-10 to reproduce end-to-end)</li>
+                                <li>Covers provider gotchas, disk sizing, gated-model access</li>
+                                <li>Inline GIF previews of both demo scenes</li>
+                            </ul>
+                        </div>
+
+                        <div class="system-card">
+                            <h3><i data-lucide="file-text"></i> Study Companion (PDF)</h3>
+                            <ul>
+                                <li>15-page architectural deep-dive</li>
+                                <li>Original SVG diagrams for each subsystem</li>
+                                <li>End-to-end closed-loop step walkthrough</li>
+                                <li>References cited inline to NVIDIA's open docs</li>
+                            </ul>
+                        </div>
+
+                        <div class="system-card">
+                            <h3><i data-lucide="video"></i> Curated Demos</h3>
+                            <ul>
+                                <li>Two 1920×1080 composite scenarios</li>
+                                <li>Construction zone + pedestrian intersection</li>
+                                <li>Animated GIF previews render inline on GitHub</li>
+                                <li>Full-quality mp4s included in the repo</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technologies -->
+                <div class="project-section">
+                    <h2><i data-lucide="cpu"></i> Technologies Used</h2>
+
+                    <div class="tech-stack-grid">
+                        <div class="tech-item">
+                            <i data-lucide="brain-circuit"></i>
+                            <span>Alpamayo 1.5</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="brain"></i>
+                            <span>Cosmos Reason 2</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="server"></i>
+                            <span>AlpaSim</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="box"></i>
+                            <span>Docker / Compose</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="code-2"></i>
+                            <span>PyTorch</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="terminal"></i>
+                            <span>uv + Rust</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="cloud"></i>
+                            <span>Hyperstack (H100)</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="film"></i>
+                            <span>ffmpeg</span>
+                        </div>
+                        <div class="tech-item">
+                            <i data-lucide="database"></i>
+                            <span>HuggingFace Hub</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources -->
+                <div class="project-section">
+                    <h2><i data-lucide="download"></i> Resources</h2>
+                    <p>All artifacts are open-source. The repo contains the full reproduction guide, scripts, demo videos, and the study PDF.</p>
+
+                    <div class="cta-buttons" style="margin-top: 1rem;">
+                        <a href="https://github.com/Adithya191101/alphamayo" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="github"></i>
+                            GitHub Repository
+                        </a>
+                        <a href="https://github.com/Adithya191101/alphamayo/raw/main/documents/learning_pdf/document.pdf" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="file-text"></i>
+                            15-Page Study PDF
+                        </a>
+                        <a href="https://github.com/Adithya191101/alphamayo/tree/main/documents/showcase" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="video"></i>
+                            Demo Videos
+                        </a>
+                    </div>
+
+                    <h3 style="margin-top: 2rem;">NVIDIA References</h3>
+                    <ul>
+                        <li><a href="https://developer.nvidia.com/blog/building-autonomous-vehicles-that-reason-with-nvidia-alpamayo/" target="_blank" rel="noopener">NVIDIA developer blog - Building AVs that Reason with Alpamayo</a></li>
+                        <li><a href="https://huggingface.co/nvidia/Alpamayo-1.5-10B" target="_blank" rel="noopener">Alpamayo 1.5 model card on HuggingFace</a></li>
+                        <li><a href="https://huggingface.co/nvidia/Cosmos-Reason2-8B" target="_blank" rel="noopener">Cosmos Reason 2 (8B) model card on HuggingFace</a></li>
+                        <li><a href="https://github.com/NVlabs/alpasim" target="_blank" rel="noopener">NVlabs/alpasim on GitHub</a></li>
+                        <li><a href="https://huggingface.co/datasets/nvidia/PhysicalAI-Autonomous-Vehicles-NuRec" target="_blank" rel="noopener">NuRec dataset</a></li>
+                        <li><a href="https://arxiv.org/abs/2511.00088" target="_blank" rel="noopener">Alpamayo R1 paper (arXiv 2511.00088)</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="index.html#about">About</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+
+                <div class="footer-social">
+                    <a href="https://linkedin.com/in/adithyarajendran" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <i data-lucide="linkedin"></i>
+                    </a>
+                    <a href="https://github.com/Adithya191101" target="_blank" rel="noopener" aria-label="GitHub">
+                        <i data-lucide="github"></i>
+                    </a>
+                    <a href="mailto:adithya191101@gmail.com" aria-label="Email">
+                        <i data-lucide="mail"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    &copy; 2025 Adithya Rajendran. All rights reserved.
+                </p>
+
+                <p class="footer-tagline">
+                    Built with passion for robotics
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
