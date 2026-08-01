@@ -2175,6 +2175,10 @@ main {
         padding: 4rem 0;
     }
 
+    .page-section {
+        padding-top: calc(4rem + 70px);
+    }
+
     .container {
         padding: 0 1.5rem;
     }

@@ -453,6 +453,34 @@
                 <h2 class="section-title">Featured Projects</h2>
 
                 <div class="projects-grid">
+                    <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-flexiv-reach.html'">
+                        <div class="project-thumbnail">
+                            <img src="assets/flexiv-reach/flexiv_reach_poster.jpg" alt="Flexiv Rizon 4 hovering above a cube in Isaac Sim">
+                            <div class="tech-overlay">
+                                <span class="tech-badge">RL</span>
+                            </div>
+                        </div>
+                        <div class="project-card-content">
+                            <div class="project-header">
+                                <h3 class="project-title">Flexiv Rizon 4 Cartesian Reach with PPO</h3>
+                                <div class="project-links">
+                                    <a href="https://github.com/Adithya191101/Flexiv_RL" target="_blank" rel="noopener" aria-label="GitHub" onclick="event.stopPropagation()">
+                                        <i data-lucide="github"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="project-date">June 2026 - July 2026</p>
+                            <p class="project-description">Trained a PPO policy to drive the Flexiv Rizon 4 TCP to a stable hover 15 cm above randomized cube positions in Isaac Sim, reaching 99.0% success over 500 held-out poses with Pink differential IK in the control loop.</p>
+                            <div class="project-tags">
+                                <span>PPO</span>
+                                <span>Isaac Sim</span>
+                                <span>Isaac Lab</span>
+                                <span>Pink DiffIK</span>
+                                <span>Flexiv</span>
+                            </div>
+                        </div>
+                    </article>
+
                     <article class="project-card animate-on-scroll clickable-project" onclick="window.location.href='project-alpamayo.html'">
                         <div class="project-thumbnail">
                             <img src="assets/alpamayo/thumb.jpg" alt="NVIDIA Alpamayo 1.5 driving in AlpaSim simulator">
@@ -677,7 +705,7 @@
                 <div class="view-all-projects">
                     <a href="projects.html" class="btn btn-secondary">
                         <i data-lucide="grid-3x3"></i>
-                        View All <span id="project-count">14</span> Projects
+                        View All <span id="project-count">17</span> Projects
                     </a>
                 </div>
             </div>

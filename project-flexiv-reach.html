@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PPO Cartesian reach control for the Flexiv Rizon 4 in Isaac Sim, using Pink differential inverse kinematics and a validated 20 Hz control stack.">
+    <meta name="author" content="Adithya Rajendran">
+
+    <title>Flexiv Rizon 4 Cartesian Reach with PPO | Adithya Rajendran</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@0.344.0"></script>
+
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="project-detail.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="nav-header" id="navbar">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-text">AR</span>
+            </a>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">
+                <i data-lucide="menu" class="menu-icon"></i>
+                <i data-lucide="x" class="close-icon"></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#projects">Featured Projects</a></li>
+                <li><a href="index.html#education">Education</a></li>
+                <li><a href="honors.html">Honors</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+
+            <button class="sidebar-menu-btn" id="sidebarMenuBtn" aria-label="Open sidebar menu">
+                <i data-lucide="menu"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <aside class="sidebar-menu" id="sidebarMenu">
+        <div class="sidebar-header">
+            <span class="sidebar-title">Menu</span>
+            <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close sidebar">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="projects.html"><i data-lucide="folder-open"></i> All Projects</a></li>
+            <li><a href="honors.html"><i data-lucide="award"></i> Honors</a></li>
+            <li><a href="publications.html"><i data-lucide="book-open"></i> Publications</a></li>
+            <li><a href="contact.html"><i data-lucide="mail"></i> Contact</a></li>
+        </ul>
+    </aside>
+
+    <main>
+        <!-- Project Hero -->
+        <section class="project-detail-hero">
+            <div class="container">
+                <a href="projects.html" class="back-link">
+                    <i data-lucide="arrow-left"></i>
+                    Back to Projects
+                </a>
+
+                <h1>Flexiv Rizon 4 Cartesian Reach with PPO</h1>
+                <p class="project-tagline" style="color: var(--text-secondary); font-size: 1.1rem; max-width: 800px;">
+                    Built and validated a position-only reinforcement-learning pipeline that drives a Flexiv Rizon 4 tool center point to a stable hover 15 cm above a randomized object position in Isaac Sim.
+                </p>
+
+                <div class="project-meta">
+                    <div class="project-meta-item">
+                        <i data-lucide="calendar"></i>
+                        <span>June 2026 - July 2026</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="user"></i>
+                        <span>Personal Robotics Project</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="box"></i>
+                        <span>Isaac Sim 5.1 / Isaac Lab</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="brain"></i>
+                        <span>PPO + Pink DiffIK</span>
+                    </div>
+                </div>
+
+                <div class="cta-buttons">
+                    <a href="https://github.com/Adithya191101/Flexiv_RL" target="_blank" rel="noopener" class="btn-github">
+                        <i data-lucide="github"></i>
+                        View on GitHub
+                    </a>
+                    <a href="#evaluation-video" class="btn-github">
+                        <i data-lucide="play"></i>
+                        Watch Evaluation
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Content -->
+        <section class="project-content">
+            <div class="container">
+
+                <!-- Overview -->
+                <div class="project-section">
+                    <h2><i data-lucide="info"></i> Project Overview</h2>
+                    <p>
+                        This project was designed as a minimal end-to-end integration test for robot learning: simulator environment, PPO training, differential inverse kinematics, controller-health validation, and repeatable visual evaluation. The policy moves the two-finger gripper's tool center point (TCP) to <strong>15 cm directly above the center of a stationary cube</strong>, regardless of the cube's sampled XY position.
+                    </p>
+                    <p>
+                        The learned policy does not output arm-joint angles directly. It emits incremental wrist translation, wrist rotation, and finger commands at 20 Hz. Those commands update an accumulated task-space target, and <strong>Pink differential IK</strong> converts that target into bounded joint-position commands for the simulated Flexiv Rizon 4.
+                    </p>
+
+                    <div class="feature-highlight">
+                        <h3><i data-lucide="target"></i> Position-Only Goal</h3>
+                        <p style="margin: 0;">
+                            Reach the target and remain strictly within 20 mm for every sample in the final one-second hold window. The task intentionally avoids contact and grasp dynamics so the complete learning and control stack can be validated before progressing to manipulation.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Evaluation Video -->
+                <div class="project-section" id="evaluation-video">
+                    <h2><i data-lucide="play-circle"></i> Held-Out Evaluation</h2>
+                    <p>
+                        The video combines 20 sequential evaluations from the selected <code>model_400</code> checkpoint. Each episode uses a distinct held-out cube position and the same policy, observation contract, Pink controller, velocity limits, and health instrumentation used for quantitative evaluation. All 20 recorded episodes pass the position and controller-health gates.
+                    </p>
+
+                    <div class="video-card" style="max-width: 1000px; margin: 1.5rem auto;">
+                        <video controls playsinline preload="metadata" poster="assets/flexiv-reach/flexiv_reach_poster.jpg">
+                            <source src="assets/flexiv-reach/flexiv_reach_20_episodes.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="caption"><strong>20 held-out reach-and-hold episodes</strong>99-second combined Isaac Sim evaluation at 20 Hz. The cube position changes between episodes.</div>
+                    </div>
+
+                    <div class="project-image-card" style="max-width: 1100px; margin: 2rem auto 0;">
+                        <a href="assets/flexiv-reach/terminal_contact_sheet.png" target="_blank" rel="noopener">
+                            <img src="assets/flexiv-reach/terminal_contact_sheet.png" alt="Terminal frames from 20 held-out Flexiv reach episodes" loading="lazy">
+                        </a>
+                        <div class="caption">Terminal frame from each recorded episode. Click to inspect the full-resolution contact sheet.</div>
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div class="project-section">
+                    <h2><i data-lucide="bar-chart-3"></i> Quantitative Results</h2>
+                    <p>
+                        The reported Gate 2 evaluation covers <strong>500 held-out positions across five seeds</strong>. Success requires all 20 final control samples to stay below the 20 mm TCP-error threshold, not merely a low average error.
+                    </p>
+
+                    <div class="system-diagram">
+                        <div class="system-card">
+                            <h3><i data-lucide="target"></i> Position Accuracy</h3>
+                            <ul>
+                                <li><strong>495 / 500 = 99.0%</strong> success</li>
+                                <li>Wilson 95% CI: 97.7% - 99.6%</li>
+                                <li>Mean terminal-window error: 8.02 mm</li>
+                                <li>P90 terminal-window error: 13.6 mm</li>
+                            </ul>
+                        </div>
+
+                        <div class="system-card">
+                            <h3><i data-lucide="timer"></i> Convergence</h3>
+                            <ul>
+                                <li>Mean settling time: 36.7 steps (1.84 seconds)</li>
+                                <li>All 500 episodes entered tolerance at least once</li>
+                                <li>Recorded set: 20 / 20 position passes</li>
+                                <li>Final one-second window defines success</li>
+                            </ul>
+                        </div>
+
+                        <div class="system-card">
+                            <h3><i data-lucide="shield-check"></i> Controller Health</h3>
+                            <ul>
+                                <li>0 external-contact steps</li>
+                                <li>0 IK failures</li>
+                                <li>0 non-finite Jacobians</li>
+                                <li>Minimum joint margin: 0.142 rad</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Design -->
+                <div class="project-section">
+                    <h2><i data-lucide="layers"></i> Learning and Control Stack</h2>
+
+                    <div class="workflow-steps">
+                        <div class="workflow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Versioned observation contract</h3>
+                                <p>Four frames of joint position and velocity, accumulated wrist and finger targets, measured wrist pose, finger state, and object center form a 136-dimensional observation. Fixed physical divisors are applied before history insertion, with no learned normalization and no privileged critic inputs.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Accumulated task-space actions</h3>
+                                <p>The PPO actor produces seven deltas: wrist XYZ, wrist roll-pitch-yaw, and finger motion. The commands are integrated into a target at 20 Hz instead of being interpreted as absolute poses.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Pink differential inverse kinematics</h3>
+                                <p>Pink solves the accumulated SE(3) wrist target into seven arm-joint commands. URDF position and velocity limits constrain the QP, followed by a command-to-command slew limiter and Isaac Sim position drives.</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>Fail-closed evaluation</h3>
+                                <p>Per-episode metrics cover terminal accuracy, joint margin, actual and commanded speed, external contact, IK failures, Jacobian finiteness, manipulability, settling time, and finger behavior. Unavailable health measurements fail rather than silently becoming zero.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Engineering Work -->
+                <div class="project-section">
+                    <h2><i data-lucide="wrench"></i> Engineering Highlights</h2>
+                    <div class="system-diagram">
+                        <div class="system-card">
+                            <h3><i data-lucide="activity"></i> PPO Telemetry</h3>
+                            <ul>
+                                <li>Adaptive-KL distribution logging</li>
+                                <li>Static field-wise observation scaling</li>
+                                <li>Checkpoint contract-version validation</li>
+                                <li>Per-field non-finite detection</li>
+                            </ul>
+                        </div>
+                        <div class="system-card">
+                            <h3><i data-lucide="gauge"></i> Command Safety</h3>
+                            <ul>
+                                <li>URDF joint-position alignment</li>
+                                <li>QP velocity constraints</li>
+                                <li>Command slew limiting</li>
+                                <li>Actual vs commanded speed reporting</li>
+                            </ul>
+                        </div>
+                        <div class="system-card">
+                            <h3><i data-lucide="check-circle"></i> Verification</h3>
+                            <ul>
+                                <li>215 offline tests</li>
+                                <li>Positive collision-sensor validation</li>
+                                <li>Positive slew-limiter validation</li>
+                                <li>Per-episode video and JSON evidence</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technologies -->
+                <div class="project-section">
+                    <h2><i data-lucide="cpu"></i> Technologies Used</h2>
+                    <div class="tech-stack-grid">
+                        <div class="tech-item"><i data-lucide="box"></i><span>Isaac Sim 5.1</span></div>
+                        <div class="tech-item"><i data-lucide="blocks"></i><span>Isaac Lab</span></div>
+                        <div class="tech-item"><i data-lucide="brain"></i><span>RSL-RL PPO</span></div>
+                        <div class="tech-item"><i data-lucide="git-branch"></i><span>Pink DiffIK</span></div>
+                        <div class="tech-item"><i data-lucide="code-2"></i><span>PyTorch</span></div>
+                        <div class="tech-item"><i data-lucide="bot"></i><span>Flexiv Rizon 4</span></div>
+                        <div class="tech-item"><i data-lucide="file-code"></i><span>URDF / USD</span></div>
+                        <div class="tech-item"><i data-lucide="terminal"></i><span>Python</span></div>
+                    </div>
+                </div>
+
+                <!-- Scope -->
+                <div class="project-section">
+                    <h2><i data-lucide="triangle-alert"></i> Current Scope and Open Work</h2>
+                    <p>
+                        This result is deliberately scoped to <strong>simulation and position variation</strong>. The evaluated object is a stationary 6 cm cube with randomized XY position, fixed orientation, and a simulator-provided center. Shape and size generalization, camera-based object perception, geometric-clearance measurement, multiple robot initial configurations, grasp contact, and real Flexiv RDK deployment are not demonstrated yet.
+                    </p>
+                    <p>
+                        The position objective and controller-health gates pass. The auxiliary finger target does not: the recorded policy settles near the gripper's upper stop, so <code>finger_passed=false</code> and the combined full-policy verdict remains false. This is reported separately rather than hidden behind the successful Cartesian reach metric.
+                    </p>
+                </div>
+
+                <!-- Resources -->
+                <div class="project-section">
+                    <h2><i data-lucide="folder-open"></i> Project Resources</h2>
+                    <p>The repository contains the environment, PPO configuration, Pink controller, evaluation scripts, tests, detailed engineering notes, and reproducible visual evidence.</p>
+                    <div class="cta-buttons" style="margin-top: 1rem;">
+                        <a href="https://github.com/Adithya191101/Flexiv_RL" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="github"></i>
+                            GitHub Repository
+                        </a>
+                        <a href="https://github.com/Adithya191101/Flexiv_RL#visual-results" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="bar-chart-3"></i>
+                            Evaluation Evidence
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="index.html#about">About</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+
+                <div class="footer-social">
+                    <a href="https://linkedin.com/in/adithyarajendran" target="_blank" rel="noopener" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+                    <a href="https://github.com/Adithya191101" target="_blank" rel="noopener" aria-label="GitHub"><i data-lucide="github"></i></a>
+                    <a href="mailto:adithya191101@gmail.com" aria-label="Email"><i data-lucide="mail"></i></a>
+                </div>
+
+                <p class="footer-copyright">&copy; 2025 Adithya Rajendran. All rights reserved.</p>
+                <p class="footer-tagline">Built with passion for robotics</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
