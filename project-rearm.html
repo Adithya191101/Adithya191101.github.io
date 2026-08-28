@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Perception-driven, collision-aware pick-and-place for the reArm B601-DM using Isaac Sim, Isaac ROS, Grounding DINO, FoundationPose, nvblox, and cuMotion.">
+    <meta name="author" content="Adithya Rajendran">
+
+    <title>Perception-Driven reArm Pick-and-Place | Adithya Rajendran</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@0.344.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="project-detail.css">
+</head>
+<body>
+    <header class="nav-header" id="navbar">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-text">AR</span>
+            </a>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">
+                <i data-lucide="menu" class="menu-icon"></i>
+                <i data-lucide="x" class="close-icon"></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#projects">Featured Projects</a></li>
+                <li><a href="index.html#education">Education</a></li>
+                <li><a href="honors.html">Honors</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+
+            <button class="sidebar-menu-btn" id="sidebarMenuBtn" aria-label="Open sidebar menu">
+                <i data-lucide="menu"></i>
+            </button>
+        </nav>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <aside class="sidebar-menu" id="sidebarMenu">
+        <div class="sidebar-header">
+            <span class="sidebar-title">Menu</span>
+            <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close sidebar menu">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="projects.html"><i data-lucide="folder-open"></i> All Projects</a></li>
+            <li><a href="honors.html"><i data-lucide="award"></i> Honors</a></li>
+            <li><a href="publications.html"><i data-lucide="book-open"></i> Publications</a></li>
+            <li><a href="contact.html"><i data-lucide="mail"></i> Contact</a></li>
+        </ul>
+    </aside>
+
+    <main>
+        <section class="project-detail-hero">
+            <div class="container">
+                <a href="projects.html" class="back-link">
+                    <i data-lucide="arrow-left"></i>
+                    Back to Projects
+                </a>
+
+                <h1>Perception-Driven reArm B601-DM Pick-and-Place</h1>
+                <p class="project-tagline">
+                    An end-to-end Isaac ROS manipulation stack that detects a bottom-up soup can, estimates its 6-DoF pose, reconstructs a two-camera obstacle map, plans the carried object around a hard wall, grasps through physical finger contact, rotates the can upright, and releases it under gravity.
+                </p>
+
+                <div class="project-meta">
+                    <div class="project-meta-item">
+                        <i data-lucide="calendar"></i>
+                        <span>August 2026</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="bot"></i>
+                        <span>reArm B601-DM</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="cpu"></i>
+                        <span>Isaac Sim 5.1 + Isaac ROS 4.5</span>
+                    </div>
+                    <div class="project-meta-item">
+                        <i data-lucide="layers"></i>
+                        <span>Simulation / Physical AI</span>
+                    </div>
+                </div>
+
+                <div class="cta-buttons">
+                    <a href="https://github.com/Adithya191101/rearm_clean" target="_blank" rel="noopener" class="btn-github">
+                        <i data-lucide="github"></i>
+                        View on GitHub
+                    </a>
+                    <a href="#demo" class="btn-github">
+                        <i data-lucide="play-circle"></i>
+                        Watch Demo
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-content">
+            <div class="container">
+                <div class="project-section">
+                    <h2><i data-lucide="info"></i> Project Overview</h2>
+                    <p>
+                        This project adapts NVIDIA's Isaac for Manipulation reference architecture to the Seeed Studio reArm B601-DM. It closes the complete perception-to-action loop in simulation: camera observations create the object pose and collision map, the planner produces robot motion, and PhysX contact determines whether the grasp and release actually work.
+                    </p>
+                    <p>
+                        The repository is a source-only overlay rather than a copy of NVIDIA and Seeed trees. External repositories are pinned to immutable commits, one reviewable patch carries the workflow integration, and bootstrap scripts reconstruct the complete environment, models, and GPU-specific TensorRT engines locally.
+                    </p>
+
+                    <div class="feature-highlight">
+                        <h3><i data-lucide="target"></i> Project Goal</h3>
+                        <p style="margin: 0;">
+                            Demonstrate a collision-aware pick-and-place task in which perception supplies the object pose, mapped depth supplies the obstacle geometry, cuMotion plans both the robot and carried-can volume, and the simulated gripper succeeds through contact physics instead of a hidden weld or object teleport.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="project-section" id="demo">
+                    <h2><i data-lucide="play-circle"></i> Full-Flow Demonstration</h2>
+                    <p>
+                        The main view overlays the Grounding DINO detection and FoundationPose axes on the live Isaac Sim observer. The two diagnostic panels show robot-masked depth entering nvblox from the fixed scene cameras. The successful sequence is followed by a short edited bloopers section showing development failures.
+                    </p>
+
+                    <div class="video-card" style="max-width: 1000px; margin: 1.5rem auto;">
+                        <video controls preload="metadata" poster="assets/rearm/rearm_b601dm_full_flow_preview.jpg">
+                            <source src="assets/rearm/rearm_b601dm_full_flow_demo.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="caption">
+                            <strong>Perception-driven pick, collision-aware transfer, and gravity release</strong>
+                            51-second H.264 recording at 1920x1080 and 30 FPS.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-section">
+                    <h2><i data-lucide="workflow"></i> Perception-to-Action Architecture</h2>
+
+                    <div class="architecture-flow">
+                        <span class="component">Isaac Sim RGB-D cameras</span>
+                        <span class="arrow"> &rarr; </span>
+                        <span class="component">Grounding DINO detection</span>
+                        <span class="arrow"> &rarr; </span>
+                        <span class="component">FoundationPose 6-DoF pose</span>
+                        <span class="arrow"> &rarr; </span>
+                        <span class="component">axial-pose canonicalization</span>
+                        <span class="arrow"> &rarr; </span>
+                        <span class="component">grasp goal set</span>
+                        <br>
+                        <span class="component">two depth cameras</span>
+                        <span class="arrow"> &rarr; </span>
+                        <span class="component">robot segmentation</span>
+                        <span class="arrow"> &rarr; </span>
+                        <span class="component">nvblox ESDF</span>
+                        <span class="arrow"> &rarr; </span>
+                        <span class="component">cuMotion + MoveIt</span>
+                        <span class="arrow"> &rarr; </span>
+                        <span class="component">ROS 2 control + physical gripper</span>
+                    </div>
+                </div>
+
+                <div class="project-section">
+                    <h2><i data-lucide="scan-line"></i> Perception and 6-DoF Pose</h2>
+                    <div class="system-diagram">
+                        <div class="system-card">
+                            <h3><i data-lucide="search"></i> Open-Vocabulary Detection</h3>
+                            <ul>
+                                <li>Grounding DINO locates the prompted soup-can class</li>
+                                <li>Detection score and bounding box are projected into the observer view</li>
+                                <li>Fail-closed connectivity checks require the detector action server</li>
+                            </ul>
+                        </div>
+
+                        <div class="system-card">
+                            <h3><i data-lucide="axis-3d"></i> FoundationPose</h3>
+                            <ul>
+                                <li>RGB, depth, intrinsics, ROI, and the textured can mesh produce a 6-DoF pose</li>
+                                <li>Projected object axes make pose direction visible in the recording</li>
+                                <li>Axial sign handling preserves top-up versus bottom-up orientation</li>
+                            </ul>
+                        </div>
+
+                        <div class="system-card">
+                            <h3><i data-lucide="camera"></i> Camera Contract</h3>
+                            <ul>
+                                <li>The calibrated static scene camera is the pose-estimation source</li>
+                                <li>Camera frame IDs and timestamps are kept consistent through ROS 2</li>
+                                <li>The wrist RGB-D stream remains separate from the static-camera pose chain</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-section">
+                    <h2><i data-lucide="map"></i> Mapping and Obstacle Avoidance</h2>
+                    <p>
+                        Two fixed depth views are synchronously throttled, segmented with the robot model, and fused by nvblox. The resulting ESDF is the live world representation used by cuMotion. A visible, collidable transfer wall also has a hard geometric safety shell so contact or insufficient clearance fails the task rather than becoming a visual-only defect.
+                    </p>
+
+                    <div class="workflow-steps">
+                        <div class="workflow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Observe</h3>
+                                <p>Publish synchronized RGB, optical-Z depth, CameraInfo, TF, and joint state from Isaac Sim across DDS.</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Remove the robot</h3>
+                                <p>Use the current robot geometry to mask arm pixels from both mapping depth streams so the manipulator does not become a moving obstacle to itself.</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Build the ESDF</h3>
+                                <p>Fuse the two masked views in nvblox and expose distance-to-obstacle information to the GPU planner.</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>Plan the carried volume</h3>
+                                <p>cuMotion evaluates the robot collision spheres and the logically attached can volume, routing the payload around the wall before execution.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-section">
+                    <h2><i data-lucide="hand"></i> Physical Grasp and Release</h2>
+                    <div class="system-diagram">
+                        <div class="system-card">
+                            <h3><i data-lucide="grip"></i> Contact-Driven Closure</h3>
+                            <ul>
+                                <li>Dynamic can with gravity and rigid-body contact</li>
+                                <li>Force-limited prismatic jaw drives</li>
+                                <li>Single-actuator mimic constraint tuned and verified</li>
+                                <li>Millimetre-scale contact generation around the fingers</li>
+                            </ul>
+                        </div>
+
+                        <div class="system-card">
+                            <h3><i data-lucide="rotate-3d"></i> Orientation-Aware Transfer</h3>
+                            <ul>
+                                <li>Multiple grasp candidates are generated from the detected axial pose</li>
+                                <li>The bottom-up can is rotated consistently into an upright placement</li>
+                                <li>The behavior tree coordinates approach, close, lift, transfer, and lower</li>
+                            </ul>
+                        </div>
+
+                        <div class="system-card">
+                            <h3><i data-lucide="shield-check"></i> Honest Release</h3>
+                            <ul>
+                                <li>No kinematic object pose writes during the grasped motion</li>
+                                <li>Planner attachment represents collision volume, not a physics weld</li>
+                                <li>Opening the fingers above the destination lets gravity finish placement</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-section">
+                    <h2><i data-lucide="wrench"></i> Engineering Highlights</h2>
+                    <div class="system-diagram">
+                        <div class="system-card">
+                            <h3><i data-lucide="git-branch"></i> Reconstructable Overlay</h3>
+                            <ul>
+                                <li>Four upstream trees pinned to immutable commits</li>
+                                <li>One reviewable patch for NVIDIA workflow changes</li>
+                                <li>Checksummed vendor USD and generated robot files</li>
+                            </ul>
+                        </div>
+
+                        <div class="system-card">
+                            <h3><i data-lucide="container"></i> Reproducible Runtime</h3>
+                            <ul>
+                                <li>Dockerized ROS 2 Jazzy and Isaac ROS 4.5 workflow</li>
+                                <li>Host Isaac Sim scene connected through Cyclone DDS</li>
+                                <li>GPU-specific TensorRT engines generated during bootstrap</li>
+                            </ul>
+                        </div>
+
+                        <div class="system-card">
+                            <h3><i data-lucide="circle-check"></i> Fail-Closed Gates</h3>
+                            <ul>
+                                <li>Connectivity, models, source pins, build, and overlay checks</li>
+                                <li>Wall contact and clearance monitored during execution</li>
+                                <li>Incomplete behavior-tree goals return a nonzero result</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-section">
+                    <h2><i data-lucide="alert-circle"></i> Scope and Transfer to Hardware</h2>
+                    <p>
+                        The demonstrated result is simulation-only. The repository includes a separate real-camera extrinsics profile, but it intentionally remains unavailable until physical hand-eye calibration is completed. Real deployment also requires robot-side safety validation, measured gripper contact parameters, camera calibration, and launch-profile verification on the physical B601-DM.
+                    </p>
+                    <p>
+                        Model weights, NVIDIA containers, and TensorRT engines are not redistributed. The bootstrap path requires explicit acceptance of the applicable third-party licenses and builds hardware-specific engines on the target GPU.
+                    </p>
+                </div>
+
+                <div class="project-section">
+                    <h2><i data-lucide="cpu"></i> Technologies Used</h2>
+                    <div class="tech-stack-grid">
+                        <div class="tech-item"><i data-lucide="box"></i><span>Isaac Sim 5.1</span></div>
+                        <div class="tech-item"><i data-lucide="bot"></i><span>Isaac ROS 4.5</span></div>
+                        <div class="tech-item"><i data-lucide="network"></i><span>ROS 2 Jazzy</span></div>
+                        <div class="tech-item"><i data-lucide="search"></i><span>Grounding DINO</span></div>
+                        <div class="tech-item"><i data-lucide="scan-line"></i><span>FoundationPose</span></div>
+                        <div class="tech-item"><i data-lucide="map"></i><span>nvblox</span></div>
+                        <div class="tech-item"><i data-lucide="route"></i><span>cuMotion</span></div>
+                        <div class="tech-item"><i data-lucide="move-3d"></i><span>MoveIt 2</span></div>
+                        <div class="tech-item"><i data-lucide="container"></i><span>Docker</span></div>
+                    </div>
+                </div>
+
+                <div class="project-section">
+                    <h2><i data-lucide="download"></i> Resources</h2>
+                    <div class="cta-buttons" style="margin-top: 1rem;">
+                        <a href="https://github.com/Adithya191101/rearm_clean" target="_blank" rel="noopener" class="btn-github">
+                            <i data-lucide="github"></i>
+                            Source and Reproduction Guide
+                        </a>
+                        <a href="assets/rearm/rearm_b601dm_full_flow_demo.mp4" class="btn-github">
+                            <i data-lucide="video"></i>
+                            Full-Resolution Demo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="index.html#about">About</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+
+                <div class="footer-social">
+                    <a href="https://linkedin.com/in/adithyarajendran" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <i data-lucide="linkedin"></i>
+                    </a>
+                    <a href="https://github.com/Adithya191101" target="_blank" rel="noopener" aria-label="GitHub">
+                        <i data-lucide="github"></i>
+                    </a>
+                    <a href="mailto:adithya191101@gmail.com" aria-label="Email">
+                        <i data-lucide="mail"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    &copy; 2025 Adithya Rajendran. All rights reserved.
+                </p>
+
+                <p class="footer-tagline">
+                    Built with passion for robotics
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
